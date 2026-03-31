@@ -151,18 +151,19 @@ def call_minimax(system_prompt: str, user_message: str) -> str:
     if not api_key:
         raise RuntimeError("MINIMAX_API_KEY environment variable is not set.")
 
-    url = "https://api.minimaxi.chat/v1/chat/completions"
+    # International API: api.minimax.io (keys from platform.minimax.io)
+    url = "https://api.minimax.io/v1/text/chatcompletion_v2"
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
     }
     payload = {
-        "model": "MiniMax-Text-01",
+        "model": "MiniMax-M2.7",
         "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user",   "content": user_message},
+            {"role": "system", "name": "MiniMax AI", "content": system_prompt},
+            {"role": "user",   "name": "user",        "content": user_message},
         ],
-        "max_tokens": 8192,
+        "max_completion_tokens": 8192,
         "temperature": 0.7,
     }
 

@@ -2,7 +2,9 @@ name: Autoresearch
 
 on:
   schedule:
-    - cron: "*/10 * * * *"   # every 10 minutes
+    # GitHub schedules are best-effort — runs can be delayed 15-60 min or
+    # skipped during high load. Avoid :00 minute marks to reduce queue pressure.
+    - cron: '*/10 * * * *'   # every 10 minutes (target; not guaranteed)
   workflow_dispatch:           # allow manual trigger from GitHub UI
 
 # Prevent overlapping runs — if a previous run is still going, cancel it.
