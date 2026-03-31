@@ -1,389 +1,627 @@
+from __future__ import annotations
+
 """
-One-time data preparation for autoresearch experiments.
-Downloads data shards and trains a BPE tokenizer.
+prepare.py
 
-Usage:
-    python prepare.py                  # full prep (download + tokenizer)
-    python prepare.py --num-shards 8   # download only 8 shards (for testing)
+Fixed preparation and evaluation harness for LuxAlgo-style autoresearch experiments.
 
-Data and tokenizer are stored in ~/.cache/autoresearch/.
+Role in this repo
+-----------------
+- prepare.py is the fixed support layer.
+- It loads market data, derives strategy context, and evaluates train.py.
+- train.py is the single editable strategy surface for the autoresearch loop.
+
+This file replaces Karpathy's original ML data/tokenizer pipeline with a
+market-data preparation pipeline while preserving the same repo philosophy:
+fixed prep/eval harness + single editable experiment file.
+
+Expected input CSV columns
+--------------------------
+Required:
+- open
+- high
+- low
+- close
+
+Optional:
+- timestamp
+- volume
+- symbol
+
+Typical usage
+-------------
+python prepare.py --csv data/sample.csv
+python prepare.py --csv data/sample.csv --output prepared_market_data.csv
+python prepare.py --csv data/sample.csv --run-train
 """
 
-import os
-import sys
-import time
-import math
 import argparse
-import pickle
-from multiprocessing import Pool
+import importlib.util
+import json
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
-import requests
-import pyarrow.parquet as pq
-import rustbpe
-import tiktoken
-import torch
+import numpy as np
+import pandas as pd
+
 
 # ---------------------------------------------------------------------------
-# Constants (fixed, do not modify)
+# Fixed configuration
 # ---------------------------------------------------------------------------
 
-MAX_SEQ_LEN = 2048       # context length
-TIME_BUDGET = 300        # training time budget in seconds (5 minutes)
-EVAL_TOKENS = 40 * 524288  # number of tokens for val eval
+BULLISH = 1
+BEARISH = -1
+BULLISH_LEG = 1
+BEARISH_LEG = 0
+
+DEFAULT_INTERNAL_LENGTH = 5
+DEFAULT_SWING_LENGTH = 50
+DEFAULT_EQUAL_HL_LENGTH = 3
+DEFAULT_EQUAL_HL_THRESHOLD = 0.1
+DEFAULT_RSI_LENGTH = 14
+DEFAULT_ATR_LENGTH = 200
+DEFAULT_OB_FILTER = "atr"       # "atr" or "range"
+DEFAULT_OB_MITIGATION = "highlow"  # "close" or "highlow"
+
+
+@dataclass(frozen=True)
+class PrepareConfig:
+    internal_length: int = DEFAULT_INTERNAL_LENGTH
+    swing_length: int = DEFAULT_SWING_LENGTH
+    equal_hl_length: int = DEFAULT_EQUAL_HL_LENGTH
+    equal_hl_threshold: float = DEFAULT_EQUAL_HL_THRESHOLD
+    rsi_length: int = DEFAULT_RSI_LENGTH
+    atr_length: int = DEFAULT_ATR_LENGTH
+    ob_filter: str = DEFAULT_OB_FILTER
+    ob_mitigation: str = DEFAULT_OB_MITIGATION
+
+
+@dataclass
+class PivotState:
+    current_level: Optional[float] = None
+    last_level: Optional[float] = None
+    crossed: bool = False
+    bar_index: Optional[int] = None
+
+
+@dataclass
+class TrendState:
+    bias: int = 0
+
+
+@dataclass
+class OrderBlockState:
+    high: Optional[float] = None
+    low: Optional[float] = None
+    start_index: Optional[int] = None
+    bias: Optional[int] = None
+    active: bool = False
+
 
 # ---------------------------------------------------------------------------
-# Configuration
+# Validation and basic indicators
 # ---------------------------------------------------------------------------
 
-CACHE_DIR = os.path.join(os.path.expanduser("~"), ".cache", "autoresearch")
-DATA_DIR = os.path.join(CACHE_DIR, "data")
-TOKENIZER_DIR = os.path.join(CACHE_DIR, "tokenizer")
-BASE_URL = "https://huggingface.co/datasets/karpathy/climbmix-400b-shuffle/resolve/main"
-MAX_SHARD = 6542 # the last datashard is shard_06542.parquet
-VAL_SHARD = MAX_SHARD  # pinned validation shard (shard_06542)
-VAL_FILENAME = f"shard_{VAL_SHARD:05d}.parquet"
-VOCAB_SIZE = 8192
+def validate_market_frame(df: pd.DataFrame) -> None:
+    required = {"open", "high", "low", "close"}
+    missing = sorted(required - set(df.columns))
+    if missing:
+        raise ValueError("CSV is missing required columns: " + ", ".join(missing))
 
-# BPE split pattern (GPT-4 style, with \p{N}{1,2} instead of {1,3})
-SPLIT_PATTERN = r"""'(?i:[sdmt]|ll|ve|re)|[^\r\n\p{L}\p{N}]?+\p{L}+|\p{N}{1,2}| ?[^\s\p{L}\p{N}]++[\r\n]*|\s*[\r\n]|\s+(?!\S)|\s+"""
 
-SPECIAL_TOKENS = [f"<|reserved_{i}|>" for i in range(4)]
-BOS_TOKEN = "<|reserved_0|>"
+def compute_true_range(df: pd.DataFrame) -> pd.Series:
+    prev_close = df["close"].shift(1)
+    tr1 = df["high"] - df["low"]
+    tr2 = (df["high"] - prev_close).abs()
+    tr3 = (df["low"] - prev_close).abs()
+    return pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+
+
+def compute_atr(df: pd.DataFrame, length: int) -> pd.Series:
+    tr = compute_true_range(df)
+    return tr.ewm(alpha=1 / length, adjust=False, min_periods=length).mean()
+
+
+def compute_rsi(close: pd.Series, length: int) -> pd.Series:
+    delta = close.diff()
+    gain = delta.clip(lower=0)
+    loss = -delta.clip(upper=0)
+
+    avg_gain = gain.ewm(alpha=1 / length, adjust=False, min_periods=length).mean()
+    avg_loss = loss.ewm(alpha=1 / length, adjust=False, min_periods=length).mean()
+
+    rs = avg_gain / avg_loss.replace(0, pd.NA)
+    rsi = 100 - (100 / (1 + rs))
+    return rsi.fillna(50.0)
+
 
 # ---------------------------------------------------------------------------
-# Data download
+# LuxAlgo-style parsing helpers
 # ---------------------------------------------------------------------------
 
-def download_single_shard(index):
-    """Download one parquet shard with retries. Returns True on success."""
-    filename = f"shard_{index:05d}.parquet"
-    filepath = os.path.join(DATA_DIR, filename)
-    if os.path.exists(filepath):
-        return True
+def add_volatility_parsing(df: pd.DataFrame, config: PrepareConfig) -> pd.DataFrame:
+    out = df.copy()
+    out["atr"] = compute_atr(out, config.atr_length)
+    tr = compute_true_range(out)
 
-    url = f"{BASE_URL}/{filename}"
-    max_attempts = 5
-    for attempt in range(1, max_attempts + 1):
-        try:
-            response = requests.get(url, stream=True, timeout=30)
-            response.raise_for_status()
-            temp_path = filepath + ".tmp"
-            with open(temp_path, "wb") as f:
-                for chunk in response.iter_content(chunk_size=1024 * 1024):
-                    if chunk:
-                        f.write(chunk)
-            os.rename(temp_path, filepath)
-            print(f"  Downloaded {filename}")
-            return True
-        except (requests.RequestException, IOError) as e:
-            print(f"  Attempt {attempt}/{max_attempts} failed for {filename}: {e}")
-            for path in [filepath + ".tmp", filepath]:
-                if os.path.exists(path):
-                    try:
-                        os.remove(path)
-                    except OSError:
-                        pass
-            if attempt < max_attempts:
-                time.sleep(2 ** attempt)
-    return False
-
-
-def download_data(num_shards, download_workers=8):
-    """Download training shards + pinned validation shard."""
-    os.makedirs(DATA_DIR, exist_ok=True)
-    num_train = min(num_shards, MAX_SHARD)
-    ids = list(range(num_train))
-    if VAL_SHARD not in ids:
-        ids.append(VAL_SHARD)
-
-    # Count what's already downloaded
-    existing = sum(1 for i in ids if os.path.exists(os.path.join(DATA_DIR, f"shard_{i:05d}.parquet")))
-    if existing == len(ids):
-        print(f"Data: all {len(ids)} shards already downloaded at {DATA_DIR}")
-        return
-
-    needed = len(ids) - existing
-    print(f"Data: downloading {needed} shards ({existing} already exist)...")
-
-    workers = max(1, min(download_workers, needed))
-    with Pool(processes=workers) as pool:
-        results = pool.map(download_single_shard, ids)
-
-    ok = sum(1 for r in results if r)
-    print(f"Data: {ok}/{len(ids)} shards ready at {DATA_DIR}")
-
-# ---------------------------------------------------------------------------
-# Tokenizer training
-# ---------------------------------------------------------------------------
-
-def list_parquet_files():
-    """Return sorted list of parquet file paths in the data directory."""
-    files = sorted(f for f in os.listdir(DATA_DIR) if f.endswith(".parquet") and not f.endswith(".tmp"))
-    return [os.path.join(DATA_DIR, f) for f in files]
-
-
-def text_iterator(max_chars=1_000_000_000, doc_cap=10_000):
-    """Yield documents from training split (all shards except pinned val shard)."""
-    parquet_paths = [p for p in list_parquet_files() if not p.endswith(VAL_FILENAME)]
-    nchars = 0
-    for filepath in parquet_paths:
-        pf = pq.ParquetFile(filepath)
-        for rg_idx in range(pf.num_row_groups):
-            rg = pf.read_row_group(rg_idx)
-            for text in rg.column("text").to_pylist():
-                doc = text[:doc_cap] if len(text) > doc_cap else text
-                nchars += len(doc)
-                yield doc
-                if nchars >= max_chars:
-                    return
-
-
-def train_tokenizer():
-    """Train BPE tokenizer using rustbpe, save as tiktoken pickle."""
-    tokenizer_pkl = os.path.join(TOKENIZER_DIR, "tokenizer.pkl")
-    token_bytes_path = os.path.join(TOKENIZER_DIR, "token_bytes.pt")
-
-    if os.path.exists(tokenizer_pkl) and os.path.exists(token_bytes_path):
-        print(f"Tokenizer: already trained at {TOKENIZER_DIR}")
-        return
-
-    os.makedirs(TOKENIZER_DIR, exist_ok=True)
-
-    parquet_files = list_parquet_files()
-    if len(parquet_files) < 2:
-        print("Tokenizer: need at least 2 data shards (1 train + 1 val). Download more data first.")
-        sys.exit(1)
-
-    # --- Train with rustbpe ---
-    print("Tokenizer: training BPE tokenizer...")
-    t0 = time.time()
-
-    tokenizer = rustbpe.Tokenizer()
-    vocab_size_no_special = VOCAB_SIZE - len(SPECIAL_TOKENS)
-    tokenizer.train_from_iterator(text_iterator(), vocab_size_no_special, pattern=SPLIT_PATTERN)
-
-    # Build tiktoken encoding from trained merges
-    pattern = tokenizer.get_pattern()
-    mergeable_ranks = {bytes(k): v for k, v in tokenizer.get_mergeable_ranks()}
-    tokens_offset = len(mergeable_ranks)
-    special_tokens = {name: tokens_offset + i for i, name in enumerate(SPECIAL_TOKENS)}
-    enc = tiktoken.Encoding(
-        name="rustbpe",
-        pat_str=pattern,
-        mergeable_ranks=mergeable_ranks,
-        special_tokens=special_tokens,
-    )
-
-    # Save tokenizer
-    with open(tokenizer_pkl, "wb") as f:
-        pickle.dump(enc, f)
-
-    t1 = time.time()
-    print(f"Tokenizer: trained in {t1 - t0:.1f}s, saved to {tokenizer_pkl}")
-
-    # --- Build token_bytes lookup for BPB evaluation ---
-    print("Tokenizer: building token_bytes lookup...")
-    special_set = set(SPECIAL_TOKENS)
-    token_bytes_list = []
-    for token_id in range(enc.n_vocab):
-        token_str = enc.decode([token_id])
-        if token_str in special_set:
-            token_bytes_list.append(0)
-        else:
-            token_bytes_list.append(len(token_str.encode("utf-8")))
-    token_bytes_tensor = torch.tensor(token_bytes_list, dtype=torch.int32)
-    torch.save(token_bytes_tensor, token_bytes_path)
-    print(f"Tokenizer: saved token_bytes to {token_bytes_path}")
-
-    # Sanity check
-    test = "Hello world! Numbers: 123. Unicode: 你好"
-    encoded = enc.encode_ordinary(test)
-    decoded = enc.decode(encoded)
-    assert decoded == test, f"Tokenizer roundtrip failed: {test!r} -> {decoded!r}"
-    print(f"Tokenizer: sanity check passed (vocab_size={enc.n_vocab})")
-
-# ---------------------------------------------------------------------------
-# Runtime utilities (imported by train.py)
-# ---------------------------------------------------------------------------
-
-class Tokenizer:
-    """Minimal tokenizer wrapper. Training is handled above."""
-
-    def __init__(self, enc):
-        self.enc = enc
-        self.bos_token_id = enc.encode_single_token(BOS_TOKEN)
-
-    @classmethod
-    def from_directory(cls, tokenizer_dir=TOKENIZER_DIR):
-        with open(os.path.join(tokenizer_dir, "tokenizer.pkl"), "rb") as f:
-            enc = pickle.load(f)
-        return cls(enc)
-
-    def get_vocab_size(self):
-        return self.enc.n_vocab
-
-    def get_bos_token_id(self):
-        return self.bos_token_id
-
-    def encode(self, text, prepend=None, num_threads=8):
-        if prepend is not None:
-            prepend_id = prepend if isinstance(prepend, int) else self.enc.encode_single_token(prepend)
-        if isinstance(text, str):
-            ids = self.enc.encode_ordinary(text)
-            if prepend is not None:
-                ids.insert(0, prepend_id)
-        elif isinstance(text, list):
-            ids = self.enc.encode_ordinary_batch(text, num_threads=num_threads)
-            if prepend is not None:
-                for row in ids:
-                    row.insert(0, prepend_id)
-        else:
-            raise ValueError(f"Invalid input type: {type(text)}")
-        return ids
-
-    def decode(self, ids):
-        return self.enc.decode(ids)
-
-
-def get_token_bytes(device="cpu"):
-    path = os.path.join(TOKENIZER_DIR, "token_bytes.pt")
-    with open(path, "rb") as f:
-        return torch.load(f, map_location=device)
-
-
-def _document_batches(split, tokenizer_batch_size=128):
-    """Infinite iterator over document batches from parquet files."""
-    parquet_paths = list_parquet_files()
-    assert len(parquet_paths) > 0, "No parquet files found. Run prepare.py first."
-    val_path = os.path.join(DATA_DIR, VAL_FILENAME)
-    if split == "train":
-        parquet_paths = [p for p in parquet_paths if p != val_path]
-        assert len(parquet_paths) > 0, "No training shards found."
+    if config.ob_filter == "atr":
+        volatility_measure = out["atr"]
     else:
-        parquet_paths = [val_path]
-    epoch = 1
-    while True:
-        for filepath in parquet_paths:
-            pf = pq.ParquetFile(filepath)
-            for rg_idx in range(pf.num_row_groups):
-                rg = pf.read_row_group(rg_idx)
-                batch = rg.column('text').to_pylist()
-                for i in range(0, len(batch), tokenizer_batch_size):
-                    yield batch[i:i+tokenizer_batch_size], epoch
-        epoch += 1
+        # Pine uses ta.cum(ta.tr) / bar_index; this is the closest stable equivalent.
+        volatility_measure = tr.expanding(min_periods=1).mean()
+
+    out["volatility_measure"] = volatility_measure.bfill().fillna(0.0)
+    out["high_volatility_bar"] = (out["high"] - out["low"]) >= (2.0 * out["volatility_measure"])
+
+    out["parsed_high"] = out["high"]
+    out["parsed_low"] = out["low"]
+
+    hv_mask = out["high_volatility_bar"]
+    out.loc[hv_mask, "parsed_high"] = out.loc[hv_mask, "low"]
+    out.loc[hv_mask, "parsed_low"] = out.loc[hv_mask, "high"]
+    return out
 
 
-def make_dataloader(tokenizer, B, T, split, buffer_size=1000):
+def compute_leg_series(high: pd.Series, low: pd.Series, size: int) -> pd.Series:
     """
-    BOS-aligned dataloader with best-fit packing.
-    Every row starts with BOS. Documents packed using best-fit to minimize cropping.
-    When no document fits remaining space, crops shortest doc to fill exactly.
-    100% utilization (no padding).
+    Approximate the Pine logic:
+
+        newLegHigh = high[size] > ta.highest(size)
+        newLegLow  = low[size]  < ta.lowest(size)
+
+    In a forward Python pass, we interpret this as checking whether the current bar
+    breaks above/below the previous `size` bars.
+
+    Vectorized via rolling max/min with shift(1), making the window exclusive of the
+    current bar — equivalent to high.iloc[i-size:i].max(). High breakout takes
+    precedence over low (mirrors the original elif order). Forward-fill carries the
+    last confirmed leg direction between breakout events.
     """
-    assert split in ["train", "val"]
-    row_capacity = T + 1
-    batches = _document_batches(split)
-    bos_token = tokenizer.get_bos_token_id()
-    doc_buffer = []
-    epoch = 1
+    rolling_max = high.rolling(window=size, min_periods=size).max().shift(1)
+    rolling_min = low.rolling(window=size, min_periods=size).min().shift(1)
 
-    def refill_buffer():
-        nonlocal epoch
-        doc_batch, epoch = next(batches)
-        token_lists = tokenizer.encode(doc_batch, prepend=bos_token)
-        doc_buffer.extend(token_lists)
+    new_high = high > rolling_max
+    new_low  = low  < rolling_min
 
-    # Pre-allocate buffers: [inputs (B*T) | targets (B*T)]
-    row_buffer = torch.empty((B, row_capacity), dtype=torch.long)
-    cpu_buffer = torch.empty(2 * B * T, dtype=torch.long, pin_memory=True)
-    gpu_buffer = torch.empty(2 * B * T, dtype=torch.long, device="cuda")
-    cpu_inputs = cpu_buffer[:B * T].view(B, T)
-    cpu_targets = cpu_buffer[B * T:].view(B, T)
-    inputs = gpu_buffer[:B * T].view(B, T)
-    targets = gpu_buffer[B * T:].view(B, T)
+    events = pd.Series(
+        np.where(new_high, BEARISH_LEG, np.where(new_low, BULLISH_LEG, np.nan)),
+        index=high.index,
+    )
+    return events.ffill().fillna(0).astype("int64")
 
-    while True:
-        for row_idx in range(B):
-            pos = 0
-            while pos < row_capacity:
-                while len(doc_buffer) < buffer_size:
-                    refill_buffer()
-
-                remaining = row_capacity - pos
-
-                # Find largest doc that fits entirely
-                best_idx = -1
-                best_len = 0
-                for i, doc in enumerate(doc_buffer):
-                    doc_len = len(doc)
-                    if doc_len <= remaining and doc_len > best_len:
-                        best_idx = i
-                        best_len = doc_len
-
-                if best_idx >= 0:
-                    doc = doc_buffer.pop(best_idx)
-                    row_buffer[row_idx, pos:pos + len(doc)] = torch.tensor(doc, dtype=torch.long)
-                    pos += len(doc)
-                else:
-                    # No doc fits — crop shortest to fill remaining
-                    shortest_idx = min(range(len(doc_buffer)), key=lambda i: len(doc_buffer[i]))
-                    doc = doc_buffer.pop(shortest_idx)
-                    row_buffer[row_idx, pos:pos + remaining] = torch.tensor(doc[:remaining], dtype=torch.long)
-                    pos += remaining
-
-        cpu_inputs.copy_(row_buffer[:, :-1])
-        cpu_targets.copy_(row_buffer[:, 1:])
-        gpu_buffer.copy_(cpu_buffer, non_blocking=True)
-        yield inputs, targets, epoch
 
 # ---------------------------------------------------------------------------
-# Evaluation (DO NOT CHANGE — this is the fixed metric)
+# Main structure engine
 # ---------------------------------------------------------------------------
 
-@torch.no_grad()
-def evaluate_bpb(model, tokenizer, batch_size):
-    """
-    Bits per byte (BPB): vocab size-independent evaluation metric.
-    Sums per-token cross-entropy (in nats), sums target byte lengths,
-    then converts nats/byte to bits/byte. Special tokens (byte length 0)
-    are excluded from both sums.
-    Uses fixed MAX_SEQ_LEN so results are comparable across configs.
-    """
-    token_bytes = get_token_bytes(device="cuda")
-    val_loader = make_dataloader(tokenizer, batch_size, MAX_SEQ_LEN, "val")
-    steps = EVAL_TOKENS // (batch_size * MAX_SEQ_LEN)
-    total_nats = 0.0
-    total_bytes = 0
-    for _ in range(steps):
-        x, y, _ = next(val_loader)
-        loss_flat = model(x, y, reduction='none').view(-1)
-        y_flat = y.view(-1)
-        nbytes = token_bytes[y_flat]
-        mask = nbytes > 0
-        total_nats += (loss_flat * mask).sum().item()
-        total_bytes += nbytes.sum().item()
-    return total_nats / (math.log(2) * total_bytes)
+def build_strategy_frame(raw_df: pd.DataFrame, config: Optional[PrepareConfig] = None) -> pd.DataFrame:
+    config = config or PrepareConfig()
+    df = raw_df.copy()
+
+    validate_market_frame(df)
+
+    if "timestamp" in df.columns:
+        df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
+
+    for col in [c for c in ["open", "high", "low", "close", "volume"] if c in df.columns]:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    df = df.dropna(subset=["open", "high", "low", "close"]).reset_index(drop=True)
+
+    df["rsi"] = compute_rsi(df["close"], config.rsi_length)
+    df = add_volatility_parsing(df, config)
+
+    # Output columns expected by train.py
+    output = df.copy()
+
+    output["bullish_internal_ob_high"] = np.nan
+    output["bullish_internal_ob_low"] = np.nan
+    output["bullish_internal_ob_active"] = False
+
+    output["bearish_internal_ob_high"] = np.nan
+    output["bearish_internal_ob_low"] = np.nan
+    output["bearish_internal_ob_active"] = False
+
+    output["nearest_weak_high_price"] = np.nan
+    output["nearest_weak_high_exists"] = False
+    output["nearest_weak_low_price"] = np.nan
+    output["nearest_weak_low_exists"] = False
+
+    output["bullish_fvg_nearby"] = False
+    output["bearish_fvg_nearby"] = False
+
+    output["in_premium_zone"] = False
+    output["in_equilibrium_zone"] = False
+    output["in_discount_zone"] = False
+
+    output["swing_trend_bias"] = 0
+    output["internal_trend_bias"] = 0
+
+    output["last_swing_high"] = np.nan
+    output["last_swing_low"] = np.nan
+    output["last_internal_high"] = np.nan
+    output["last_internal_low"] = np.nan
+
+    output["equal_high"] = False
+    output["equal_low"] = False
+
+    swing_leg = compute_leg_series(output["high"], output["low"], config.swing_length)
+    internal_leg = compute_leg_series(output["high"], output["low"], config.internal_length)
+    equal_leg = compute_leg_series(output["high"], output["low"], config.equal_hl_length)
+
+    swing_high = PivotState()
+    swing_low = PivotState()
+    internal_high = PivotState()
+    internal_low = PivotState()
+    equal_high = PivotState()
+    equal_low = PivotState()
+
+    swing_trend = TrendState()
+    internal_trend = TrendState()
+
+    bullish_internal_ob = OrderBlockState()
+    bearish_internal_ob = OrderBlockState()
+
+    trailing_top: Optional[float] = None
+    trailing_bottom: Optional[float] = None
+    trailing_top_index: Optional[int] = None
+    trailing_bottom_index: Optional[int] = None
+
+    def update_pivot(pivot: PivotState, level: float, bar_index: int) -> None:
+        pivot.last_level = pivot.current_level
+        pivot.current_level = level
+        pivot.crossed = False
+        pivot.bar_index = bar_index
+
+    def maybe_store_order_block(
+        pivot: PivotState,
+        current_index: int,
+        bias: int,
+        internal: bool,
+    ) -> None:
+        nonlocal bullish_internal_ob, bearish_internal_ob
+
+        if pivot.bar_index is None:
+            return
+
+        scan = output.iloc[pivot.bar_index: current_index + 1]
+        if scan.empty:
+            return
+
+        if bias == BULLISH:
+            parsed_idx = scan["parsed_low"].astype(float).idxmin()
+            ob_high = float(output.loc[parsed_idx, "parsed_high"])
+            ob_low = float(output.loc[parsed_idx, "parsed_low"])
+            if internal:
+                bullish_internal_ob = OrderBlockState(
+                    high=ob_high,
+                    low=ob_low,
+                    start_index=int(parsed_idx),
+                    bias=BULLISH,
+                    active=True,
+                )
+        else:
+            parsed_idx = scan["parsed_high"].astype(float).idxmax()
+            ob_high = float(output.loc[parsed_idx, "parsed_high"])
+            ob_low = float(output.loc[parsed_idx, "parsed_low"])
+            if internal:
+                bearish_internal_ob = OrderBlockState(
+                    high=ob_high,
+                    low=ob_low,
+                    start_index=int(parsed_idx),
+                    bias=BEARISH,
+                    active=True,
+                )
+
+    def delete_order_blocks(row: pd.Series) -> None:
+        nonlocal bullish_internal_ob, bearish_internal_ob
+
+        close = float(row["close"])
+        high = float(row["high"])
+        low = float(row["low"])
+
+        if bullish_internal_ob.active and bullish_internal_ob.low is not None:
+            if config.ob_mitigation == "close":
+                crossed = close < bullish_internal_ob.low
+            else:
+                crossed = low < bullish_internal_ob.low
+            if crossed:
+                bullish_internal_ob = OrderBlockState()
+
+        if bearish_internal_ob.active and bearish_internal_ob.high is not None:
+            if config.ob_mitigation == "close":
+                crossed = close > bearish_internal_ob.high
+            else:
+                crossed = high > bearish_internal_ob.high
+            if crossed:
+                bearish_internal_ob = OrderBlockState()
+
+    def process_structure(
+        i: int,
+        row: pd.Series,
+        pivot_high: PivotState,
+        pivot_low: PivotState,
+        trend: TrendState,
+        leg_series: pd.Series,
+        size: int,
+        internal: bool,
+    ) -> None:
+        current_close = float(row["close"])
+
+        # Mirrors the confluence filter logic shape from Pine, but always enabled as data context.
+        bullish_bar = row["high"] - max(row["close"], row["open"]) > min(
+            row["close"], row["open"]
+        ) - row["low"]
+        bearish_bar = row["high"] - max(row["close"], row["open"]) < min(
+            row["close"], row["open"]
+        ) - row["low"]
+
+        # Bullish break of structure / CHoCH
+        extra_condition = True
+        if internal:
+            extra_condition = (
+                internal_high.current_level is not None
+                and swing_high.current_level is not None
+                and internal_high.current_level != swing_high.current_level
+                and bullish_bar
+            )
+
+        if (
+            pivot_high.current_level is not None
+            and not pivot_high.crossed
+            and extra_condition
+            and current_close > pivot_high.current_level
+        ):
+            pivot_high.crossed = True
+            trend.bias = BULLISH
+            maybe_store_order_block(pivot_high, i, BULLISH, internal=internal)
+
+        # Bearish break of structure / CHoCH
+        extra_condition = True
+        if internal:
+            extra_condition = (
+                internal_low.current_level is not None
+                and swing_low.current_level is not None
+                and internal_low.current_level != swing_low.current_level
+                and bearish_bar
+            )
+
+        if (
+            pivot_low.current_level is not None
+            and not pivot_low.crossed
+            and extra_condition
+            and current_close < pivot_low.current_level
+        ):
+            pivot_low.crossed = True
+            trend.bias = BEARISH
+            maybe_store_order_block(pivot_low, i, BEARISH, internal=internal)
+
+        output.at[i, "internal_trend_bias" if internal else "swing_trend_bias"] = trend.bias
+
+    for i in range(len(output)):
+        row = output.iloc[i]
+        # -------------------------------------------------------------------
+        # Current structure updates
+        # -------------------------------------------------------------------
+        if i >= config.swing_length:
+            current_leg = int(swing_leg.iloc[i])
+            previous_leg = int(swing_leg.iloc[i - 1])
+
+            new_pivot = current_leg != previous_leg
+            pivot_low_trigger = (current_leg - previous_leg) == 1
+            pivot_high_trigger = (current_leg - previous_leg) == -1
+
+            if new_pivot:
+                pivot_idx = i - config.swing_length
+                if pivot_idx >= 0:
+                    if pivot_low_trigger:
+                        level = float(output.iloc[pivot_idx]["low"])
+                        update_pivot(swing_low, level, pivot_idx)
+                        trailing_bottom = level
+                        trailing_bottom_index = pivot_idx
+                    elif pivot_high_trigger:
+                        level = float(output.iloc[pivot_idx]["high"])
+                        update_pivot(swing_high, level, pivot_idx)
+                        trailing_top = level
+                        trailing_top_index = pivot_idx
+
+        if i >= config.internal_length:
+            current_leg = int(internal_leg.iloc[i])
+            previous_leg = int(internal_leg.iloc[i - 1])
+
+            new_pivot = current_leg != previous_leg
+            pivot_low_trigger = (current_leg - previous_leg) == 1
+            pivot_high_trigger = (current_leg - previous_leg) == -1
+
+            if new_pivot:
+                pivot_idx = i - config.internal_length
+                if pivot_idx >= 0:
+                    if pivot_low_trigger:
+                        level = float(output.iloc[pivot_idx]["low"])
+                        update_pivot(internal_low, level, pivot_idx)
+                    elif pivot_high_trigger:
+                        level = float(output.iloc[pivot_idx]["high"])
+                        update_pivot(internal_high, level, pivot_idx)
+
+        if i >= config.equal_hl_length:
+            current_leg = int(equal_leg.iloc[i])
+            previous_leg = int(equal_leg.iloc[i - 1])
+
+            new_pivot = current_leg != previous_leg
+            pivot_low_trigger = (current_leg - previous_leg) == 1
+            pivot_high_trigger = (current_leg - previous_leg) == -1
+
+            if new_pivot:
+                pivot_idx = i - config.equal_hl_length
+                if pivot_idx >= 0:
+                    atr_measure = float(row["atr"]) if pd.notna(row["atr"]) else 0.0
+
+                    if pivot_low_trigger:
+                        level = float(output.iloc[pivot_idx]["low"])
+                        if equal_low.current_level is not None and abs(equal_low.current_level - level) < config.equal_hl_threshold * atr_measure:
+                            output.at[i, "equal_low"] = True
+                        update_pivot(equal_low, level, pivot_idx)
+
+                    elif pivot_high_trigger:
+                        level = float(output.iloc[pivot_idx]["high"])
+                        if equal_high.current_level is not None and abs(equal_high.current_level - level) < config.equal_hl_threshold * atr_measure:
+                            output.at[i, "equal_high"] = True
+                        update_pivot(equal_high, level, pivot_idx)
+
+        # -------------------------------------------------------------------
+        # Structure display logic translated into state updates
+        # -------------------------------------------------------------------
+        process_structure(
+            i=i,
+            row=row,
+            pivot_high=internal_high,
+            pivot_low=internal_low,
+            trend=internal_trend,
+            leg_series=internal_leg,
+            size=config.internal_length,
+            internal=True,
+        )
+        process_structure(
+            i=i,
+            row=row,
+            pivot_high=swing_high,
+            pivot_low=swing_low,
+            trend=swing_trend,
+            leg_series=swing_leg,
+            size=config.swing_length,
+            internal=False,
+        )
+
+        # -------------------------------------------------------------------
+        # OB mitigation / invalidation
+        # -------------------------------------------------------------------
+        delete_order_blocks(row)
+
+        # -------------------------------------------------------------------
+        # Save active OBs
+        # -------------------------------------------------------------------
+        output.at[i, "bullish_internal_ob_high"] = bullish_internal_ob.high
+        output.at[i, "bullish_internal_ob_low"] = bullish_internal_ob.low
+        output.at[i, "bullish_internal_ob_active"] = bullish_internal_ob.active
+
+        output.at[i, "bearish_internal_ob_high"] = bearish_internal_ob.high
+        output.at[i, "bearish_internal_ob_low"] = bearish_internal_ob.low
+        output.at[i, "bearish_internal_ob_active"] = bearish_internal_ob.active
+
+        # -------------------------------------------------------------------
+        # Trailing extremes, weak high/low, premium/discount
+        # -------------------------------------------------------------------
+        output.at[i, "last_swing_high"] = trailing_top
+        output.at[i, "last_swing_low"] = trailing_bottom
+        output.at[i, "last_internal_high"] = internal_high.current_level
+        output.at[i, "last_internal_low"] = internal_low.current_level
+
+        # LuxAlgo labeling logic:
+        # top label text = Strong High if swingTrend.bias == BEARISH else Weak High
+        # bottom label text = Strong Low if swingTrend.bias == BULLISH else Weak Low
+        weak_high = (trailing_top is not None) and (swing_trend.bias != BEARISH) and (trailing_top > float(row["close"]))
+        weak_low = (trailing_bottom is not None) and (swing_trend.bias != BULLISH) and (trailing_bottom < float(row["close"]))
+
+        output.at[i, "nearest_weak_high_price"] = trailing_top
+        output.at[i, "nearest_weak_high_exists"] = bool(weak_high)
+        output.at[i, "nearest_weak_low_price"] = trailing_bottom
+        output.at[i, "nearest_weak_low_exists"] = bool(weak_low)
+
+        # Premium / Equilibrium / Discount zones from the exact LuxAlgo blends.
+        if trailing_top is not None and trailing_bottom is not None and trailing_top > trailing_bottom:
+            close = float(row["close"])
+
+            premium_top = trailing_top
+            premium_bottom = 0.95 * trailing_top + 0.05 * trailing_bottom
+
+            equilibrium_top = 0.525 * trailing_top + 0.475 * trailing_bottom
+            equilibrium_bottom = 0.525 * trailing_bottom + 0.475 * trailing_top
+
+            discount_top = 0.95 * trailing_bottom + 0.05 * trailing_top
+            discount_bottom = trailing_bottom
+
+            output.at[i, "in_premium_zone"] = premium_bottom <= close <= premium_top
+            output.at[i, "in_equilibrium_zone"] = equilibrium_bottom <= close <= equilibrium_top
+            output.at[i, "in_discount_zone"] = discount_bottom <= close <= discount_top
+
+        # -------------------------------------------------------------------
+        # FVG context
+        # -------------------------------------------------------------------
+        if i >= 2:
+            bullish_fvg = float(row["low"]) > float(output.iloc[i - 2]["high"])
+            bearish_fvg = float(row["high"]) < float(output.iloc[i - 2]["low"])
+            output.at[i, "bullish_fvg_nearby"] = bullish_fvg
+            output.at[i, "bearish_fvg_nearby"] = bearish_fvg
+
+    return output
+
 
 # ---------------------------------------------------------------------------
-# Main
+# train.py integration
 # ---------------------------------------------------------------------------
+
+def load_train_module(train_path: str):
+    import sys as _sys
+    spec = importlib.util.spec_from_file_location("train_module", train_path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Unable to load train module from {train_path}")
+    module = importlib.util.module_from_spec(spec)
+    _sys.modules["train_module"] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def run_train_on_prepared_frame(prepared_df: pd.DataFrame, train_path: str = "train.py") -> Dict[str, Any]:
+    module = load_train_module(train_path)
+    if not hasattr(module, "run_strategy"):
+        raise AttributeError("train.py must expose run_strategy(df, config=None)")
+    return module.run_strategy(prepared_df)
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Prepare LuxAlgo-style market context and optionally run train.py"
+    )
+    parser.add_argument("--csv", required=True, help="Path to OHLC CSV input")
+    parser.add_argument("--output", default="prepared_market_data.csv", help="Path to save prepared frame")
+    parser.add_argument("--run-train", action="store_true", help="Run train.py after preparing the frame")
+    parser.add_argument("--train-path", default="train.py", help="Path to train.py")
+    parser.add_argument(
+        "--metrics-output",
+        default="strategy_metrics.json",
+        help="Where to save metrics JSON if --run-train is used",
+    )
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    csv_path = Path(args.csv)
+    if not csv_path.exists():
+        raise FileNotFoundError(f"CSV not found: {csv_path}")
+
+    raw_df = pd.read_csv(csv_path)
+    config = PrepareConfig()
+    prepared_df = build_strategy_frame(raw_df, config=config)
+    prepared_df.to_csv(args.output, index=False)
+
+    print(f"Prepared frame saved to: {args.output}")
+    print(f"Rows: {len(prepared_df)}")
+
+    if args.run_train:
+        result = run_train_on_prepared_frame(prepared_df, train_path=args.train_path)
+        metrics = result.get("metrics", {})
+        with open(args.metrics_output, "w", encoding="utf-8") as f:
+            json.dump(metrics, f, indent=2)
+        print(f"Metrics saved to: {args.metrics_output}")
+        print("Metrics:")
+        print(json.dumps(metrics, indent=2))
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Prepare data and tokenizer for autoresearch")
-    parser.add_argument("--num-shards", type=int, default=10, help="Number of training shards to download (-1 = all). Val shard is always pinned.")
-    parser.add_argument("--download-workers", type=int, default=8, help="Number of parallel download workers")
-    args = parser.parse_args()
-
-    num_shards = MAX_SHARD if args.num_shards == -1 else args.num_shards
-
-    print(f"Cache directory: {CACHE_DIR}")
-    print()
-
-    # Step 1: Download data
-    download_data(num_shards, download_workers=args.download_workers)
-    print()
-
-    # Step 2: Train tokenizer
-    train_tokenizer()
-    print()
-    print("Done! Ready to train.")
+    main()

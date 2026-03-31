@@ -1,0 +1,48 @@
+name: Autoresearch
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # every 10 minutes
+  workflow_dispatch:           # allow manual trigger from GitHub UI
+
+# Prevent overlapping runs — if a previous run is still going, cancel it.
+concurrency:
+  group: autoresearch
+  cancel-in-progress: true
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push commits back to the branch
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0            # full history so git log works
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install numpy pandas requests
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "autoresearch-bot"
+          git config user.email "autoresearch@github-actions.com"
+
+      - name: Run autoresearch step
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: python autoresearch_step.py
+
+      - name: Push new commit (if experiment was kept)
+        run: git push origin HEAD
+        # Only push when the step above succeeded and left a new commit.
+        # `git push` is a no-op if HEAD hasn't moved, so this is always safe.
+        if: success()

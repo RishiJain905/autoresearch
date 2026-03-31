@@ -19,5 +19,8 @@ AGENTS.md
 # Experimental code/artifacts
 dev/
 
-# Results file
-results.tsv
+# Autoresearch runtime outputs (never commit these)
+run.log
+strategy_metrics.json
+prepared_market_data.csv
+# results.tsv IS committed — it is the persistent experiment log

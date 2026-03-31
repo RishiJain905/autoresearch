@@ -1,91 +1,154 @@
 # autoresearch
 
-![teaser](progress.png)
+*Inspired by [@karpathy's autoresearch](https://github.com/karpathy/autoresearch) — an autonomous LLM pretraining research loop — adapted for autonomous trading strategy research on LuxAlgo Smart Money Concepts.*
 
-*One day, frontier AI research used to be done by meat computers in between eating, sleeping, having other fun, and synchronizing once in a while using sound wave interconnect in the ritual of "group meeting". That era is long gone. Research is now entirely the domain of autonomous swarms of AI agents running across compute cluster megastructures in the skies. The agents claim that we are now in the 10,205th generation of the code base, in any case no one could tell if that's right or wrong as the "code" is now a self-modifying binary that has grown beyond human comprehension. This repo is the story of how it all began. -@karpathy, March 2026*.
+The idea: give an AI agent a trading strategy backtester and let it experiment autonomously. It modifies the strategy code, runs the backtest, checks if `total_pnl_pct` improved, keeps or discards, and repeats. You wake up in the morning to a log of experiments and (hopefully) a better strategy. The core philosophy is the same as Karpathy's — you're not touching `train.py` like you normally would as a researcher. Instead, you let the agent iterate on it while `prepare.py` provides the fixed evaluation harness.
 
-The idea: give an AI agent a small but real LLM training setup and let it experiment autonomously overnight. It modifies the code, trains for 5 minutes, checks if the result improved, keeps or discards, and repeats. You wake up in the morning to a log of experiments and (hopefully) a better model. The training code here is a simplified single-GPU implementation of [nanochat](https://github.com/karpathy/nanochat). The core idea is that you're not touching any of the Python files like you normally would as a researcher. Instead, you are programming the `program.md` Markdown files that provide context to the AI agents and set up your autonomous research org. The default `program.md` in this repo is intentionally kept as a bare bones baseline, though it's obvious how one would iterate on it over time to find the "research org code" that achieves the fastest research progress, how you'd add more agents to the mix, etc. A bit more context on this project is here in this [tweet](https://x.com/karpathy/status/2029701092347630069) and [this tweet](https://x.com/karpathy/status/2031135152349524125).
+## Pipeline
+
+```mermaid
+flowchart TB
+    subgraph trigger["GitHub Actions (every 10 min)"]
+        cron["Cron trigger<br/>*/10 * * * *"]
+    end
+
+    subgraph step["autoresearch_step.py"]
+        direction TB
+        run1["Step 1: Run current train.py<br/>on data/sample.csv"]
+        measure1["Measure current_metrics<br/>(total_pnl_pct, win_rate, trade_count)"]
+        api["Step 2: Call Minimax API<br/>Send: program.md + prepare.py<br/>+ train.py + git history<br/>+ current_metrics"]
+        extract["Extract proposed train.py<br/>from LLM response"]
+        run2["Step 3: Run proposed train.py<br/>on data/sample.csv"]
+        measure2["Measure new_metrics"]
+        compare{"Step 4: Improved?<br/>new > current AND<br/>trade_count >= 5"}
+        keep["git commit train.py + results.tsv<br/>git push"]
+        discard["Revert train.py<br/>Commit results.tsv only"]
+
+        run1 --> measure1 --> api --> extract --> run2 --> measure2 --> compare
+        compare -->|Yes| keep
+        compare -->|No| discard
+    end
+
+    subgraph data["Fixed inputs (never modified)"]
+        csv["data/sample.csv<br/>BTC/USDT 15m OHLCV"]
+        prepare["prepare.py<br/>LuxAlgo SMC engine"]
+        program["program.md<br/>Agent instructions"]
+    end
+
+    subgraph editable["Editable by agent"]
+        train["train.py<br/>Strategy logic"]
+        results["results.tsv<br/>Experiment history"]
+    end
+
+    cron --> run1
+    csv --> run1
+    csv --> run2
+    prepare -.->|"builds strategy frame"| run1
+    prepare -.->|"builds strategy frame"| run2
+    program -.->|"system prompt"| api
+    train -->|"current version"| run1
+    extract -->|"overwrites"| train
+    keep --> results
+    discard --> results
+```
+
+```mermaid
+flowchart LR
+    subgraph prepare_py["prepare.py — Fixed Support Layer"]
+        direction TB
+        csv_in["OHLC CSV input"]
+        validate["Validate columns"]
+        rsi["Compute RSI"]
+        atr["Compute ATR"]
+        vol["Volatility parsing<br/>(high-volatility bar detection)"]
+        legs["Compute leg series<br/>(swing + internal + equal)"]
+        pivots["Detect pivots<br/>(swing highs/lows,<br/>internal highs/lows)"]
+        structure["Process structure<br/>(CHoCH / BoS detection)"]
+        ob["Order Block creation<br/>+ mitigation"]
+        zones["Premium / Equilibrium /<br/>Discount zones"]
+        fvg["FVG detection"]
+        weak["Weak High / Low<br/>classification"]
+        frame["Output: strategy frame<br/>(all features per bar)"]
+
+        csv_in --> validate --> rsi --> atr --> vol --> legs --> pivots --> structure --> ob --> zones --> fvg --> weak --> frame
+    end
+
+    subgraph train_py["train.py — Editable Strategy"]
+        direction TB
+        signals["Signal detection<br/>(long / short)"]
+        entry["Entry conditions:<br/>OB overlap + RSI +<br/>weak high/low"]
+        exit["Exit conditions:<br/>TP at +/-2% or<br/>OB boundary break"]
+        trades["Trade list +<br/>PnL calculation"]
+        metrics["Metrics:<br/>total_pnl_pct<br/>win_rate<br/>trade_count"]
+
+        signals --> entry --> exit --> trades --> metrics
+    end
+
+    frame -->|"prepared DataFrame"| signals
+```
 
 ## How it works
 
-The repo is deliberately kept small and only really has three files that matter:
+The repo has a clean separation of concerns:
 
-- **`prepare.py`** — fixed constants, one-time data prep (downloads training data, trains a BPE tokenizer), and runtime utilities (dataloader, evaluation). Not modified.
-- **`train.py`** — the single file the agent edits. Contains the full GPT model, optimizer (Muon + AdamW), and training loop. Everything is fair game: architecture, hyperparameters, optimizer, batch size, etc. **This file is edited and iterated on by the agent**.
-- **`program.md`** — baseline instructions for one agent. Point your agent here and let it go. **This file is edited and iterated on by the human**.
+- **`prepare.py`** — fixed support layer. Loads OHLC CSV, computes all LuxAlgo Smart Money Concepts context (order blocks, swing/internal pivots, FVGs, premium/discount zones, RSI, ATR, equal highs/lows), and runs `train.py` via `run_train_on_prepared_frame`. Not modified.
+- **`train.py`** — the single file the agent edits. Contains entry/exit logic, RSI thresholds, take-profit percentage, position management. Everything is fair game. **This file is edited and iterated on by the agent.**
+- **`program.md`** — instructions that tell the AI what the metric is, what it can change, and how the experiment loop works. **This file is edited and iterated on by the human.**
+- **`autoresearch_step.py`** — orchestrator that runs one experiment iteration: measure current strategy, call Minimax for an improvement, test it, keep or revert. Not modified.
 
-By design, training runs for a **fixed 5-minute time budget** (wall clock, excluding startup/compilation), regardless of the details of your compute. The metric is **val_bpb** (validation bits per byte) — lower is better, and vocab-size-independent so architectural changes are fairly compared.
-
-If you are new to neural networks, this ["Dummy's Guide"](https://x.com/hooeem/status/2030720614752039185) looks pretty good for a lot more context.
+The metric is **`total_pnl_pct`** (sum of trade PnL percentages) — higher is better. Trade count must stay above 5 to prevent overfitting to a handful of lucky trades.
 
 ## Quick start
 
-**Requirements:** A single NVIDIA GPU (tested on H100), Python 3.10+, [uv](https://docs.astral.sh/uv/).
+**Requirements:** Python 3.10+, a Minimax API key.
 
 ```bash
+# 1. Install dependencies
+pip install numpy pandas requests
 
-# 1. Install uv project manager (if you don't already have it)
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# 2. Run the pipeline manually (one experiment iteration)
+export MINIMAX_API_KEY=your_key_here
+python autoresearch_step.py
 
-# 2. Install dependencies
-uv sync
-
-# 3. Download data and train tokenizer (one-time, ~2 min)
-uv run prepare.py
-
-# 4. Manually run a single training experiment (~5 min)
-uv run train.py
+# 3. Or just run the backtest without the AI loop
+python prepare.py --csv data/sample.csv --run-train
 ```
 
-If the above commands all work ok, your setup is working and you can go into autonomous research mode.
+## Running autonomously via GitHub Actions
 
-## Running the agent
+The workflow (`.github/workflows/autoresearch.yml`) triggers every 10 minutes:
 
-Simply spin up your Claude/Codex or whatever you want in this repo (and disable all permissions), then you can prompt something like:
+1. Add your `MINIMAX_API_KEY` as a repository secret in GitHub Settings.
+2. Push to the branch you want the agent to iterate on.
+3. The workflow runs `autoresearch_step.py`, which calls Minimax, tests the proposed change, and commits if improved.
 
-```
-Hi have a look at program.md and let's kick off a new experiment! let's do the setup first.
-```
-
-The `program.md` file is essentially a super lightweight "skill".
+With 10-minute cycles, that's ~6 experiments/hour and ~48+ experiments overnight.
 
 ## Project structure
 
 ```
-prepare.py      — constants, data prep + runtime utilities (do not modify)
-train.py        — model, optimizer, training loop (agent modifies this)
-program.md      — agent instructions
-pyproject.toml  — dependencies
+prepare.py              — SMC feature engine + evaluation harness (do not modify)
+train.py                — strategy logic (agent modifies this)
+program.md              — agent instructions (human modifies this)
+autoresearch_step.py    — experiment orchestrator (do not modify)
+data/sample.csv         — BTC/USDT 15m OHLCV dataset (do not modify)
+data/merge.py           — utility to merge Binance daily CSVs
+results.tsv             — persistent experiment log (committed by agent)
+.github/workflows/      — GitHub Actions workflow (10-min cron)
+pyproject.toml          — dependencies (numpy, pandas, requests)
 ```
 
 ## Design choices
 
 - **Single file to modify.** The agent only touches `train.py`. This keeps the scope manageable and diffs reviewable.
-- **Fixed time budget.** Training always runs for exactly 5 minutes, regardless of your specific platform. This means you can expect approx 12 experiments/hour and approx 100 experiments while you sleep. There are two upsides of this design decision. First, this makes experiments directly comparable regardless of what the agent changes (model size, batch size, architecture, etc). Second, this means that autoresearch will find the most optimal model for your platform in that time budget. The downside is that your runs (and results) become not comparable to other people running on other compute platforms.
-- **Self-contained.** No external dependencies beyond PyTorch and a few small packages. No distributed training, no complex configs. One GPU, one file, one metric.
+- **Fixed dataset.** The strategy always runs against the same `data/sample.csv`. This makes experiments directly comparable regardless of what the agent changes.
+- **Git as state.** The commit history is the experiment log. Each "keep" commit advances `train.py`, each "discard" commit only updates `results.tsv`. You can `git log --oneline` to see the full research trajectory.
+- **Self-contained.** No GPU required, no heavy dependencies. One dataset, one file, one metric.
 
-## Platform support
+## Acknowledgements
 
-This code currently requires that you have a single NVIDIA GPU. In principle it is quite possible to support CPU, MPS and other platforms but this would also bloat the code. I'm not 100% sure that I want to take this on personally right now. People can reference (or have their agents reference) the full/parent nanochat repository that has wider platform support and shows the various solutions (e.g. a Flash Attention 3 kernels fallback implementation, generic device support, autodetection, etc.), feel free to create forks or discussions for other platforms and I'm happy to link to them here in the README in some new notable forks section or etc.
-
-Seeing as there seems to be a lot of interest in tinkering with autoresearch on much smaller compute platforms than an H100, a few extra words. If you're going to try running autoresearch on smaller computers (Macbooks etc.), I'd recommend one of the forks below. On top of this, here are some recommendations for how to tune the defaults for much smaller models for aspiring forks:
-
-1. To get half-decent results I'd use a dataset with a lot less entropy, e.g. this [TinyStories dataset](https://huggingface.co/datasets/karpathy/tinystories-gpt4-clean). These are GPT-4 generated short stories. Because the data is a lot narrower in scope, you will see reasonable results with a lot smaller models (if you try to sample from them after training).
-2. You might experiment with decreasing `vocab_size`, e.g. from 8192 down to 4096, 2048, 1024, or even - simply byte-level tokenizer with 256 possibly bytes after utf-8 encoding.
-3. In `prepare.py`, you'll want to lower `MAX_SEQ_LEN` a lot, depending on the computer even down to 256 etc. As you lower `MAX_SEQ_LEN`, you may want to experiment with increasing `DEVICE_BATCH_SIZE` in `train.py` slightly to compensate. The number of tokens per fwd/bwd pass is the product of these two.
-4. Also in `prepare.py`, you'll want to decrease `EVAL_TOKENS` so that your validation loss is evaluated on a lot less data.
-5. In `train.py`, the primary single knob that controls model complexity is the `DEPTH` (default 8, here). A lot of variables are just functions of this, so e.g. lower it down to e.g. 4.
-6. You'll want to most likely use `WINDOW_PATTERN` of just "L", because "SSSL" uses alternating banded attention pattern that may be very inefficient for you. Try it.
-7. You'll want to lower `TOTAL_BATCH_SIZE` a lot, but keep it powers of 2, e.g. down to `2**14` (~16K) or so even, hard to tell.
-
-I think these would be the reasonable hyperparameters to play with. Ask your favorite coding agent for help and copy paste them this guide, as well as the full source code.
-
-## Notable forks
-
-- [miolini/autoresearch-macos](https://github.com/miolini/autoresearch-macos) (MacOS)
-- [trevin-creator/autoresearch-mlx](https://github.com/trevin-creator/autoresearch-mlx) (MacOS)
-- [jsegov/autoresearch-win-rtx](https://github.com/jsegov/autoresearch-win-rtx) (Windows)
-- [andyluo7/autoresearch](https://github.com/andyluo7/autoresearch) (AMD)
+- [@karpathy/autoresearch](https://github.com/karpathy/autoresearch) — the original autonomous LLM pretraining research loop that inspired this project.
+- [LuxAlgo Smart Money Concepts](https://www.tradingview.com/script/cR52pOF2/) — the TradingView indicator whose logic `prepare.py` translates into Python.
 
 ## License
 
