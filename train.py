@@ -43,7 +43,7 @@ Strategy summary
 ----------------
 Long:
 - latest valid bullish internal OB exists
-- candle overlaps bullish OB
+- close is inside bullish OB (not merely a wick overlap)
 - RSI < 45 (oversold, tuned)
 - nearest relevant upside liquidity target is a weak high
 - optional bullish FVG can strengthen the thesis but is not required
@@ -53,7 +53,7 @@ Long:
 
 Short:
 - latest valid bearish internal OB exists
-- candle overlaps bearish OB
+- close is inside bearish OB (not merely a wick overlap)
 - RSI > 55 (overbought, tuned)
 - nearest relevant downside liquidity target is a weak low
 - optional bearish FVG can strengthen the thesis but is not required
@@ -150,10 +150,6 @@ def compute_rsi(series: pd.Series, length: int = 14) -> pd.Series:
 # Core strategy predicates
 # -----------------------------
 
-def candle_overlaps_range(candle_high: float, candle_low: float, zone_high: float, zone_low: float) -> bool:
-    return candle_high >= zone_low and candle_low <= zone_high
-
-
 def valid_long_signal(row: pd.Series, config: StrategyConfig) -> bool:
     if not config.allow_longs:
         return False
@@ -164,13 +160,8 @@ def valid_long_signal(row: pd.Series, config: StrategyConfig) -> bool:
 
     ob_high = float(row["bullish_internal_ob_high"])
     ob_low = float(row["bullish_internal_ob_low"])
-    overlaps = candle_overlaps_range(
-        candle_high=float(row["high"]),
-        candle_low=float(row["low"]),
-        zone_high=ob_high,
-        zone_low=ob_low,
-    )
-    if not overlaps:
+    close = float(row["close"])
+    if not (ob_low <= close <= ob_high):
         return False
 
     if float(row["rsi"]) >= config.long_rsi_threshold:
@@ -196,13 +187,8 @@ def valid_short_signal(row: pd.Series, config: StrategyConfig) -> bool:
 
     ob_high = float(row["bearish_internal_ob_high"])
     ob_low = float(row["bearish_internal_ob_low"])
-    overlaps = candle_overlaps_range(
-        candle_high=float(row["high"]),
-        candle_low=float(row["low"]),
-        zone_high=ob_high,
-        zone_low=ob_low,
-    )
-    if not overlaps:
+    close = float(row["close"])
+    if not (ob_low <= close <= ob_high):
         return False
 
     if float(row["rsi"]) <= config.short_rsi_threshold:
