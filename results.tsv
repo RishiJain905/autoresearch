@@ -81,3 +81,6 @@ eedd9ed	0.033252	0.425532	47	discard	Looking at the history, they've extensively
 317755a	-0.257003	0.375000	8	discard	breakeven arm 0.75pct after favorable move
 d2ff30a	0.000000	0.000000	0	discard	require discount long premium short zones
 67ce0be	0.197990	1.000000	12	discard	min OB stop distance 0.6pct vs 0.5pct baseline
+e15698f	-0.292048	0.500000	2	discard	require internal_trend_bias align long 1 short -1
+
+
