@@ -44,20 +44,20 @@ Strategy summary
 Long:
 - latest valid bullish internal OB exists
 - candle overlaps bullish OB
-- RSI < 40 (oversold, not neutral)
+- RSI < 45 (oversold, tuned)
 - nearest relevant upside liquidity target is a weak high
 - optional bullish FVG can strengthen the thesis but is not required
-- take profit at +~1.54% (`take_profit_pct`, tuned on sample data)
+- take profit at +~1.554% long (`take_profit_pct`; shorts use `short_take_profit_pct` ~1.9%)
 - stop if close breaks below bullish OB low, BUT only if OB is ≥0.5% below entry
   (prevents getting stopped out by tight OBs that don't offer real risk management)
 
 Short:
 - latest valid bearish internal OB exists
 - candle overlaps bearish OB
-- RSI > 60 (overbought, not neutral)
+- RSI > 55 (overbought, tuned)
 - nearest relevant downside liquidity target is a weak low
 - optional bearish FVG can strengthen the thesis but is not required
-- take profit at -~1.54% (`take_profit_pct`, tuned on sample data)
+- take profit at -`short_take_profit_pct` (~1.9% on sample data)
 - stop if close breaks above bearish OB high, BUT only if OB is ≥0.5% above entry
 """
 
