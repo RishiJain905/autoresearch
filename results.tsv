@@ -43,3 +43,4 @@ a46bd37	0.203704	0.928571	14	keep	long TP 1.554pct short TP 1.90pct
 ab5012d	0.185504	0.923077	13	discard	short TP 1.95pct worse than 1.90pct
 6163a6e	0.188344	0.923077	13	discard	long TP 1.556pct worse than 1.554pct
 2c6d455	0.203104	0.928571	14	discard	short TP 1.88pct below best 1.90pct
+4b340d7	0.203604	0.928571	14	discard	long TP 1.553pct below 1.554pct best
