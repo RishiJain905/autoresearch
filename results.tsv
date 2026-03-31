@@ -163,3 +163,4 @@ ee12d12	0.218981118	0.928571	14	keep	short TP 0.0240481 vs 0.024048
 4350b35	0.045904	0.722222	18	discard	Add partial take profit to let winners run further
 e42173b	0.217897	0.866667	15	discard	Lower short RSI threshold to 52 for more short entries
 f99b4f1	0.149911	1.000000	8	discard	Relax long RSI threshold to 40, tighten short to 58
+735b0f3	-0.239723	0.875000	8	discard	Add ATR-based trailing stop for open positions
