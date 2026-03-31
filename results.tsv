@@ -73,3 +73,4 @@ b6a9ca2	0.204845	0.928571	14	discard	RSI length 13 same PnL as 14
 badfb10	0.189296	0.923077	13	discard	long TP 1.55534pct cliff
 171deb7	0.189295	0.923077	13	discard	long TP 1.55533pct cliff
 8499580	0.000000	0.000000	0	discard	Add zone filtering to entry conditions
+eedd9ed	0.033252	0.425532	47	discard	Looking at the history, they've extensively tuned TP percentages and RSI
