@@ -7,3 +7,4 @@ f2eed31	0.000000	0.000000	0	discard	require discount/premium zone for entries
 b910ad0	0.054202	0.875000	8	discard	TP 1.65pct (between baseline and 2pct)
 eb028f8	0.000000	0.000000	0	discard	require FVG confirmation
 eb028f8	0.186304	0.928571	14	keep	looser RSI thresholds 45/55
+c8681c3	0.176725	0.866667	15	discard	RSI 48/52 (too loose vs 45/55)
