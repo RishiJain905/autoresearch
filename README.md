@@ -7,84 +7,149 @@ The idea: give an AI agent a trading strategy backtester and let it experiment a
 ## Pipeline
 
 ```mermaid
-flowchart TB
-    subgraph trigger["GitHub Actions (every 10 min)"]
-        cron["Cron trigger<br/>*/10 * * * *"]
-    end
-
-    subgraph step["autoresearch_step.py"]
-        direction TB
-        run1["Step 1: Run current train.py<br/>on data/sample.csv"]
-        measure1["Measure current_metrics<br/>(total_pnl_pct, win_rate, trade_count)"]
-        api["Step 2: Call Minimax API<br/>Send: program.md + prepare.py<br/>+ train.py + git history<br/>+ current_metrics"]
-        extract["Extract proposed train.py<br/>from LLM response"]
-        run2["Step 3: Run proposed train.py<br/>on data/sample.csv"]
-        measure2["Measure new_metrics"]
-        compare{"Step 4: Improved?<br/>new > current AND<br/>trade_count >= 5"}
-        keep["git commit train.py + results.tsv<br/>git push"]
-        discard["Revert train.py<br/>Commit results.tsv only"]
-
-        run1 --> measure1 --> api --> extract --> run2 --> measure2 --> compare
-        compare -->|Yes| keep
-        compare -->|No| discard
-    end
-
-    subgraph data["Fixed inputs (never modified)"]
-        csv["data/sample.csv<br/>BTC/USDT 15m OHLCV"]
-        prepare["prepare.py<br/>LuxAlgo SMC engine"]
-        program["program.md<br/>Agent instructions"]
-    end
-
-    subgraph editable["Editable by agent"]
-        train["train.py<br/>Strategy logic"]
-        results["results.tsv<br/>Experiment history"]
+flowchart TD
+    subgraph trigger [" "]
+        direction LR
+        cron["GitHub Actions\n⏱ every 10 min"]
     end
 
     cron --> run1
-    csv --> run1
-    csv --> run2
-    prepare -.->|"builds strategy frame"| run1
-    prepare -.->|"builds strategy frame"| run2
-    program -.->|"system prompt"| api
-    train -->|"current version"| run1
-    extract -->|"overwrites"| train
-    keep --> results
-    discard --> results
+
+    subgraph step ["autoresearch_step.py"]
+        direction TB
+
+        run1["1. Run current train.py\non data/sample.csv"]
+
+        run1 --> measure1
+
+        measure1["Measure current_metrics\ntotal_pnl_pct · win_rate · trade_count"]
+
+        measure1 --> api
+
+        api["2. Call Minimax API\nSend: program.md + prepare.py\n+ train.py + git history\n+ current_metrics"]
+
+        api --> extract
+
+        extract["Extract proposed\ntrain.py from response"]
+
+        extract --> run2
+
+        run2["3. Run proposed train.py\non data/sample.csv"]
+
+        run2 --> measure2
+
+        measure2["Measure new_metrics"]
+
+        measure2 --> compare
+
+        compare{"4. Improved?\nnew > current\nAND trades >= 5"}
+
+        compare -->|Yes| keep
+        compare -->|No| discard
+
+        keep["Commit train.py\n+ results.tsv\nthen push"]
+        discard["Revert train.py\nCommit results.tsv\nonly"]
+    end
+
+    subgraph fixed ["Fixed inputs — never modified"]
+        direction LR
+        csv["data/sample.csv\nBTC/USDT 15m"]
+        prepare["prepare.py\nLuxAlgo SMC engine"]
+        program["program.md\nAgent instructions"]
+    end
+
+    subgraph editable ["Editable by agent"]
+        direction LR
+        train["train.py\nStrategy logic"]
+        results["results.tsv\nExperiment history"]
+    end
+
+    csv -.-> run1
+    csv -.-> run2
+    prepare -.-> run1
+    prepare -.-> run2
+    program -.-> api
+    train -.-> run1
+    extract -.-> train
+    keep -.-> results
+    discard -.-> results
 ```
 
 ```mermaid
-flowchart LR
-    subgraph prepare_py["prepare.py — Fixed Support Layer"]
+flowchart TD
+    subgraph prepare_py ["prepare.py — Fixed Support Layer"]
         direction TB
-        csv_in["OHLC CSV input"]
-        validate["Validate columns"]
-        rsi["Compute RSI"]
-        atr["Compute ATR"]
-        vol["Volatility parsing<br/>(high-volatility bar detection)"]
-        legs["Compute leg series<br/>(swing + internal + equal)"]
-        pivots["Detect pivots<br/>(swing highs/lows,<br/>internal highs/lows)"]
-        structure["Process structure<br/>(CHoCH / BoS detection)"]
-        ob["Order Block creation<br/>+ mitigation"]
-        zones["Premium / Equilibrium /<br/>Discount zones"]
-        fvg["FVG detection"]
-        weak["Weak High / Low<br/>classification"]
-        frame["Output: strategy frame<br/>(all features per bar)"]
 
-        csv_in --> validate --> rsi --> atr --> vol --> legs --> pivots --> structure --> ob --> zones --> fvg --> weak --> frame
+        csv_in["OHLC CSV\ninput"]
+
+        csv_in --> validate
+
+        validate["Validate columns\nClean types"]
+
+        validate --> indicators
+
+        indicators["Compute RSI\nCompute ATR"]
+
+        indicators --> vol
+
+        vol["Volatility parsing\nHigh-vol bar detection"]
+
+        vol --> legs
+
+        legs["Compute leg series\nSwing · Internal · Equal"]
+
+        legs --> pivots
+
+        pivots["Detect pivots\nSwing highs/lows\nInternal highs/lows"]
+
+        pivots --> structure
+
+        structure["Process structure\nCHoCH / BoS"]
+
+        structure --> ob
+
+        ob["Order Block\ncreation + mitigation"]
+
+        ob --> zones
+
+        zones["Premium · Equilibrium\nDiscount zones"]
+
+        zones --> fvg
+
+        fvg["FVG detection\nEqual H/L"]
+
+        fvg --> weak
+
+        weak["Weak High / Low\nclassification"]
+
+        weak --> frame
+
+        frame["Strategy frame\nAll features per bar"]
     end
 
-    subgraph train_py["train.py — Editable Strategy"]
+    subgraph train_py ["train.py — Editable Strategy"]
         direction TB
-        signals["Signal detection<br/>(long / short)"]
-        entry["Entry conditions:<br/>OB overlap + RSI +<br/>weak high/low"]
-        exit["Exit conditions:<br/>TP at +/-2% or<br/>OB boundary break"]
-        trades["Trade list +<br/>PnL calculation"]
-        metrics["Metrics:<br/>total_pnl_pct<br/>win_rate<br/>trade_count"]
 
-        signals --> entry --> exit --> trades --> metrics
+        signals["Signal detection\nLong / Short"]
+
+        signals --> entry
+
+        entry["Entry conditions\nOB overlap + RSI\n+ Weak High/Low"]
+
+        entry --> exit_cond
+
+        exit_cond["Exit conditions\nTP at +/- 2%\nor OB boundary break"]
+
+        exit_cond --> trades
+
+        trades["Trade list\nPnL calculation"]
+
+        trades --> metrics
+
+        metrics["total_pnl_pct\nwin_rate\ntrade_count"]
     end
 
-    frame -->|"prepared DataFrame"| signals
+    frame --> signals
 ```
 
 ## How it works
