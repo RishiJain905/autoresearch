@@ -138,6 +138,8 @@ b23785c	0.218981	0.928571	14	discard	min OB stop 0.0049 same PnL as 0.005
 91709c2	0.218981	0.928571	14	discard	short RSI 56 same metrics as 55
 ee12d12	0.194933	0.923077	13	discard	short TP 0.02404825 loses short vs 0.024048
 ee12d12	0.218981118	0.928571	14	keep	short TP 0.0240481 vs 0.024048
+9510d74	0.194933	0.923077	13	discard	short TP 0.0240482 loses short vs 0.0240481
+9510d74	0.194933	0.923077	13	discard	short TP 0.02404815 loses short vs 0.0240481
 
 
 
