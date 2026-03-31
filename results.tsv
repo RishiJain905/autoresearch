@@ -88,6 +88,7 @@ beb8791	0.173741	0.916667	12	discard	RSI thresholds 43 long 57 short
 27937e3	0.204844	0.928571	14	discard	long TP 0.0155529 slightly below 0.0155532
 b726f2b	0.019337	1.000000	1	discard	require equal_low long equal_high short on signal bar
 9ed67a9	0.189294	0.923077	13	discard	long close bottom 40pct bar short top 40pct
+87a921a	0.158188	0.909091	11	discard	min weak liquidity target 0.3pct from close
 
 
 
