@@ -39,3 +39,4 @@ d761650	0.195804	0.928571	14	keep	short TP 1.65pct long 1.55pct
 7a7a6e7	0.203304	0.928571	14	keep	short TP 1.90pct long 1.55pct
 feea7da	0.186304	0.923077	13	discard	short TP 2.00pct worse than 1.90pct
 f295856	0.203504	0.928571	14	keep	long TP 1.552pct short TP 1.90pct
+ab5012d	0.185504	0.923077	13	discard	short TP 1.95pct worse than 1.90pct
