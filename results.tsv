@@ -91,6 +91,7 @@ b726f2b	0.019337	1.000000	1	discard	require equal_low long equal_high short on s
 87a921a	0.158188	0.909091	11	discard	min weak liquidity target 0.3pct from close
 0597913	0.204844	0.928571	14	discard	short TP 1.9336pct below baseline 1.9337
 adefb89	0.204847	0.928571	14	discard	RSI 46/54 same PnL within float noise vs 45/55
+814c036	0.204847	0.928571	14	discard	use prepare.py rsi column when present same metrics
 
 
 
