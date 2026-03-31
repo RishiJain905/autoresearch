@@ -77,3 +77,4 @@ eedd9ed	0.033252	0.425532	47	discard	Looking at the history, they've extensively
 43e2396	0.135777	1.000000	8	discard	Tighten RSI thresholds to 40/58 to require more oversold/overbought cond
 0ef462b	0.181377	0.812500	16	discard	Reduce min OB stop distance from 0.5% to 0.3%
 42bda78	-0.307455	0.000000	1	discard	Enable FVG confirmation and add trailing stop
+489a598	0.068606	0.411765	51	discard	Add ATR-based trailing stop to protect profits
