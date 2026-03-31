@@ -72,7 +72,8 @@ class StrategyConfig:
     rsi_length: int = 14
     long_rsi_threshold: float = 45.0
     short_rsi_threshold: float = 55.0
-    take_profit_pct: float = 0.0155
+    take_profit_pct: float = 0.0155  # long TP; shorts use short_take_profit_pct when not None
+    short_take_profit_pct: Optional[float] = 0.0156
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
     allow_longs: bool = True
@@ -225,7 +226,12 @@ def long_take_profit(entry_price: float, config: StrategyConfig) -> float:
 
 
 def short_take_profit(entry_price: float, config: StrategyConfig) -> float:
-    return entry_price * (1.0 - config.take_profit_pct)
+    pct = (
+        config.short_take_profit_pct
+        if config.short_take_profit_pct is not None
+        else config.take_profit_pct
+    )
+    return entry_price * (1.0 - pct)
 
 
 def ob_stop_distance_pct(entry_price: float, ob_price: float, side: str) -> float:
