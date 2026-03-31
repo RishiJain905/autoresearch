@@ -1,74 +1,74 @@
 commit	total_pnl_pct	win_rate	trade_count	status	description
-d73f336	0.000000	0.000000	0	discard	<think>
-f554109	0.039216	0.204545	44	keep	Looking at the metrics, the strategy is losing money with a very low win rate (1
-cbd64d2	0.120000	1.000000	8	keep	Looking at the metrics: very low win rate (20.5%) with 44 trades. The strategy i
-fcf8162	0.058702	0.857143	7	discard	**Summary: Raise TP from 1.5% to 2.0% to capture larger moves**
-f2eed31	0.000000	0.000000	0	discard	require discount/premium zone for entries
-b910ad0	0.054202	0.875000	8	discard	TP 1.65pct (between baseline and 2pct)
-eb028f8	0.000000	0.000000	0	discard	require FVG confirmation
-eb028f8	0.186304	0.928571	14	keep	looser RSI thresholds 45/55
-c8681c3	0.176725	0.866667	15	discard	RSI 48/52 (too loose vs 45/55)
-5ad5e10	-0.262446	0.750000	4	discard	long-only (trade_count below 5)
-4d1ea71	0.186304	0.928571	14	discard	min OB stop 0.4pct (same PnL as 0.5pct)
-53be003	0.186304	0.928571	14	discard	RSI length 10 vs 14 (same PnL)
-17a307b	-0.038388	0.391304	23	discard	entry at open instead of close
-8f465cf	0.186304	0.928571	14	discard	RSI 46/54 same PnL as 45/55
-35d0f48	0.000000	0.000000	0	discard	zone filter discount|eq long premium|eq short
-ef1a5c5	-0.073513	0.378378	37	discard	max 64-bar time exit
-716548c	0.039937	0.285714	42	discard	always apply OB stop (min dist 0)
-7fc5dd3	0.171304	0.923077	13	discard	stricter RSI 44/56 vs 45/55
-e252b7c	0.180000	1.000000	12	discard	entry hl2 long hc2 short vs close
-a24159a	0.111304	0.888889	9	discard	RSI length 21 with 45/55
-bd3168c	0.186304	0.928571	14	discard	prefer long on dual signal (same PnL)
-cb9e5e1	0.187604	0.928571	14	keep	take profit 1.51pct
-284507e	0.188904	0.928571	14	keep	take profit 1.52pct
-2f80a12	0.190204	0.928571	14	keep	take profit 1.53pct
-d1be05e	0.191504	0.928571	14	keep	take profit 1.54pct
-ab1ac5e	0.192804	0.928571	14	keep	take profit 1.55pct
-34c40d2	0.178504	0.923077	13	discard	TP 1.56pct worse than 1.55pct
-e37a36f	-0.260946	0.750000	4	discard	require bearish FVG for shorts only
-062fc1d	0.193104	0.928571	14	keep	asymmetric short TP 1.56pct long 1.55pct
-f39f543	0.193404	0.928571	14	keep	short TP 1.57pct long 1.55pct
-2d7c187	0.193704	0.928571	14	keep	short TP 1.58pct long 1.55pct
-b1a0638	0.194004	0.928571	14	keep	short TP 1.59pct long 1.55pct
-68c344a	0.194304	0.928571	14	keep	short TP 1.60pct long 1.55pct
-8b4c60a	0.194604	0.928571	14	keep	short TP 1.61pct long 1.55pct
-d761650	0.195804	0.928571	14	keep	short TP 1.65pct long 1.55pct
-65ebdce	0.197304	0.928571	14	keep	short TP 1.70pct long 1.55pct
-3de6a9b	0.200304	0.928571	14	keep	short TP 1.80pct long 1.55pct
-7a7a6e7	0.203304	0.928571	14	keep	short TP 1.90pct long 1.55pct
-feea7da	0.186304	0.923077	13	discard	short TP 2.00pct worse than 1.90pct
-f295856	0.203504	0.928571	14	keep	long TP 1.552pct short TP 1.90pct
-a46bd37	0.203704	0.928571	14	keep	long TP 1.554pct short TP 1.90pct
-2933093	0.204304	0.928571	14	keep	short TP 1.92pct long 1.554pct
-46cd1dd	0.204604	0.928571	14	keep	short TP 1.93pct long 1.554pct
-ab5012d	0.185504	0.923077	13	discard	short TP 1.95pct worse than 1.90pct
-6163a6e	0.188344	0.923077	13	discard	long TP 1.556pct worse than 1.554pct
-2c6d455	0.203104	0.928571	14	discard	short TP 1.88pct below best 1.90pct
-4b340d7	0.203604	0.928571	14	discard	long TP 1.553pct below 1.554pct best
-4f941d1	0.185504	0.923077	13	discard	short TP 1.94pct cliff vs 1.93pct
-730fdb4	0.204454	0.928571	14	discard	short TP 1.925pct below 1.93pct
-d06298d	0.204664	0.928571	14	keep	short TP 1.932pct long 1.554pct
-115ee25	0.204694	0.928571	14	keep	short TP 1.933pct long 1.554pct
-14aea81	0.204704	0.928571	14	keep	long TP 1.5541pct short 1.933pct
-ca63e0e	0.204714	0.928571	14	keep	long TP 1.5542pct short 1.933pct
-f57c4b1	0.204724	0.928571	14	keep	long TP 1.5543pct short 1.933pct
-c198742	0.204734	0.928571	14	keep	long TP 1.5544pct short 1.933pct
-3ba4473	0.204744	0.928571	14	keep	long TP 1.5545pct short 1.933pct
-eede895	0.204774	0.928571	14	keep	long TP 1.5548pct short 1.933pct
-3650a7b	0.204814	0.928571	14	keep	long TP 1.5552pct short 1.933pct
-acf5942	0.204824	0.928571	14	keep	long TP 1.5553pct short 1.933pct
-f638cda	0.204827	0.928571	14	keep	short TP 1.9331pct long 1.5553pct
-dd109a9	0.204830	0.928571	14	keep	short TP 1.9332pct long 1.5553pct
-6bec825	0.204839	0.928571	14	keep	short TP 1.9335pct long 1.5553pct
-2062ec3	0.204845	0.928571	14	keep	short TP 1.9337pct long 1.5553pct
-badfb10	0.204846	0.928571	14	keep	long TP 1.55531pct short 1.9337pct
-171deb7	0.204847	0.928571	14	keep	long TP 1.55532pct short 1.9337pct
-c78908f	0.185384	0.923077	13	discard	short TP 1.934pct loses short trade
-f0bb310	0.189280	0.923077	13	discard	long TP 1.5554pct loses long trade
-6d4203e	0.185512	0.923077	13	discard	short TP 1.9339pct cliff
-fb67c04	0.185510	0.923077	13	discard	short TP 1.9338pct cliff
-d937c1a	0.204845	0.928571	14	discard	min OB stop 0.49pct same PnL as 0.5pct
-d923fc5	0.204845	0.928571	14	discard	RSI length 13 same PnL as 14
-73a78fd	0.189296	0.923077	13	discard	long TP 1.55534pct cliff
-98b2470	0.189295	0.923077	13	discard	long TP 1.55533pct cliff
+2f9b771	0.000000	0.000000	0	discard	<think>
+cbd64d2	0.039216	0.204545	44	keep	Looking at the metrics, the strategy is losing money with a very low win rate (1
+db1378d	0.120000	1.000000	8	keep	Looking at the metrics: very low win rate (20.5%) with 44 trades. The strategy i
+1cd1f3d	0.058702	0.857143	7	discard	**Summary: Raise TP from 1.5% to 2.0% to capture larger moves**
+b910ad0	0.000000	0.000000	0	discard	require discount/premium zone for entries
+f0e66c1	0.054202	0.875000	8	discard	TP 1.65pct (between baseline and 2pct)
+c8681c3	0.000000	0.000000	0	discard	require FVG confirmation
+c8681c3	0.186304	0.928571	14	keep	looser RSI thresholds 45/55
+5ad5e10	0.176725	0.866667	15	discard	RSI 48/52 (too loose vs 45/55)
+4d1ea71	-0.262446	0.750000	4	discard	long-only (trade_count below 5)
+53be003	0.186304	0.928571	14	discard	min OB stop 0.4pct (same PnL as 0.5pct)
+17a307b	0.186304	0.928571	14	discard	RSI length 10 vs 14 (same PnL)
+8f465cf	-0.038388	0.391304	23	discard	entry at open instead of close
+35d0f48	0.186304	0.928571	14	discard	RSI 46/54 same PnL as 45/55
+ef1a5c5	0.000000	0.000000	0	discard	zone filter discount|eq long premium|eq short
+716548c	-0.073513	0.378378	37	discard	max 64-bar time exit
+7fc5dd3	0.039937	0.285714	42	discard	always apply OB stop (min dist 0)
+e252b7c	0.171304	0.923077	13	discard	stricter RSI 44/56 vs 45/55
+a24159a	0.180000	1.000000	12	discard	entry hl2 long hc2 short vs close
+bd3168c	0.111304	0.888889	9	discard	RSI length 21 with 45/55
+cb9e5e1	0.186304	0.928571	14	discard	prefer long on dual signal (same PnL)
+284507e	0.187604	0.928571	14	keep	take profit 1.51pct
+2f80a12	0.188904	0.928571	14	keep	take profit 1.52pct
+d1be05e	0.190204	0.928571	14	keep	take profit 1.53pct
+5bf43c2	0.191504	0.928571	14	keep	take profit 1.54pct
+34c40d2	0.192804	0.928571	14	keep	take profit 1.55pct
+e37a36f	0.178504	0.923077	13	discard	TP 1.56pct worse than 1.55pct
+062fc1d	-0.260946	0.750000	4	discard	require bearish FVG for shorts only
+f39f543	0.193104	0.928571	14	keep	asymmetric short TP 1.56pct long 1.55pct
+2d7c187	0.193404	0.928571	14	keep	short TP 1.57pct long 1.55pct
+b1a0638	0.193704	0.928571	14	keep	short TP 1.58pct long 1.55pct
+68c344a	0.194004	0.928571	14	keep	short TP 1.59pct long 1.55pct
+8b4c60a	0.194304	0.928571	14	keep	short TP 1.60pct long 1.55pct
+d761650	0.194604	0.928571	14	keep	short TP 1.61pct long 1.55pct
+65ebdce	0.195804	0.928571	14	keep	short TP 1.65pct long 1.55pct
+3de6a9b	0.197304	0.928571	14	keep	short TP 1.70pct long 1.55pct
+7a7a6e7	0.200304	0.928571	14	keep	short TP 1.80pct long 1.55pct
+feea7da	0.203304	0.928571	14	keep	short TP 1.90pct long 1.55pct
+f295856	0.186304	0.923077	13	discard	short TP 2.00pct worse than 1.90pct
+ab5012d	0.203504	0.928571	14	keep	long TP 1.552pct short TP 1.90pct
+6163a6e	0.203704	0.928571	14	keep	long TP 1.554pct short TP 1.90pct
+46cd1dd	0.204304	0.928571	14	keep	short TP 1.92pct long 1.554pct
+4f941d1	0.204604	0.928571	14	keep	short TP 1.93pct long 1.554pct
+a46bd37	0.185504	0.923077	13	discard	short TP 1.95pct worse than 1.90pct
+2c6d455	0.188344	0.923077	13	discard	long TP 1.556pct worse than 1.554pct
+4b340d7	0.203104	0.928571	14	discard	short TP 1.88pct below best 1.90pct
+f943928	0.203604	0.928571	14	discard	long TP 1.553pct below 1.554pct best
+1ec5fcc	0.185504	0.923077	13	discard	short TP 1.94pct cliff vs 1.93pct
+d06298d	0.204454	0.928571	14	discard	short TP 1.925pct below 1.93pct
+2c33bf5	0.204664	0.928571	14	keep	short TP 1.932pct long 1.554pct
+c78908f	0.204694	0.928571	14	keep	short TP 1.933pct long 1.554pct
+ca63e0e	0.204704	0.928571	14	keep	long TP 1.5541pct short 1.933pct
+f57c4b1	0.204714	0.928571	14	keep	long TP 1.5542pct short 1.933pct
+c198742	0.204724	0.928571	14	keep	long TP 1.5543pct short 1.933pct
+3ba4473	0.204734	0.928571	14	keep	long TP 1.5544pct short 1.933pct
+eede895	0.204744	0.928571	14	keep	long TP 1.5545pct short 1.933pct
+3650a7b	0.204774	0.928571	14	keep	long TP 1.5548pct short 1.933pct
+f0bb310	0.204814	0.928571	14	keep	long TP 1.5552pct short 1.933pct
+f638cda	0.204824	0.928571	14	keep	long TP 1.5553pct short 1.933pct
+dd109a9	0.204827	0.928571	14	keep	short TP 1.9331pct long 1.5553pct
+6d4203e	0.204830	0.928571	14	keep	short TP 1.9332pct long 1.5553pct
+fb67c04	0.204839	0.928571	14	keep	short TP 1.9335pct long 1.5553pct
+d937c1a	0.204845	0.928571	14	keep	short TP 1.9337pct long 1.5553pct
+98b2470	0.204846	0.928571	14	keep	long TP 1.55531pct short 1.9337pct
+cbdc6f7	0.204847	0.928571	14	keep	long TP 1.55532pct short 1.9337pct
+14aea81	0.185384	0.923077	13	discard	short TP 1.934pct loses short trade
+acf5942	0.189280	0.923077	13	discard	long TP 1.5554pct loses long trade
+6bec825	0.185512	0.923077	13	discard	short TP 1.9339pct cliff
+2062ec3	0.185510	0.923077	13	discard	short TP 1.9338pct cliff
+d923fc5	0.204845	0.928571	14	discard	min OB stop 0.49pct same PnL as 0.5pct
+b6a9ca2	0.204845	0.928571	14	discard	RSI length 13 same PnL as 14
+badfb10	0.189296	0.923077	13	discard	long TP 1.55534pct cliff
+171deb7	0.189295	0.923077	13	discard	long TP 1.55533pct cliff

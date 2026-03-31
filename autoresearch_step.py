@@ -37,6 +37,8 @@ METRICS_PATH = "strategy_metrics.json"
 RESULTS_TSV  = "results.tsv"
 RUN_LOG      = "run.log"
 
+# Column "commit": orchestrator writes HEAD before the logging commit. For an auditable
+# hash of the commit that *contains* each row, use: git blame -w -l results.tsv
 RESULTS_HEADER = "commit\ttotal_pnl_pct\twin_rate\ttrade_count\tstatus\tdescription\n"
 
 # Minimum credible trade count — strategies below this are treated as overfitted.

@@ -71,7 +71,7 @@ The TSV has a header row and 6 columns:
 commit	total_pnl_pct	win_rate	trade_count	status	description
 ```
 
-1. git commit hash (short, 7 chars)
+1. Short git hash (7 chars) of the commit that **last modified this row** in `results.tsv` (same as `git blame` on that line — typically the `keep:` / `discard:` / `crash:` commit that appended it). This is **not** the parent commit before the experiment; use `git log` for full history.
 2. `total_pnl_pct` achieved (e.g. 0.151776) — use 0.000000 for crashes
 3. `win_rate` (e.g. 0.611111) — use 0.000000 for crashes
 4. `trade_count` (integer) — use 0 for crashes
