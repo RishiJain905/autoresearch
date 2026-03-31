@@ -4,3 +4,4 @@ f554109	0.039216	0.204545	44	keep	Looking at the metrics, the strategy is losing
 cbd64d2	0.120000	1.000000	8	keep	Looking at the metrics: very low win rate (20.5%) with 44 trades. The strategy i
 fcf8162	0.058702	0.857143	7	discard	**Summary: Raise TP from 1.5% to 2.0% to capture larger moves**
 f2eed31	0.000000	0.000000	0	discard	require discount/premium zone for entries
+b910ad0	0.054202	0.875000	8	discard	TP 1.65pct (between baseline and 2pct)
