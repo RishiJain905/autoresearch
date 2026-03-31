@@ -18,3 +18,4 @@ ef1a5c5	-0.073513	0.378378	37	discard	max 64-bar time exit
 716548c	0.039937	0.285714	42	discard	always apply OB stop (min dist 0)
 7fc5dd3	0.171304	0.923077	13	discard	stricter RSI 44/56 vs 45/55
 e252b7c	0.180000	1.000000	12	discard	entry hl2 long hc2 short vs close
+a24159a	0.111304	0.888889	9	discard	RSI length 21 with 45/55
