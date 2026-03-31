@@ -9,3 +9,4 @@ eb028f8	0.000000	0.000000	0	discard	require FVG confirmation
 eb028f8	0.186304	0.928571	14	keep	looser RSI thresholds 45/55
 c8681c3	0.176725	0.866667	15	discard	RSI 48/52 (too loose vs 45/55)
 5ad5e10	-0.262446	0.750000	4	discard	long-only (trade_count below 5)
+4d1ea71	0.186304	0.928571	14	discard	min OB stop 0.4pct (same PnL as 0.5pct)
