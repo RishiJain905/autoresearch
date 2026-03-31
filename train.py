@@ -43,17 +43,17 @@ Strategy summary
 ----------------
 Long:
 - latest valid bullish internal OB exists
-- close is inside bullish OB (not merely a wick overlap)
+- close lies inside the bullish OB (wick-only overlap is not enough)
 - RSI < 45 (oversold, tuned)
 - nearest relevant upside liquidity target is a weak high
 - optional bullish FVG can strengthen the thesis but is not required
-- take profit at +~1.5553% long (`take_profit_pct`; shorts use `short_take_profit_pct` ~1.9337%)
+- take profit at +~1.55533% long (`take_profit_pct`; shorts use `short_take_profit_pct` ~1.9337%)
 - stop if close breaks below bullish OB low, BUT only if OB is ≥0.5% below entry
   (prevents getting stopped out by tight OBs that don't offer real risk management)
 
 Short:
 - latest valid bearish internal OB exists
-- close is inside bearish OB (not merely a wick overlap)
+- close lies inside the bearish OB (wick-only overlap is not enough)
 - RSI > 55 (overbought, tuned)
 - nearest relevant downside liquidity target is a weak low
 - optional bearish FVG can strengthen the thesis but is not required
