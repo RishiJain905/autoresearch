@@ -190,12 +190,18 @@ def extract_python_block(text: str) -> str | None:
 
 
 def extract_description(text: str) -> str:
-    """Pull the first substantive sentence from the LLM's explanation for the TSV."""
+    """Extract the Summary: label if present, otherwise fall back to first substantive line."""
     text = strip_reasoning(text)
     for line in text.split("\n"):
         line = line.strip()
+        if line.lower().startswith("summary:"):
+            summary = line[len("summary:"):].strip()
+            return summary[:72].replace("\t", " ")
+    # Fallback: first non-empty, non-code, non-heading line
+    for line in text.split("\n"):
+        line = line.strip()
         if line and not line.startswith("```") and not line.startswith("#"):
-            return line[:80].replace("\t", " ")
+            return line[:72].replace("\t", " ")
     return "no description"
 
 
@@ -265,8 +271,9 @@ Propose ONE specific, targeted improvement to `train.py`.
 - Do NOT modify `prepare.py` — it is the fixed evaluation harness.
 
 Respond with:
-1. A brief explanation (2-4 sentences) of what you are changing and why.
-2. The complete updated `train.py` as a single ```python code block.
+1. A one-line summary in this exact format (max 60 chars after the label): `Summary: <what you changed>`
+2. A brief explanation (2-4 sentences) of what you are changing and why.
+3. The complete updated `train.py` as a single ```python code block.
 """
 
     print("Calling Minimax API...")
