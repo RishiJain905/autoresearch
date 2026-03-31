@@ -86,6 +86,7 @@ beb8791	0.173741	0.916667	12	discard	RSI thresholds 43 long 57 short
 8b33ac7	0.000000	0.000000	0	discard	long discount or eq short premium or eq zone filter
 225f685	0.204766	0.928571	14	discard	short TP 1.931pct below 1.9337 baseline
 27937e3	0.204844	0.928571	14	discard	long TP 0.0155529 slightly below 0.0155532
+b726f2b	0.019337	1.000000	1	discard	require equal_low long equal_high short on signal bar
 
 
 
