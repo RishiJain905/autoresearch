@@ -93,6 +93,7 @@ b726f2b	0.019337	1.000000	1	discard	require equal_low long equal_high short on s
 adefb89	0.204847	0.928571	14	discard	RSI 46/54 same PnL within float noise vs 45/55
 814c036	0.204847	0.928571	14	discard	use prepare.py rsi column when present same metrics
 28d2947	0.204847219	0.928571	14	keep	close inside OB not wick overlap remove candle_overlaps_range
+bc6ca5f	0.204847718	0.928571	14	keep	long take profit 0.01555325 vs 0.0155532
 
 
 
