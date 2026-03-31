@@ -44,20 +44,21 @@ Strategy summary
 Long:
 - latest valid bullish internal OB exists
 - candle overlaps bullish OB
-- RSI < 50 (relaxed from 40 to catch RSI cross)
+- RSI < 40 (oversold, not neutral)
 - nearest relevant upside liquidity target is a weak high
 - optional bullish FVG can strengthen the thesis but is not required
-- take profit at +2.5% (widened from 2%)
-- stop if close breaks below bullish OB low
+- take profit at +1.5% (tighter TP since winners tend to exceed this)
+- stop if close breaks below bullish OB low, BUT only if OB is ≥0.5% below entry
+  (prevents getting stopped out by tight OBs that don't offer real risk management)
 
 Short:
 - latest valid bearish internal OB exists
 - candle overlaps bearish OB
-- RSI > 50 (relaxed from 70 to catch RSI cross)
+- RSI > 60 (overbought, not neutral)
 - nearest relevant downside liquidity target is a weak low
 - optional bearish FVG can strengthen the thesis but is not required
-- take profit at -2.5% (widened from 2%)
-- stop if close breaks above bearish OB high
+- take profit at -1.5% (tighter TP since winners tend to exceed this)
+- stop if close breaks above bearish OB high, BUT only if OB is ≥0.5% above entry
 """
 
 from dataclasses import dataclass, asdict
@@ -69,13 +70,14 @@ import pandas as pd
 @dataclass
 class StrategyConfig:
     rsi_length: int = 14
-    long_rsi_threshold: float = 50.0
-    short_rsi_threshold: float = 50.0
-    take_profit_pct: float = 0.025
+    long_rsi_threshold: float = 40.0
+    short_rsi_threshold: float = 60.0
+    take_profit_pct: float = 0.015
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
     allow_longs: bool = True
     allow_shorts: bool = True
+    min_ob_stop_distance_pct: float = 0.005  # OB must be ≥0.5% away to apply stop
 
 
 @dataclass
@@ -222,10 +224,13 @@ def long_take_profit(entry_price: float, config: StrategyConfig) -> float:
     return entry_price * (1.0 + config.take_profit_pct)
 
 
-
 def short_take_profit(entry_price: float, config: StrategyConfig) -> float:
     return entry_price * (1.0 - config.take_profit_pct)
 
+
+def ob_stop_distance_pct(entry_price: float, ob_price: float, side: str) -> float:
+    """Return the percentage distance from entry to the OB level."""
+    return abs(entry_price - ob_price) / entry_price
 
 
 def should_exit_position(position: Position, row: pd.Series, config: StrategyConfig) -> Optional[tuple[float, str]]:
@@ -236,16 +241,20 @@ def should_exit_position(position: Position, row: pd.Series, config: StrategyCon
     if position.side == "long":
         tp = long_take_profit(position.entry_price, config)
         if high >= tp:
-            return tp, "take_profit_2p5pct"
-        if close < position.ob_low:
+            return tp, "take_profit_1p5pct"
+        # Only apply OB stop if it's far enough from entry
+        ob_dist_pct = ob_stop_distance_pct(position.entry_price, position.ob_low, "long")
+        if ob_dist_pct >= config.min_ob_stop_distance_pct and close < position.ob_low:
             return close, "close_below_bullish_ob_low"
         return None
 
     if position.side == "short":
         tp = short_take_profit(position.entry_price, config)
         if low <= tp:
-            return tp, "take_profit_2p5pct"
-        if close > position.ob_high:
+            return tp, "take_profit_1p5pct"
+        # Only apply OB stop if it's far enough from entry
+        ob_dist_pct = ob_stop_distance_pct(position.entry_price, position.ob_high, "short")
+        if ob_dist_pct >= config.min_ob_stop_distance_pct and close > position.ob_high:
             return close, "close_above_bearish_ob_high"
         return None
 
