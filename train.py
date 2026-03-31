@@ -72,7 +72,7 @@ class StrategyConfig:
     rsi_length: int = 14
     long_rsi_threshold: float = 45.0
     short_rsi_threshold: float = 55.0
-    take_profit_pct: float = 0.01554  # long TP; shorts use short_take_profit_pct when not None
+    take_profit_pct: float = 0.015541  # long TP; shorts use short_take_profit_pct when not None
     short_take_profit_pct: Optional[float] = 0.01933
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
