@@ -72,7 +72,7 @@ class StrategyConfig:
     rsi_length: int = 14
     long_rsi_threshold: float = 45.0
     short_rsi_threshold: float = 55.0
-    take_profit_pct: float = 0.015
+    take_profit_pct: float = 0.0151
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
     allow_longs: bool = True
