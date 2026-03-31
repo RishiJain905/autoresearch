@@ -44,19 +44,19 @@ Strategy summary
 Long:
 - latest valid bullish internal OB exists
 - candle overlaps bullish OB
-- RSI < 40
+- RSI < 50 (relaxed from 40 to catch RSI cross)
 - nearest relevant upside liquidity target is a weak high
 - optional bullish FVG can strengthen the thesis but is not required
-- take profit at +2%
+- take profit at +2.5% (widened from 2%)
 - stop if close breaks below bullish OB low
 
 Short:
 - latest valid bearish internal OB exists
 - candle overlaps bearish OB
-- RSI > 70
+- RSI > 50 (relaxed from 70 to catch RSI cross)
 - nearest relevant downside liquidity target is a weak low
 - optional bearish FVG can strengthen the thesis but is not required
-- take profit at -2%
+- take profit at -2.5% (widened from 2%)
 - stop if close breaks above bearish OB high
 """
 
@@ -69,9 +69,9 @@ import pandas as pd
 @dataclass
 class StrategyConfig:
     rsi_length: int = 14
-    long_rsi_threshold: float = 40.0
-    short_rsi_threshold: float = 70.0
-    take_profit_pct: float = 0.02
+    long_rsi_threshold: float = 50.0
+    short_rsi_threshold: float = 50.0
+    take_profit_pct: float = 0.025
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
     allow_longs: bool = True
@@ -236,7 +236,7 @@ def should_exit_position(position: Position, row: pd.Series, config: StrategyCon
     if position.side == "long":
         tp = long_take_profit(position.entry_price, config)
         if high >= tp:
-            return tp, "take_profit_2pct"
+            return tp, "take_profit_2p5pct"
         if close < position.ob_low:
             return close, "close_below_bullish_ob_low"
         return None
@@ -244,7 +244,7 @@ def should_exit_position(position: Position, row: pd.Series, config: StrategyCon
     if position.side == "short":
         tp = short_take_profit(position.entry_price, config)
         if low <= tp:
-            return tp, "take_profit_2pct"
+            return tp, "take_profit_2p5pct"
         if close > position.ob_high:
             return close, "close_above_bearish_ob_high"
         return None
