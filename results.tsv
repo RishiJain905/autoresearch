@@ -12,3 +12,4 @@ c8681c3	0.176725	0.866667	15	discard	RSI 48/52 (too loose vs 45/55)
 4d1ea71	0.186304	0.928571	14	discard	min OB stop 0.4pct (same PnL as 0.5pct)
 53be003	0.186304	0.928571	14	discard	RSI length 10 vs 14 (same PnL)
 17a307b	-0.038388	0.391304	23	discard	entry at open instead of close
+8f465cf	0.186304	0.928571	14	discard	RSI 46/54 same PnL as 45/55
