@@ -172,8 +172,14 @@ def call_minimax(system_prompt: str, user_message: str) -> str:
     return response.json()["choices"][0]["message"]["content"]
 
 
+def strip_reasoning(text: str) -> str:
+    """Remove <think>...</think> reasoning blocks emitted by reasoning models."""
+    return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
+
+
 def extract_python_block(text: str) -> str | None:
     """Extract the first ```python ... ``` code block from the LLM response."""
+    text = strip_reasoning(text)
     match = re.search(r"```python\s*\n(.*?)```", text, re.DOTALL)
     if match:
         return match.group(1)
@@ -185,6 +191,7 @@ def extract_python_block(text: str) -> str | None:
 
 def extract_description(text: str) -> str:
     """Pull the first substantive sentence from the LLM's explanation for the TSV."""
+    text = strip_reasoning(text)
     for line in text.split("\n"):
         line = line.strip()
         if line and not line.startswith("```") and not line.startswith("#"):
