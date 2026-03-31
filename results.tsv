@@ -74,3 +74,4 @@ badfb10	0.189296	0.923077	13	discard	long TP 1.55534pct cliff
 171deb7	0.189295	0.923077	13	discard	long TP 1.55533pct cliff
 8499580	0.000000	0.000000	0	discard	Add zone filtering to entry conditions
 eedd9ed	0.033252	0.425532	47	discard	Looking at the history, they've extensively tuned TP percentages and RSI
+43e2396	0.135777	1.000000	8	discard	Tighten RSI thresholds to 40/58 to require more oversold/overbought cond
