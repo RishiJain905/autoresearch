@@ -70,8 +70,8 @@ import pandas as pd
 @dataclass
 class StrategyConfig:
     rsi_length: int = 14
-    long_rsi_threshold: float = 40.0
-    short_rsi_threshold: float = 60.0
+    long_rsi_threshold: float = 45.0
+    short_rsi_threshold: float = 55.0
     take_profit_pct: float = 0.015
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
