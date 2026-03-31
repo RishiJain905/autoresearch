@@ -16,3 +16,4 @@ c8681c3	0.176725	0.866667	15	discard	RSI 48/52 (too loose vs 45/55)
 35d0f48	0.000000	0.000000	0	discard	zone filter discount|eq long premium|eq short
 ef1a5c5	-0.073513	0.378378	37	discard	max 64-bar time exit
 716548c	0.039937	0.285714	42	discard	always apply OB stop (min dist 0)
+7fc5dd3	0.171304	0.923077	13	discard	stricter RSI 44/56 vs 45/55
