@@ -82,7 +82,7 @@ class StrategyConfig:
     # Trailing stop params
     trailing_stop_enabled: bool = True
     trailing_trigger_pct: float = 0.015  # activate trailing stop once price moves 1.5% in profit
-    trailing_distance_pct: float = 0.008  # trail 0.8% below the highest/lowest price seen
+    trailing_distance_pct: float = 0.006  # trail 0.6% below the highest/lowest price seen
 
 
 @dataclass
