@@ -192,12 +192,13 @@ def valid_short_signal(row: pd.Series, config: StrategyConfig) -> bool:
         return False
 
     ob_high = float(row["bearish_internal_ob_high"])
-    ob_low = float(row["bullish_internal_ob_low"])
+    ob_low = float(row["bearish_internal_ob_low"])
     close = float(row["close"])
     if not (ob_low <= close <= ob_high):
         return False
 
-    if float(row["rsi"]) <= config.short_rsi_threshold:
+    # Short only valid when RSI is clearly overbought (> threshold, not just >=)
+    if float(row["rsi"]) < config.short_rsi_threshold:
         return False
 
     if not bool(row["nearest_weak_low_exists"]):

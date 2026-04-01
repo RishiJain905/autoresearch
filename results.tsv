@@ -169,3 +169,4 @@ f99b4f1	0.149911	1.000000	8	discard	Relax long RSI threshold to 40, tighten shor
 400a8b0	-0.307455	0.000000	1	discard	**Summary:** Widen TP to 2.5%/3% and enable FVG confirmation by default
 de198e5	0.227583	0.933333	15	keep	Widen trailing stop to let winners run
 b5a97e8	0.229550	0.933333	15	keep	Tighten trailing stop distance to capture more profit
+d9fa2df	0.268598	0.944444	18	keep	Fix inverted short RSI condition
