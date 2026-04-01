@@ -215,3 +215,4 @@ e5aac37	0.127017	0.818182	11	discard	Increase trailing trigger to 2.0% to let wi
 9cdceb0	0.300193	0.947368	19	discard	**Summary: Reduce short trailing distance to 0.12%**
 042c748	0.319774	0.947368	19	keep	Increase take profit targets to 2.4% long and 2.7% short
 65f3a73	-0.102695	0.900000	10	discard	**Summary:** Remove weak high/low liquidity filter to capture more trade
+8952275	0.111120	0.416667	36	discard	Use ATR-based adaptive stop loss for better risk control
