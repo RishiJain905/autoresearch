@@ -194,4 +194,5 @@ d9fa2df	0.268598	0.944444	18	keep	Fix inverted short RSI condition
 132a6cb	0.283867	0.947368	19	discard	short TP 0.0255 below best 0.025
 132a6cb	0.278570	0.947368	19	discard	long TP 0.016 below best 0.01555326
 132a6cb	0.270944	0.944444	18	discard	RSI 44/56 stricter worse
+56fd776	0.288465	0.947368	19	keep	asymmetric trailing stops long 0.5pct short 0.35pct
 95ab0a9	0.276785	1.000000	17	discard	disable OB stop 100% WR but fewer trades

@@ -90,7 +90,7 @@ class StrategyConfig:
         0.005  # trail 0.5% below the highest price seen for longs
     )
     short_trailing_distance_pct: float = (
-        0.0035  # trail 0.35% above the lowest price seen for shorts
+        0.003  # trail 0.3% above the lowest price seen for shorts
     )
 
 
