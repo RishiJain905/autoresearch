@@ -203,3 +203,4 @@ b0fcefd	0.294368	0.947368	19	keep	tighten short trailing to 0.2pct vs 0.25pct
 11e2303	0.285190	0.947368	19	discard	short trailing 0.1pct too tight worse
 95ab0a9	0.276785	1.000000	17	discard	disable OB stop 100% WR but fewer trades
 465ec67	0.000000	0.000000	0	discard	Add zone filter for trade alignment
+0b23e4a	0.292400	0.947368	19	discard	Widen short trailing distance to let winners run
