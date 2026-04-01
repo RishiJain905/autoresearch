@@ -207,3 +207,4 @@ b0fcefd	0.294368	0.947368	19	keep	tighten short trailing to 0.2pct vs 0.25pct
 8d76b78	0.295865	0.947368	19	discard	Raise long trailing trigger to 2% to let bigger winners run
 340132c	0.094006	0.800000	10	discard	Increase TPs and disable trailing stops to let full winners run
 97cc37c	0.223808	1.000000	13	discard	Tighten RSI thresholds to 40/60 for more directional entries
+0bd7782	0.258346	0.850000	20	discard	Lower min_ob_stop_distance_pct to 0.3% for tighter OB stops
