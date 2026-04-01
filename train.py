@@ -79,6 +79,10 @@ class StrategyConfig:
     allow_longs: bool = True
     allow_shorts: bool = True
     min_ob_stop_distance_pct: float = 0.005  # OB must be ≥0.5% away to apply stop
+    # Trailing stop params
+    trailing_stop_enabled: bool = True
+    trailing_trigger_pct: float = 0.010  # activate trailing stop once price moves 1.0% in profit
+    trailing_distance_pct: float = 0.006  # trail 0.6% below the highest/lowest price seen
 
 
 @dataclass
@@ -89,6 +93,8 @@ class Position:
     ob_high: float
     ob_low: float
     entry_reason: str
+    peak_price: float  # highest price for longs, lowest for shorts
+    trailing_activated: bool = False
 
 
 @dataclass
@@ -233,8 +239,22 @@ def should_exit_position(position: Position, row: pd.Series, config: StrategyCon
     if position.side == "long":
         tp = long_take_profit(position.entry_price, config)
         if high >= tp:
-            return tp, "take_profit_1p5pct"
-        # Only apply OB stop if it's far enough from entry
+            return tp, "take_profit"
+
+        # Update peak price for trailing stop
+        if high > position.peak_price:
+            position.peak_price = high
+
+        # Check trailing stop
+        if config.trailing_stop_enabled:
+            profit_from_entry = (position.peak_price - position.entry_price) / position.entry_price
+            if profit_from_entry >= config.trailing_trigger_pct:
+                position.trailing_activated = True
+                trailing_stop_price = position.peak_price * (1.0 - config.trailing_distance_pct)
+                if close <= trailing_stop_price:
+                    return trailing_stop_price, "trailing_stop"
+
+        # OB stop only if far enough from entry
         ob_dist_pct = ob_stop_distance_pct(position.entry_price, position.ob_low, "long")
         if ob_dist_pct >= config.min_ob_stop_distance_pct and close < position.ob_low:
             return close, "close_below_bullish_ob_low"
@@ -243,8 +263,22 @@ def should_exit_position(position: Position, row: pd.Series, config: StrategyCon
     if position.side == "short":
         tp = short_take_profit(position.entry_price, config)
         if low <= tp:
-            return tp, "take_profit_1p5pct"
-        # Only apply OB stop if it's far enough from entry
+            return tp, "take_profit"
+
+        # Update peak (lowest) price for trailing stop
+        if low < position.peak_price:
+            position.peak_price = low
+
+        # Check trailing stop
+        if config.trailing_stop_enabled:
+            profit_from_entry = (position.entry_price - position.peak_price) / position.entry_price
+            if profit_from_entry >= config.trailing_trigger_pct:
+                position.trailing_activated = True
+                trailing_stop_price = position.peak_price * (1.0 + config.trailing_distance_pct)
+                if close >= trailing_stop_price:
+                    return trailing_stop_price, "trailing_stop"
+
+        # OB stop only if far enough from entry
         ob_dist_pct = ob_stop_distance_pct(position.entry_price, position.ob_high, "short")
         if ob_dist_pct >= config.min_ob_stop_distance_pct and close > position.ob_high:
             return close, "close_above_bearish_ob_high"
@@ -316,6 +350,8 @@ def run_strategy(df: pd.DataFrame, config: Optional[StrategyConfig] = None) -> D
                     ob_high=float(row["bullish_internal_ob_high"]),
                     ob_low=float(row["bullish_internal_ob_low"]),
                     entry_reason="bullish_internal_ob_overlap_rsi_weak_high",
+                    peak_price=entry_price,
+                    trailing_activated=False,
                 )
             elif short_signal:
                 entry_price = float(row["close"])
@@ -326,6 +362,8 @@ def run_strategy(df: pd.DataFrame, config: Optional[StrategyConfig] = None) -> D
                     ob_high=float(row["bearish_internal_ob_high"]),
                     ob_low=float(row["bearish_internal_ob_low"]),
                     entry_reason="bearish_internal_ob_overlap_rsi_weak_low",
+                    peak_price=entry_price,
+                    trailing_activated=False,
                 )
 
         position_side.append(position.side if position is not None else None)

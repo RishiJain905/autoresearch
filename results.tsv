@@ -165,3 +165,4 @@ e42173b	0.217897	0.866667	15	discard	Lower short RSI threshold to 52 for more sh
 f99b4f1	0.149911	1.000000	8	discard	Relax long RSI threshold to 40, tighten short to 58
 735b0f3	-0.239723	0.875000	8	discard	Add ATR-based trailing stop for open positions
 58628a7	0.218981	0.928571	14	discard	**Summary:** Require candle close (not wick) to break OB stop
+02b3a01	0.221660	0.954545	22	keep	Add fixed-pct trailing stop to let winners run
