@@ -212,3 +212,4 @@ c61cb3f	0.218099	0.928571	14	discard	Tighten long RSI threshold to 42 for higher
 6df87f4	0.292400	0.947368	19	discard	Widen short trailing stop distance to 0.25%
 8822d85	0.311853	0.947368	19	keep	Increase long take profit to 2.2% to capture bigger winners
 e5aac37	0.127017	0.818182	11	discard	Increase trailing trigger to 2.0% to let winners run longer before locki
+9cdceb0	0.300193	0.947368	19	discard	**Summary: Reduce short trailing distance to 0.12%**
