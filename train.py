@@ -72,7 +72,9 @@ class StrategyConfig:
     rsi_length: int = 14
     long_rsi_threshold: float = 45.0
     short_rsi_threshold: float = 55.0
-    take_profit_pct: float = 0.01555326  # long TP; shorts use short_take_profit_pct when not None
+    take_profit_pct: float = (
+        0.01555326  # long TP; shorts use short_take_profit_pct when not None
+    )
     short_take_profit_pct: Optional[float] = 0.0240481
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
@@ -81,8 +83,12 @@ class StrategyConfig:
     min_ob_stop_distance_pct: float = 0.005  # OB must be ≥0.5% away to apply stop
     # Trailing stop params
     trailing_stop_enabled: bool = True
-    trailing_trigger_pct: float = 0.015  # activate trailing stop once price moves 1.5% in profit
-    trailing_distance_pct: float = 0.006  # trail 0.6% below the highest/lowest price seen
+    trailing_trigger_pct: float = (
+        0.015  # activate trailing stop once price moves 1.5% in profit
+    )
+    trailing_distance_pct: float = (
+        0.005  # trail 0.5% below the highest/lowest price seen
+    )
 
 
 @dataclass
@@ -139,6 +145,7 @@ def validate_input_frame(df: pd.DataFrame) -> None:
 # Indicator helpers
 # -----------------------------
 
+
 def compute_rsi(series: pd.Series, length: int = 14) -> pd.Series:
     delta = series.diff()
     gain = delta.clip(lower=0)
@@ -155,6 +162,7 @@ def compute_rsi(series: pd.Series, length: int = 14) -> pd.Series:
 # -----------------------------
 # Core strategy predicates
 # -----------------------------
+
 
 def valid_long_signal(row: pd.Series, config: StrategyConfig) -> bool:
     if not config.allow_longs:
@@ -180,7 +188,6 @@ def valid_long_signal(row: pd.Series, config: StrategyConfig) -> bool:
         return False
 
     return True
-
 
 
 def valid_short_signal(row: pd.Series, config: StrategyConfig) -> bool:
@@ -214,6 +221,7 @@ def valid_short_signal(row: pd.Series, config: StrategyConfig) -> bool:
 # Position management
 # -----------------------------
 
+
 def long_take_profit(entry_price: float, config: StrategyConfig) -> float:
     return entry_price * (1.0 + config.take_profit_pct)
 
@@ -232,7 +240,9 @@ def ob_stop_distance_pct(entry_price: float, ob_price: float, side: str) -> floa
     return abs(entry_price - ob_price) / entry_price
 
 
-def should_exit_position(position: Position, row: pd.Series, config: StrategyConfig) -> Optional[tuple[float, str]]:
+def should_exit_position(
+    position: Position, row: pd.Series, config: StrategyConfig
+) -> Optional[tuple[float, str]]:
     close = float(row["close"])
     high = float(row["high"])
     low = float(row["low"])
@@ -248,15 +258,21 @@ def should_exit_position(position: Position, row: pd.Series, config: StrategyCon
 
         # Check trailing stop
         if config.trailing_stop_enabled:
-            profit_from_entry = (position.peak_price - position.entry_price) / position.entry_price
+            profit_from_entry = (
+                position.peak_price - position.entry_price
+            ) / position.entry_price
             if profit_from_entry >= config.trailing_trigger_pct:
                 position.trailing_activated = True
-                trailing_stop_price = position.peak_price * (1.0 - config.trailing_distance_pct)
+                trailing_stop_price = position.peak_price * (
+                    1.0 - config.trailing_distance_pct
+                )
                 if close <= trailing_stop_price:
                     return trailing_stop_price, "trailing_stop"
 
         # OB stop only if far enough from entry
-        ob_dist_pct = ob_stop_distance_pct(position.entry_price, position.ob_low, "long")
+        ob_dist_pct = ob_stop_distance_pct(
+            position.entry_price, position.ob_low, "long"
+        )
         if ob_dist_pct >= config.min_ob_stop_distance_pct and close < position.ob_low:
             return close, "close_below_bullish_ob_low"
         return None
@@ -272,15 +288,21 @@ def should_exit_position(position: Position, row: pd.Series, config: StrategyCon
 
         # Check trailing stop
         if config.trailing_stop_enabled:
-            profit_from_entry = (position.entry_price - position.peak_price) / position.entry_price
+            profit_from_entry = (
+                position.entry_price - position.peak_price
+            ) / position.entry_price
             if profit_from_entry >= config.trailing_trigger_pct:
                 position.trailing_activated = True
-                trailing_stop_price = position.peak_price * (1.0 + config.trailing_distance_pct)
+                trailing_stop_price = position.peak_price * (
+                    1.0 + config.trailing_distance_pct
+                )
                 if close >= trailing_stop_price:
                     return trailing_stop_price, "trailing_stop"
 
         # OB stop only if far enough from entry
-        ob_dist_pct = ob_stop_distance_pct(position.entry_price, position.ob_high, "short")
+        ob_dist_pct = ob_stop_distance_pct(
+            position.entry_price, position.ob_high, "short"
+        )
         if ob_dist_pct >= config.min_ob_stop_distance_pct and close > position.ob_high:
             return close, "close_above_bearish_ob_high"
         return None
@@ -292,7 +314,10 @@ def should_exit_position(position: Position, row: pd.Series, config: StrategyCon
 # Backtest loop
 # -----------------------------
 
-def run_strategy(df: pd.DataFrame, config: Optional[StrategyConfig] = None) -> Dict[str, Any]:
+
+def run_strategy(
+    df: pd.DataFrame, config: Optional[StrategyConfig] = None
+) -> Dict[str, Any]:
     config = config or StrategyConfig()
     validate_input_frame(df)
 
@@ -411,6 +436,7 @@ def run_strategy(df: pd.DataFrame, config: Optional[StrategyConfig] = None) -> D
 # Evaluation helpers
 # -----------------------------
 
+
 def summarize_trades(trades_df: pd.DataFrame) -> Dict[str, Any]:
     if trades_df.empty:
         return {
@@ -441,6 +467,7 @@ def summarize_trades(trades_df: pd.DataFrame) -> Dict[str, Any]:
 # -----------------------------
 # Example CLI entrypoint
 # -----------------------------
+
 
 def main() -> None:
     """
