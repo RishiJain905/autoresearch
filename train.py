@@ -81,8 +81,8 @@ class StrategyConfig:
     min_ob_stop_distance_pct: float = 0.005  # OB must be ≥0.5% away to apply stop
     # Trailing stop params
     trailing_stop_enabled: bool = True
-    trailing_trigger_pct: float = 0.010  # activate trailing stop once price moves 1.0% in profit
-    trailing_distance_pct: float = 0.006  # trail 0.6% below the highest/lowest price seen
+    trailing_trigger_pct: float = 0.015  # activate trailing stop once price moves 1.5% in profit
+    trailing_distance_pct: float = 0.008  # trail 0.8% below the highest/lowest price seen
 
 
 @dataclass
@@ -192,7 +192,7 @@ def valid_short_signal(row: pd.Series, config: StrategyConfig) -> bool:
         return False
 
     ob_high = float(row["bearish_internal_ob_high"])
-    ob_low = float(row["bearish_internal_ob_low"])
+    ob_low = float(row["bullish_internal_ob_low"])
     close = float(row["close"])
     if not (ob_low <= close <= ob_high):
         return False
