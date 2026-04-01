@@ -170,4 +170,17 @@ f99b4f1	0.149911	1.000000	8	discard	Relax long RSI threshold to 40, tighten shor
 de198e5	0.227583	0.933333	15	keep	Widen trailing stop to let winners run
 b5a97e8	0.229550	0.933333	15	keep	Tighten trailing stop distance to capture more profit
 d9fa2df	0.268598	0.944444	18	keep	Fix inverted short RSI condition
+0000001	0.225177	0.944444	18	discard	trailing trigger 1.2pct distance 0.5pct worse than baseline
+0000002	0.218981	0.928571	14	discard	disable trailing stop worse than baseline
+0000003	0.271546	0.944444	18	discard	trailing trigger 1.4pct distance 0.5pct same as baseline
 3492b3e	0.271546	0.944444	18	keep	tighten trailing stop distance 0.5pct vs 0.6pct
+95ab0a9	0.283642	0.947368	19	keep	trailing trigger 1.3pct distance 0.4pct vs 1.5pct/0.5pct
+95ab0a9	0.229251	0.944444	18	discard	trailing trigger 1.2pct distance 0.35pct worse
+95ab0a9	0.281998	0.947368	19	discard	short TP 0.0235 below best 0.0240481
+95ab0a9	0.202410	0.928571	14	discard	tighter RSI 42/58 fewer trades worse
+95ab0a9	0.276785	1.000000	17	discard	disable OB stop 100% WR but 17 trades below 19
+95ab0a9	0.000000	0.000000	0	discard	zone filter long discount|eq short premium|eq zero trades
+95ab0a9	-0.250226	0.800000	5	discard	require bearish FVG for shorts always worse
+95ab0a9	-0.192001	0.888889	9	discard	remove weak high filter for longs worse
+95ab0a9	0.281674	0.947368	19	discard	trailing distance 0.0045 below best 0.004
+95ab0a9	0.187312	1.000000	12	discard	internal trend bias filter too restrictive
