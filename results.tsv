@@ -221,3 +221,4 @@ c707380	0.322499	0.947368	19	keep	Increase short TP to 3.1% to let short winners
 310bbaf	0.310294	0.947368	19	discard	Widen long trailing distance to let winners run longer
 900cba7	0.254918	1.000000	13	discard	Widen RSI thresholds to 40/60 to capture more directional trades
 988b542	0.137749	0.818182	11	discard	Widen trailing stop parameters to let winners run
+79bfbe4	0.304191	0.947368	19	discard	Increase long trailing stop distance to let winners run longer
