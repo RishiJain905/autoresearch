@@ -251,3 +251,4 @@ b26b090	0.229493	0.923077	13	discard	disable trailing stop for shorts worse
 7e2ad12	0.309932	0.947368	19	discard	ATR 0.2x trailing still too wide
 813932e	0.326499	0.947368	19	discard	SMA-based RSI same metrics
 267db05	0.326499	0.947368	19	discard	EMA crossover same 19 trades
+5560df8	0.326499	0.947368	19	discard	disable OB stop same metrics
