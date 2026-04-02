@@ -170,53 +170,24 @@ def compute_rsi(series: pd.Series, length: int = 14) -> pd.Series:
 def valid_long_signal(row: pd.Series, config: StrategyConfig) -> bool:
     if not config.allow_longs:
         return False
-
-    bullish_ob_active = bool(row["bullish_internal_ob_active"])
-    if not bullish_ob_active:
+    if "macd_hist" not in row.index or pd.isna(row.get("macd_hist")):
         return False
-
-    ob_high = float(row["bullish_internal_ob_high"])
-    ob_low = float(row["bullish_internal_ob_low"])
-    close = float(row["close"])
-    if not (ob_low <= close <= ob_high):
+    if float(row["macd_hist"]) <= 0:
         return False
-
     if float(row["rsi"]) >= config.long_rsi_threshold:
         return False
-
-    if not bool(row["nearest_weak_high_exists"]):
-        return False
-
-    if config.require_fvg_confirmation and not bool(row["bullish_fvg_nearby"]):
-        return False
-
     return True
 
 
 def valid_short_signal(row: pd.Series, config: StrategyConfig) -> bool:
     if not config.allow_shorts:
         return False
-
-    bearish_ob_active = bool(row["bearish_internal_ob_active"])
-    if not bearish_ob_active:
+    if "macd_hist" not in row.index or pd.isna(row.get("macd_hist")):
         return False
-
-    ob_high = float(row["bearish_internal_ob_high"])
-    ob_low = float(row["bearish_internal_ob_low"])
-    close = float(row["close"])
-    if not (ob_low <= close <= ob_high):
+    if float(row["macd_hist"]) >= 0:
         return False
-
-    # Short only valid when RSI is clearly overbought (> threshold, not just >=)
     if float(row["rsi"]) < config.short_rsi_threshold:
         return False
-
-    if not bool(row["nearest_weak_low_exists"]):
-        return False
-
-    if config.require_fvg_confirmation and not bool(row["bearish_fvg_nearby"]):
-        return False
-
     return True
 
 
@@ -326,6 +297,12 @@ def run_strategy(
 
     working = df.copy()
     working["rsi"] = compute_rsi(working["close"], length=config.rsi_length)
+    # MACD histogram
+    ema12 = working["close"].ewm(span=12, adjust=False).mean()
+    ema26 = working["close"].ewm(span=26, adjust=False).mean()
+    macd = ema12 - ema26
+    signal = macd.ewm(span=9, adjust=False).mean()
+    working["macd_hist"] = macd - signal
 
     position: Optional[Position] = None
     trades: List[Trade] = []
@@ -376,9 +353,9 @@ def run_strategy(
                     side="long",
                     entry_index=int(idx),
                     entry_price=entry_price,
-                    ob_high=float(row["bullish_internal_ob_high"]),
-                    ob_low=float(row["bullish_internal_ob_low"]),
-                    entry_reason="bullish_internal_ob_overlap_rsi_weak_high",
+                    ob_high=entry_price * 1.01,
+                    ob_low=entry_price * 0.99,
+                    entry_reason="macd_hist_rsi",
                     peak_price=entry_price,
                     trailing_activated=False,
                 )
@@ -388,9 +365,9 @@ def run_strategy(
                     side="short",
                     entry_index=int(idx),
                     entry_price=entry_price,
-                    ob_high=float(row["bearish_internal_ob_high"]),
-                    ob_low=float(row["bearish_internal_ob_low"]),
-                    entry_reason="bearish_internal_ob_overlap_rsi_weak_low",
+                    ob_high=entry_price * 1.01,
+                    ob_low=entry_price * 0.99,
+                    entry_reason="macd_hist_rsi",
                     peak_price=entry_price,
                     trailing_activated=False,
                 )
