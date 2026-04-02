@@ -218,3 +218,4 @@ e5aac37	0.127017	0.818182	11	discard	Increase trailing trigger to 2.0% to let wi
 8952275	0.111120	0.416667	36	discard	Use ATR-based adaptive stop loss for better risk control
 c707380	0.322499	0.947368	19	keep	Increase short TP to 3.1% to let short winners run longer
 3029043	0.321648	0.947368	19	discard	Tighten short RSI threshold from 55 to 53
+310bbaf	0.310294	0.947368	19	discard	Widen long trailing distance to let winners run longer
