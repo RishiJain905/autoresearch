@@ -253,3 +253,4 @@ b26b090	0.229493	0.923077	13	discard	disable trailing stop for shorts worse
 267db05	0.326499	0.947368	19	discard	EMA crossover same 19 trades
 5560df8	0.326499	0.947368	19	discard	disable OB stop same metrics
 f7de3ca	0.342699	0.530864	162	keep	MACD histogram RSI signal no OB
+64d502a	0.235137	0.543689	103	discard	MACD RSI 40/60 stricter worse
