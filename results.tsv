@@ -234,3 +234,4 @@ e38baaa	0.326499	0.947368	19	discard	SMA 20 trend filter same metrics
 de796f8	0.326499	0.947368	19	discard	remove weak liquidity filter same metrics
 3765387	0.326499	0.947368	19	discard	swing trend regime filter same metrics
 7f303a6	0.326499	0.947368	19	discard	min profit floor same metrics
+6851fa0	0.326499	0.947368	19	discard	enter at OB boundary same metrics
