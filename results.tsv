@@ -239,3 +239,6 @@ de796f8	0.326499	0.947368	19	discard	remove weak liquidity filter same metrics
 6f57bc7	0.326499	0.947368	19	discard	RSI 43/57 stricter same metrics
 ed85eda	-0.281216	0.500000	2	discard	momentum filter close higher/lower than prev
 ed7510d	0.326499	0.947368	19	discard	mean reversion filter buy dip sell rip same
+4b4bb2f	0.098825	0.625000	32	discard	fixed 2pct stop loss no trailing too many stops
+4b4bb2f	0.326499	0.947368	19	discard	pure RSI mean reversion same 19 trades
+4b4bb2f	0.326499	0.947368	19	discard	RSI length 3 same metrics
