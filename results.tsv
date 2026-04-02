@@ -224,3 +224,4 @@ c707380	0.322499	0.947368	19	keep	Increase short TP to 3.1% to let short winners
 79bfbe4	0.304191	0.947368	19	discard	Increase long trailing stop distance to let winners run longer
 251a60e	0.326499	0.947368	19	keep	Increase short TP to 3.5% to capture more from short winners
 5a0f700	0.082768	0.594595	37	discard	time exit at 50 bars freed capital but too noisy
+edb6367	0.322299	0.947368	19	discard	long TP 2.8pct slightly worse than 2.4pct
