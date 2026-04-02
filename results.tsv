@@ -245,3 +245,4 @@ ed7510d	0.326499	0.947368	19	discard	mean reversion filter buy dip sell rip same
 ebdd53b	0.326499	0.947368	19	discard	RSI momentum reversed same 19 trades
 62096df	0.326499	0.947368	19	discard	progressive trailing stop same metrics
 62096df	0.326499	0.947368	19	discard	reversal bar pattern filter same metrics
+a29bb35	0.217646	0.866667	15	discard	disable trailing stop for longs worse
