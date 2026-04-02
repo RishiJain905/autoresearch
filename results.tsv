@@ -242,3 +242,4 @@ ed7510d	0.326499	0.947368	19	discard	mean reversion filter buy dip sell rip same
 4b4bb2f	0.098825	0.625000	32	discard	fixed 2pct stop loss no trailing too many stops
 4b4bb2f	0.326499	0.947368	19	discard	pure RSI mean reversion same 19 trades
 4b4bb2f	0.326499	0.947368	19	discard	RSI length 3 same metrics
+ebdd53b	0.326499	0.947368	19	discard	RSI momentum reversed same 19 trades
