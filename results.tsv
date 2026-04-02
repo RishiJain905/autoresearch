@@ -256,3 +256,5 @@ f7de3ca	0.342699	0.530864	162	keep	MACD histogram RSI signal no OB
 64d502a	0.235137	0.543689	103	discard	MACD RSI 40/60 stricter worse
 f2a2bd4	0.342699	0.530864	162	discard	fast MACD 8/21/5 same metrics
 530966f	-0.193812	0.750000	4	discard	MACD+OB combined too restrictive
+3e8a2e6	-0.054585	0.300000	10	discard	MACD RSI 30/70 extreme worse
+3e8a2e6	0.235137	0.543689	103	discard	MACD RSI 40/60 worse than 45/55
