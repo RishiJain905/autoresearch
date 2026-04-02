@@ -233,3 +233,4 @@ edb6367	0.322299	0.947368	19	discard	long TP 2.8pct slightly worse than 2.4pct
 e38baaa	0.326499	0.947368	19	discard	SMA 20 trend filter same metrics
 de796f8	0.326499	0.947368	19	discard	remove weak liquidity filter same metrics
 3765387	0.326499	0.947368	19	discard	swing trend regime filter same metrics
+7f303a6	0.326499	0.947368	19	discard	min profit floor same metrics
