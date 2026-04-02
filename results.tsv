@@ -235,3 +235,5 @@ de796f8	0.326499	0.947368	19	discard	remove weak liquidity filter same metrics
 3765387	0.326499	0.947368	19	discard	swing trend regime filter same metrics
 7f303a6	0.326499	0.947368	19	discard	min profit floor same metrics
 6851fa0	0.326499	0.947368	19	discard	enter at OB boundary same metrics
+6f57bc7	0.326499	0.947368	19	discard	long TP 4pct short TP 5pct trailing always closes first
+6f57bc7	0.326499	0.947368	19	discard	RSI 43/57 stricter same metrics
