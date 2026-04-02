@@ -247,3 +247,4 @@ ebdd53b	0.326499	0.947368	19	discard	RSI momentum reversed same 19 trades
 62096df	0.326499	0.947368	19	discard	reversal bar pattern filter same metrics
 a29bb35	0.217646	0.866667	15	discard	disable trailing stop for longs worse
 b26b090	0.229493	0.923077	13	discard	disable trailing stop for shorts worse
+2d5b0b0	0.304328	0.947368	19	discard	ATR-based trailing stop too wide
