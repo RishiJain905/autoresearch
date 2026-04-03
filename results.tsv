@@ -263,3 +263,4 @@ f5a506b	-0.193812	0.750000	4	discard	Use real OB levels instead of hardcoded 1% 
 7669009	0.342699	0.530864	162	discard	Add zone-based entry filtering (discount/premium zones)
 17a529a	0.214960	0.569061	181	discard	Reduce trailing stop trigger and widen distance
 bfdbb2e	0.002798	0.500000	44	discard	Enable FVG confirmation filter for signal quality
+edf88fb	0.252921	0.571429	196	discard	Exit longs when MACD histogram flips bearish in profit
