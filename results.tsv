@@ -271,3 +271,4 @@ aff0258	0.251796	0.366972	109	discard	Remove trailing stop to let winners run fu
 e298f2f	0.373352	0.530864	162	keep	Increase long TP from 2.4% to 3.5% for symmetry with shorts
 d7ffdf8	0.251940	0.582888	187	discard	Looking at the history, many signal/filter tweaks have been tried withou
 4c13868	0.341347	0.500000	144	discard	Asymmetric TP for longs (4.5%) vs shorts (3%) to capture BTC's tendency 
+b556d54	0.421389	0.530488	164	keep	Tighten trailing stop distance to 0.25% for better profit locking
