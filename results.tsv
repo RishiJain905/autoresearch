@@ -274,3 +274,4 @@ d7ffdf8	0.251940	0.582888	187	discard	Looking at the history, many signal/filter
 b556d54	0.421389	0.530488	164	keep	Tighten trailing stop distance to 0.25% for better profit locking
 8b6f637	-0.034965	0.433333	30	discard	Looking at the git history, I notice that while `swing_trend_bias` and `
 486ccf8	-0.001574	0.333333	3	discard	Add EMA(20) trend filter for entry alignment
+4f9c6ae	0.392967	0.568966	116	discard	Looking at the git history, I notice that filtering entries by trend bia
