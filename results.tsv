@@ -272,3 +272,4 @@ e298f2f	0.373352	0.530864	162	keep	Increase long TP from 2.4% to 3.5% for symmet
 d7ffdf8	0.251940	0.582888	187	discard	Looking at the history, many signal/filter tweaks have been tried withou
 4c13868	0.341347	0.500000	144	discard	Asymmetric TP for longs (4.5%) vs shorts (3%) to capture BTC's tendency 
 b556d54	0.421389	0.530488	164	keep	Tighten trailing stop distance to 0.25% for better profit locking
+8b6f637	-0.034965	0.433333	30	discard	Looking at the git history, I notice that while `swing_trend_bias` and `
