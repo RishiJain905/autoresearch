@@ -265,3 +265,4 @@ f5a506b	-0.193812	0.750000	4	discard	Use real OB levels instead of hardcoded 1% 
 bfdbb2e	0.002798	0.500000	44	discard	Enable FVG confirmation filter for signal quality
 edf88fb	0.252921	0.571429	196	discard	Exit longs when MACD histogram flips bearish in profit
 de9a6ef	0.268632	0.432292	192	discard	Use ATR-based stops instead of fixed 1% bands for position management
+797ff81	0.235137	0.543689	103	discard	Lower RSI thresholds (40/60) for stricter entries
