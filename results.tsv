@@ -268,3 +268,4 @@ de9a6ef	0.268632	0.432292	192	discard	Use ATR-based stops instead of fixed 1% ba
 797ff81	0.235137	0.543689	103	discard	Lower RSI thresholds (40/60) for stricter entries
 aff0258	0.251796	0.366972	109	discard	Remove trailing stop to let winners run fully to TP
 1253d5c	0.253552	0.401515	264	discard	Add opposite MACD signal as quick exit filter
+e298f2f	0.373352	0.530864	162	keep	Increase long TP from 2.4% to 3.5% for symmetry with shorts
