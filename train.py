@@ -69,7 +69,7 @@ import pandas as pd
 
 @dataclass
 class StrategyConfig:
-    rsi_length: int = 14
+    rsi_length: int = 12
     long_rsi_threshold: float = 45.0
     short_rsi_threshold: float = 55.0
     take_profit_pct: float = (
@@ -80,6 +80,8 @@ class StrategyConfig:
     entry_on_close: bool = True
     allow_longs: bool = True
     allow_shorts: bool = True
+    # When both sides signal on the same bar: skip both (default), or take one side.
+    long_short_conflict: str = "skip_both"  # "prefer_long" | "prefer_short"
     min_ob_stop_distance_pct: float = 0.005  # OB must be ≥0.5% away to apply stop
     # Trailing stop params
     trailing_stop_enabled: bool = True
@@ -347,10 +349,15 @@ def run_strategy(
         long_signals.append(long_signal)
         short_signals.append(short_signal)
 
-        # No simultaneous long/short entry on the same bar.
+        # No simultaneous long/short entry on the same bar (unless conflict policy picks one).
         if long_signal and short_signal:
-            long_signal = False
-            short_signal = False
+            if config.long_short_conflict == "prefer_long":
+                short_signal = False
+            elif config.long_short_conflict == "prefer_short":
+                long_signal = False
+            else:
+                long_signal = False
+                short_signal = False
 
         if position is not None:
             exit_decision = should_exit_position(position, row, config)

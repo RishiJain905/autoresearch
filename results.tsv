@@ -316,3 +316,9 @@ b93d65f	0.283487	0.947368	19	discard	short trail 0.1455pct cliff vs 0.146pct
 0c523f7	0.296834	0.947368	19	discard	long RSI 44.9 same PnL as 45
 0c523f7	0.296834	0.947368	19	discard	short RSI 55.1 same PnL as 55
 0c523f7	0.296834	0.947368	19	discard	long TP -1e-8 tiny worse vs 1.555326e-2
+90c1f46	0.296834	0.947368	19	discard	long_short_conflict prefer_long same as skip_both on sample
+90c1f46	0.296834	0.947368	19	discard	long_short_conflict prefer_short same as skip_both on sample
+90c1f46	0.267366	0.947368	19	discard	short_take_profit_pct None uses long TP worse
+90c1f46	0.304676	0.950000	20	keep	RSI length 12 vs 14 higher total_pnl_pct
+90c1f46	0.304676	0.950000	20	discard	RSI length 11 same PnL as 12
+90c1f46	0.283447	0.950000	20	discard	RSI length 10 worse vs 12
