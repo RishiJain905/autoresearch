@@ -280,3 +280,4 @@ b556d54	0.421389	0.530488	164	keep	Tighten trailing stop distance to 0.25% for b
 9d9449e	0.367032	0.449210	443	discard	Add SMA trend exit filter for both sides
 c81a565	-0.221212	0.571429	7	discard	Use real OB levels from prepare.py for position stops
 4dc21f5	0.271365	0.538462	104	discard	Lower RSI thresholds to 40/60 for stricter entries
+56c1f1a	0.333577	0.526946	167	discard	Add RSI extreme exit for early profit taking
