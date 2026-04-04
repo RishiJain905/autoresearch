@@ -255,3 +255,4 @@ b36b203	0.172243	0.909091	11	discard	require long OB lower half fewer trades wor
 34226ba	0.197373	0.923077	13	discard	disable short trailing only worse PnL
 7319348	0.295818	0.947368	19	discard	RSI length 13 worse vs 14
 aa80e10	-0.251241	0.800000	5	discard	require short OB upper half kills shorts worse
+deeb5f9	-0.292048	0.500000	2	discard	extreme-only internal bias filter same 2 trades as strict
