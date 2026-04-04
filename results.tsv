@@ -282,3 +282,4 @@ c81a565	-0.221212	0.571429	7	discard	Use real OB levels from prepare.py for posi
 4dc21f5	0.271365	0.538462	104	discard	Lower RSI thresholds to 40/60 for stricter entries
 56c1f1a	0.333577	0.526946	167	discard	Add RSI extreme exit for early profit taking
 5b7e756	-0.221212	0.571429	7	discard	Use real OB levels from prepare.py for position stops
+26ed62e	0.273432	0.571429	189	discard	Lower TP from 3.5% to 2% for higher trade frequency
