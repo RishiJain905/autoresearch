@@ -75,7 +75,7 @@ class StrategyConfig:
     take_profit_pct: float = (
         0.01555326  # long TP; shorts use short_take_profit_pct when not None
     )
-    short_take_profit_pct: Optional[float] = 0.0251
+    short_take_profit_pct: Optional[float] = 0.02512
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
     allow_longs: bool = True
