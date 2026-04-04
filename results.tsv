@@ -248,3 +248,4 @@ a7482ee	0.296669	0.947368	19	discard	long TP 0.015553259 not improved vs 0.01555
 6a892b6	0.159547	1.000000	8	discard	require bullish FVG for long only kills longs worse PnL
 74fb198	0.296669	0.947368	19	discard	long trail 0.49pct same PnL as 0.5pct
 9d779af	0.296669	0.947368	19	discard	disable long trailing only same PnL
+b36b203	0.172243	0.909091	11	discard	require long OB lower half fewer trades worse PnL
