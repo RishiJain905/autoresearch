@@ -297,3 +297,12 @@ b93d65f	0.283487	0.947368	19	discard	short trail 0.1455pct cliff vs 0.146pct
 760493d	0.289977	1.000000	17	discard	min OB stop 0.51pct worse PnL vs 0.5pct
 760493d	0.281281	0.944444	18	discard	long RSI 44.5 worse vs 45
 760493d	0.296834	0.947368	19	discard	short RSI 55.5 same PnL as 55
+79ab86f	0.295983	0.947368	19	discard	RSI length 13 slightly worse vs 14
+79ab86f	0.281281	0.944444	18	discard	RSI length 15 worse vs 14
+79ab86f	-0.307455	0.000000	1	discard	require_fvg_confirmation True collapses trades
+79ab86f	0.296834	0.947368	19	discard	short TP 0.02526794 same PnL as 0.02526795
+79ab86f	0.295413	0.947368	19	discard	short TP 0.02526796 worse vs 0.02526795
+79ab86f	0.197373	0.923077	13	discard	trailing_stop_enabled False worse
+79ab86f	0.296834	0.947368	19	discard	short trail 0.145805pct tiny worse vs 0.1458
+79ab86f	0.296834	0.947368	19	discard	short trail 0.145802pct tiny worse vs 0.1458
+79ab86f	0.296834	0.947368	19	discard	short trail 0.145801pct tiny worse vs 0.1458
