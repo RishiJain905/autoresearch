@@ -206,3 +206,4 @@ b0fcefd	0.294368	0.947368	19	keep	tighten short trailing to 0.2pct vs 0.25pct
 90f671d	0.284250	0.944444	18	discard	trailing trigger 0.0135 worse PnL fewer trades
 6d8dba6	0.295865	0.947368	19	discard	long trail 0.45pct same PnL as 0.5pct
 08ffe3d	0.284206	0.947368	19	discard	short trail 0.12pct worse vs 0.15pct
+1f1cf70	0.295925	0.947368	19	keep	short TP 0.02502 vs 0.025
