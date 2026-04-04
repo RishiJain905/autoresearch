@@ -261,3 +261,4 @@ be99a2e	0.159547	1.000000	8	discard	long discount or eq zone removes all longs w
 8b0d7af	0.296669	0.947368	19	discard	long OB stop before trailing same PnL
 671c02e	0.296669	0.947368	19	discard	short OB stop before trailing same PnL
 ee3d2f7	-0.251241	0.800000	5	discard	short premium or eq zone removes all shorts worse
+c5b23bc	0.092972	0.687500	32	discard	max hold 100 bars time stop worse PnL
