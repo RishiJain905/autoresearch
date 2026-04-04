@@ -270,3 +270,4 @@ a649ef5	0.295818	0.947368	19	discard	short RSI 54 worse vs 55
 df98d83	0.296669	0.947368	19	discard	long trail 0.48pct same PnL as 0.5pct
 40ea94f	0.296669	0.947368	19	discard	short RSI 56 same PnL as 55
 6b3f361	0.271072	0.967742	31	discard	long partial 0.5pct quarter scale-out worse
+c9a41a4	0.265563	0.941176	17	discard	RSI length 16 worse vs 14
