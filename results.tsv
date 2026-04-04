@@ -249,3 +249,4 @@ a7482ee	0.296669	0.947368	19	discard	long TP 0.015553259 not improved vs 0.01555
 74fb198	0.296669	0.947368	19	discard	long trail 0.49pct same PnL as 0.5pct
 9d779af	0.296669	0.947368	19	discard	disable long trailing only same PnL
 b36b203	0.172243	0.909091	11	discard	require long OB lower half fewer trades worse PnL
+6ea06ab	0.296669	0.947368	19	discard	trailing trigger 0.01305 same PnL as 0.013
