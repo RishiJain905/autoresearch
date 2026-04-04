@@ -263,3 +263,4 @@ be99a2e	0.159547	1.000000	8	discard	long discount or eq zone removes all longs w
 ee3d2f7	-0.251241	0.800000	5	discard	short premium or eq zone removes all shorts worse
 c5b23bc	0.092972	0.687500	32	discard	max hold 100 bars time stop worse PnL
 eafde9a	0.289812	1.000000	17	discard	min OB stop 0.006 worse vs 0.005
+fddf661	0.296669	0.947368	19	discard	long RSI 45.5 same PnL as 45
