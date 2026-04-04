@@ -294,3 +294,6 @@ b93d65f	0.283487	0.947368	19	discard	short trail 0.1455pct cliff vs 0.146pct
 2d2c2e9	0.296834	0.947368	19	discard	trailing trigger 0.01301 same PnL as 0.013
 2d2c2e9	0.296834	0.947368	19	discard	long trail 0.501pct same PnL as 0.5pct
 2d2c2e9	0.296834	0.947368	19	discard	long trail 0.499pct same PnL as 0.5pct
+760493d	0.289977	1.000000	17	discard	min OB stop 0.51pct worse PnL vs 0.5pct
+760493d	0.281281	0.944444	18	discard	long RSI 44.5 worse vs 45
+760493d	0.296834	0.947368	19	discard	short RSI 55.5 same PnL as 55
