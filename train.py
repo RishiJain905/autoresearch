@@ -75,7 +75,7 @@ class StrategyConfig:
     take_profit_pct: float = (
         0.01555326072  # long TP; shorts use short_take_profit_pct when not None
     )
-    short_take_profit_pct: Optional[float] = 0.02526795982
+    short_take_profit_pct: Optional[float] = 0.025267959825
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
     allow_longs: bool = True
@@ -89,7 +89,7 @@ class StrategyConfig:
         0.013  # activate trailing stop once price moves 1.3% in profit
     )
     long_trailing_distance_pct: float = (
-        0.003792  # trail 0.3792% below the highest price seen for longs
+        0.003791500  # trail ~0.37915% below the highest price seen for longs (tuned)
     )
     short_trailing_distance_pct: float = (
         0.001457940723  # trail ~0.1457940723% above the lowest price seen for shorts (RSI 12 tuned)
