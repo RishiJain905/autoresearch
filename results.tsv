@@ -287,10 +287,10 @@ b93d65f	0.283487	0.947368	19	discard	short trail 0.1455pct cliff vs 0.146pct
 90f3a71	0.296834	0.947368	19	keep	short trail 0.1458pct vs 0.1459pct
 0a192c1	0.283477	0.947368	19	discard	short trail 0.1457pct cliff vs 0.1458pct
 95c8de2	0.283474	0.947368	19	discard	short trail 0.14575pct cliff
-4c845a4	0.296832	0.947368	19	discard	short trail 0.14585pct slightly worse vs 0.1458
-4c845a4	0.283473	0.947368	19	discard	short trail 0.14578pct cliff vs 0.1458
-4c845a4	0.291757	0.947368	19	discard	long TP +1e-8 worse vs 1.555326e-2
-4c845a4	0.296834	0.947368	19	discard	trailing trigger 0.01299 same PnL as 0.013
-4c845a4	0.296834	0.947368	19	discard	trailing trigger 0.01301 same PnL as 0.013
-4c845a4	0.296834	0.947368	19	discard	long trail 0.501pct same PnL as 0.5pct
-4c845a4	0.296834	0.947368	19	discard	long trail 0.499pct same PnL as 0.5pct
+2d2c2e9	0.296832	0.947368	19	discard	short trail 0.14585pct slightly worse vs 0.1458
+2d2c2e9	0.283473	0.947368	19	discard	short trail 0.14578pct cliff vs 0.1458
+2d2c2e9	0.291757	0.947368	19	discard	long TP +1e-8 worse vs 1.555326e-2
+2d2c2e9	0.296834	0.947368	19	discard	trailing trigger 0.01299 same PnL as 0.013
+2d2c2e9	0.296834	0.947368	19	discard	trailing trigger 0.01301 same PnL as 0.013
+2d2c2e9	0.296834	0.947368	19	discard	long trail 0.501pct same PnL as 0.5pct
+2d2c2e9	0.296834	0.947368	19	discard	long trail 0.499pct same PnL as 0.5pct
