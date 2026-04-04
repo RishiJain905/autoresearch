@@ -257,3 +257,4 @@ b36b203	0.172243	0.909091	11	discard	require long OB lower half fewer trades wor
 aa80e10	-0.251241	0.800000	5	discard	require short OB upper half kills shorts worse
 deeb5f9	-0.292048	0.500000	2	discard	extreme-only internal bias filter same 2 trades as strict
 10bc73f	0.281116	0.894737	19	discard	long breakeven arm 1.2pct worse PnL
+be99a2e	0.159547	1.000000	8	discard	long discount or eq zone removes all longs worse PnL
