@@ -288,3 +288,4 @@ c81a565	-0.221212	0.571429	7	discard	Use real OB levels from prepare.py for posi
 2f36ae2	0.486279	0.498567	349	keep	Remove RSI filter to rely only on MACD histogram
 2586620	0.314061	0.497561	205	discard	Require strict MACD crossover entries only, no momentum-chasing
 f59fa16	0.605624	0.678363	171	keep	Use real OB levels from prepare.py for position stops
+910e17a	-0.284976	0.333333	12	discard	Add FVG confirmation requirement for entries to filter weak signals
