@@ -210,3 +210,4 @@ b0fcefd	0.294368	0.947368	19	keep	tighten short trailing to 0.2pct vs 0.25pct
 1ba49b0	0.295955	0.947368	19	discard	short TP 0.02503 same PnL as 0.02502
 1cc939a	0.295985	0.947368	19	keep	short TP 0.02504 vs 0.02502
 6d2875a	0.296045	0.947368	19	discard	short TP 0.02506 same PnL as 0.02504
+40e0a24	0.296105	0.947368	19	keep	short TP 0.02508 vs 0.02504
