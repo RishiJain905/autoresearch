@@ -291,3 +291,4 @@ f59fa16	0.605624	0.678363	171	keep	Use real OB levels from prepare.py for positi
 910e17a	-0.284976	0.333333	12	discard	Add FVG confirmation requirement for entries to filter weak signals
 8349beb	-0.171612	0.750000	12	discard	Add EMA(20) pullback filter to improve entry quality
 2673f2e	0.531142	0.676471	170	discard	Use asymmetric TP: 4.5% longs, 2.5% shorts (BTC bias)
+1b4af82	0.065575	0.526316	76	discard	Increase TP to 4.5% and loosen trailing trigger to 2% for better win sca
