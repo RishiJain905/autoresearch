@@ -220,6 +220,12 @@ def valid_short_signal(row: pd.Series, config: StrategyConfig) -> bool:
     return True
 
 
+def bar_entry_price(row: pd.Series, config: StrategyConfig) -> float:
+    if config.entry_on_close:
+        return float(row["close"])
+    return 0.5 * (float(row["high"]) + float(row["low"]))
+
+
 # -----------------------------
 # Position management
 # -----------------------------
@@ -371,7 +377,7 @@ def run_strategy(
 
         if position is None:
             if long_signal:
-                entry_price = float(row["close"])
+                entry_price = bar_entry_price(row, config)
                 position = Position(
                     side="long",
                     entry_index=int(idx),
@@ -383,7 +389,7 @@ def run_strategy(
                     trailing_activated=False,
                 )
             elif short_signal:
-                entry_price = float(row["close"])
+                entry_price = bar_entry_price(row, config)
                 position = Position(
                     side="short",
                     entry_index=int(idx),
