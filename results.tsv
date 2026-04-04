@@ -297,3 +297,4 @@ ad91bd4	-0.217541	0.714286	7	discard	Add zone filter: longs in discount, shorts 
 d3a3c14	0.625132	0.688235	170	keep	Symmetrize trailing stops to 0.2% for both sides
 d3b7790	0.382499	0.660131	153	discard	Increase trailing stop distance to 0.5% for better trade capture
 fd0eb68	0.625132	0.688235	170	discard	Filter entries by price position relative to recent weak highs/lows
+27a29f9	0.159489	0.629518	664	discard	Add RSI(70/30) as exit accelerator for faster wins
