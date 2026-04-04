@@ -226,3 +226,4 @@ c3166e5	0.296645	0.947368	19	discard	long TP 0.01555325 not improved vs 0.015553
 6cb35b7	0.296645	0.947368	19	discard	min OB stop 0.0048 same PnL as 0.005
 63b2912	0.296645	0.947368	19	discard	trailing trigger 0.0129 same PnL as 0.013
 2a5d7c0	0.283495	0.947368	19	discard	short trail 0.145pct worse vs 0.15pct
+9b06e76	0.296448	0.947368	19	discard	short trail 0.155pct worse vs 0.15pct
