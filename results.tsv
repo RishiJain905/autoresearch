@@ -251,3 +251,4 @@ a7482ee	0.296669	0.947368	19	discard	long TP 0.015553259 not improved vs 0.01555
 b36b203	0.172243	0.909091	11	discard	require long OB lower half fewer trades worse PnL
 6ea06ab	0.296669	0.947368	19	discard	trailing trigger 0.01305 same PnL as 0.013
 696ffd9	-0.292048	0.500000	2	discard	filter entries by internal bias long skip bearish short skip bullish
+0ed6d14	-0.222368	0.750000	8	discard	breakeven arm 0.8pct after favorable peak worse
