@@ -306,3 +306,13 @@ b93d65f	0.283487	0.947368	19	discard	short trail 0.1455pct cliff vs 0.146pct
 79ab86f	0.296834	0.947368	19	discard	short trail 0.145805pct tiny worse vs 0.1458
 79ab86f	0.296834	0.947368	19	discard	short trail 0.145802pct tiny worse vs 0.1458
 79ab86f	0.296834	0.947368	19	discard	short trail 0.145801pct tiny worse vs 0.1458
+0c523f7	0.296834	0.947368	19	discard	long RSI 45.1 same PnL as 45
+0c523f7	0.296834	0.947368	19	discard	short RSI 54.9 same PnL as 55
+0c523f7	0.296834	0.947368	19	discard	RSI 45.1 long and 54.9 short together same PnL
+0c523f7	0.289977	1.000000	17	discard	min OB stop 0.502pct worse PnL vs 0.5pct
+0c523f7	0.296834	0.947368	19	discard	min OB stop 0.498pct same PnL as 0.5pct
+0c523f7	0.296834	0.947368	19	discard	trailing trigger 0.01298 same PnL as 0.013
+0c523f7	0.296834	0.947368	19	discard	trailing trigger 0.01302 same PnL as 0.013
+0c523f7	0.296834	0.947368	19	discard	long RSI 44.9 same PnL as 45
+0c523f7	0.296834	0.947368	19	discard	short RSI 55.1 same PnL as 55
+0c523f7	0.296834	0.947368	19	discard	long TP -1e-8 tiny worse vs 1.555326e-2
