@@ -286,3 +286,4 @@ c81a565	-0.221212	0.571429	7	discard	Use real OB levels from prepare.py for posi
 3988e68	0.421389	0.530488	164	discard	Add zone-based entry filter using discount/premium context
 32cf35d	-0.221212	0.571429	7	discard	Looking at the current strategy, I notice it uses hardcoded 1% bands for
 2f36ae2	0.486279	0.498567	349	keep	Remove RSI filter to rely only on MACD histogram
+2586620	0.314061	0.497561	205	discard	Require strict MACD crossover entries only, no momentum-chasing
