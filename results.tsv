@@ -229,3 +229,4 @@ c3166e5	0.296645	0.947368	19	discard	long TP 0.01555325 not improved vs 0.015553
 9b06e76	0.296448	0.947368	19	discard	short trail 0.155pct worse vs 0.15pct
 bf7de6e	0.296645	0.947368	19	discard	long trail 0.47pct same PnL as 0.5pct
 17cdb15	0.281092	0.944444	18	discard	long RSI 44.5 worse PnL vs 45
+3023d04	0.296645	0.947368	19	discard	short RSI 55.5 same PnL as 55
