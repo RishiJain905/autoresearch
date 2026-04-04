@@ -276,3 +276,4 @@ b556d54	0.421389	0.530488	164	keep	Tighten trailing stop distance to 0.25% for b
 486ccf8	-0.001574	0.333333	3	discard	Add EMA(20) trend filter for entry alignment
 4f9c6ae	0.392967	0.568966	116	discard	Looking at the git history, I notice that filtering entries by trend bia
 08e8f83	-0.221212	0.571429	7	discard	Looking at this, I notice the strategy uses hardcoded 1% bands (`ob_high
+88886e0	-0.221212	0.571429	7	discard	Use real OB levels from prepare.py instead of hardcoded 1% bands
