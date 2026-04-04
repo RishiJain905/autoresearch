@@ -46,6 +46,8 @@ Entries are driven purely by MACD histogram momentum:
 - Short: MACD histogram crosses below 0 (bearish momentum)
 
 Take profit at ±3.5% with trailing stop activation at 1.3% profit.
+Position stops use real order block levels from prepare.py when available,
+falling back to percentage-based stops otherwise.
 """
 
 from dataclasses import dataclass, asdict
@@ -207,6 +209,30 @@ def ob_stop_distance_pct(entry_price: float, ob_price: float, side: str) -> floa
     return abs(entry_price - ob_price) / entry_price
 
 
+def get_ob_levels(row: pd.Series, side: str) -> tuple[float, float]:
+    """
+    Get order block high/low levels from prepare.py data.
+    Returns (ob_high, ob_low) for the position side.
+    Falls back to entry-based percentages if no valid OB available.
+    """
+    if side == "long":
+        ob_active = bool(row.get("bullish_internal_ob_active", False))
+        ob_low = row.get("bullish_internal_ob_low")
+        ob_high = row.get("bullish_internal_ob_high")
+        if ob_active and pd.notna(ob_low) and pd.notna(ob_high):
+            return float(ob_high), float(ob_low)
+    else:  # short
+        ob_active = bool(row.get("bearish_internal_ob_active", False))
+        ob_low = row.get("bearish_internal_ob_low")
+        ob_high = row.get("bearish_internal_ob_high")
+        if ob_active and pd.notna(ob_low) and pd.notna(ob_high):
+            return float(ob_high), float(ob_low)
+    
+    # Fallback to entry-based bands
+    entry_price = float(row["close"])
+    return entry_price * 1.01, entry_price * 0.99
+
+
 def should_exit_position(
     position: Position, row: pd.Series, config: StrategyConfig
 ) -> Optional[tuple[float, str]]:
@@ -236,7 +262,7 @@ def should_exit_position(
                 if close <= trailing_stop_price:
                     return trailing_stop_price, "trailing_stop"
 
-        # OB stop only if far enough from entry
+        # OB stop only if far enough from entry - use real OB levels
         ob_dist_pct = ob_stop_distance_pct(
             position.entry_price, position.ob_low, "long"
         )
@@ -266,7 +292,7 @@ def should_exit_position(
                 if close >= trailing_stop_price:
                     return trailing_stop_price, "trailing_stop"
 
-        # OB stop only if far enough from entry
+        # OB stop only if far enough from entry - use real OB levels
         ob_dist_pct = ob_stop_distance_pct(
             position.entry_price, position.ob_high, "short"
         )
@@ -346,24 +372,26 @@ def run_strategy(
         if position is None:
             if long_signal:
                 entry_price = float(row["close"])
+                ob_high, ob_low = get_ob_levels(row, "long")
                 position = Position(
                     side="long",
                     entry_index=int(idx),
                     entry_price=entry_price,
-                    ob_high=entry_price * 1.01,
-                    ob_low=entry_price * 0.99,
+                    ob_high=ob_high,
+                    ob_low=ob_low,
                     entry_reason="macd_bullish",
                     peak_price=entry_price,
                     trailing_activated=False,
                 )
             elif short_signal:
                 entry_price = float(row["close"])
+                ob_high, ob_low = get_ob_levels(row, "short")
                 position = Position(
                     side="short",
                     entry_index=int(idx),
                     entry_price=entry_price,
-                    ob_high=entry_price * 1.01,
-                    ob_low=entry_price * 0.99,
+                    ob_high=ob_high,
+                    ob_low=ob_low,
                     entry_reason="macd_bearish",
                     peak_price=entry_price,
                     trailing_activated=False,
