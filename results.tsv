@@ -259,3 +259,4 @@ deeb5f9	-0.292048	0.500000	2	discard	extreme-only internal bias filter same 2 tr
 10bc73f	0.281116	0.894737	19	discard	long breakeven arm 1.2pct worse PnL
 be99a2e	0.159547	1.000000	8	discard	long discount or eq zone removes all longs worse PnL
 8b0d7af	0.296669	0.947368	19	discard	long OB stop before trailing same PnL
+671c02e	0.296669	0.947368	19	discard	short OB stop before trailing same PnL
