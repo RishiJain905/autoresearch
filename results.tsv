@@ -283,3 +283,4 @@ c81a565	-0.221212	0.571429	7	discard	Use real OB levels from prepare.py for posi
 56c1f1a	0.333577	0.526946	167	discard	Add RSI extreme exit for early profit taking
 5b7e756	-0.221212	0.571429	7	discard	Use real OB levels from prepare.py for position stops
 26ed62e	0.273432	0.571429	189	discard	Lower TP from 3.5% to 2% for higher trade frequency
+3988e68	0.421389	0.530488	164	discard	Add zone-based entry filter using discount/premium context
