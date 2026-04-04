@@ -71,11 +71,8 @@ class StrategyConfig:
     trailing_trigger_pct: float = (
         0.013  # activate trailing stop once price moves 1.3% in profit
     )
-    long_trailing_distance_pct: float = (
-        0.0025  # trail 0.25% below the highest price seen for longs
-    )
-    short_trailing_distance_pct: float = (
-        0.001  # trail 0.10% above the lowest price seen for shorts
+    trailing_distance_pct: float = (
+        0.002  # symmetric 0.2% trailing distance for both sides
     )
 
 
@@ -257,7 +254,7 @@ def should_exit_position(
             if profit_from_entry >= config.trailing_trigger_pct:
                 position.trailing_activated = True
                 trailing_stop_price = position.peak_price * (
-                    1.0 - config.long_trailing_distance_pct
+                    1.0 - config.trailing_distance_pct
                 )
                 if close <= trailing_stop_price:
                     return trailing_stop_price, "trailing_stop"
@@ -287,7 +284,7 @@ def should_exit_position(
             if profit_from_entry >= config.trailing_trigger_pct:
                 position.trailing_activated = True
                 trailing_stop_price = position.peak_price * (
-                    1.0 + config.short_trailing_distance_pct
+                    1.0 + config.trailing_distance_pct
                 )
                 if close >= trailing_stop_price:
                     return trailing_stop_price, "trailing_stop"

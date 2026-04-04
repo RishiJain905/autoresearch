@@ -294,3 +294,4 @@ f59fa16	0.605624	0.678363	171	keep	Use real OB levels from prepare.py for positi
 1b4af82	0.065575	0.526316	76	discard	Increase TP to 4.5% and loosen trailing trigger to 2% for better win sca
 774e901	0.313288	0.760369	217	discard	Add partial profit-taking at 1.5% TP to lock in early gains
 ad91bd4	-0.217541	0.714286	7	discard	Add zone filter: longs in discount, shorts in premium
+d3a3c14	0.625132	0.688235	170	keep	Symmetrize trailing stops to 0.2% for both sides
