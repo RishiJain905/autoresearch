@@ -41,24 +41,11 @@ Optional columns:
 
 Strategy summary
 ----------------
-Long:
-- latest valid bullish internal OB exists
-- close lies inside the bullish OB (wick-only overlap is not enough)
-- RSI < 45 (oversold, tuned)
-- nearest relevant upside liquidity target is a weak high
-- optional bullish FVG can strengthen the thesis but is not required
-- take profit at +~3.5% long (equal to short TP for symmetry)
-- stop if close breaks below bullish OB low, BUT only if OB is ≥0.5% below entry
-  (prevents getting stopped out by tight OBs that don't offer real risk management)
+Entries are driven purely by MACD histogram momentum:
+- Long: MACD histogram crosses above 0 (bullish momentum)
+- Short: MACD histogram crosses below 0 (bearish momentum)
 
-Short:
-- latest valid bearish internal OB exists
-- close lies inside the bearish OB (wick-only overlap is not enough)
-- RSI > 55 (overbought, tuned)
-- nearest relevant downside liquidity target is a weak low
-- optional bearish FVG can strengthen the thesis but is not required
-- take profit at -`short_take_profit_pct` (~3.5% on sample data)
-- stop if close breaks above bearish OB high, BUT only if OB is ≥0.5% above entry
+Take profit at ±3.5% with trailing stop activation at 1.3% profit.
 """
 
 from dataclasses import dataclass, asdict
@@ -70,11 +57,7 @@ import pandas as pd
 @dataclass
 class StrategyConfig:
     rsi_length: int = 14
-    long_rsi_threshold: float = 45.0
-    short_rsi_threshold: float = 55.0
-    take_profit_pct: float = (
-        0.035  # long TP; increased from 0.024 to match short TP for symmetry
-    )
+    take_profit_pct: float = 0.035
     short_take_profit_pct: Optional[float] = 0.035
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
@@ -167,28 +150,38 @@ def compute_rsi(series: pd.Series, length: int = 14) -> pd.Series:
 # -----------------------------
 
 
-def valid_long_signal(row: pd.Series, config: StrategyConfig) -> bool:
+def valid_long_signal(row: pd.Series, config: StrategyConfig, prev_macd_hist: Optional[float]) -> bool:
+    """Long signal when MACD histogram crosses above 0 (was negative, now positive)."""
     if not config.allow_longs:
         return False
     if "macd_hist" not in row.index or pd.isna(row.get("macd_hist")):
         return False
-    if float(row["macd_hist"]) <= 0:
-        return False
-    if float(row["rsi"]) >= config.long_rsi_threshold:
-        return False
-    return True
+    
+    current_hist = float(row["macd_hist"])
+    # Entry on bullish MACD crossover: previous bar was <= 0, current bar is > 0
+    if prev_macd_hist is not None and prev_macd_hist <= 0 and current_hist > 0:
+        return True
+    # Also allow entry if histogram is already positive (momentum is bullish)
+    if current_hist > 0:
+        return True
+    return False
 
 
-def valid_short_signal(row: pd.Series, config: StrategyConfig) -> bool:
+def valid_short_signal(row: pd.Series, config: StrategyConfig, prev_macd_hist: Optional[float]) -> bool:
+    """Short signal when MACD histogram crosses below 0 (was positive, now negative)."""
     if not config.allow_shorts:
         return False
     if "macd_hist" not in row.index or pd.isna(row.get("macd_hist")):
         return False
-    if float(row["macd_hist"]) >= 0:
-        return False
-    if float(row["rsi"]) < config.short_rsi_threshold:
-        return False
-    return True
+    
+    current_hist = float(row["macd_hist"])
+    # Entry on bearish MACD crossover: previous bar was >= 0, current bar is < 0
+    if prev_macd_hist is not None and prev_macd_hist >= 0 and current_hist < 0:
+        return True
+    # Also allow entry if histogram is already negative (momentum is bearish)
+    if current_hist < 0:
+        return True
+    return False
 
 
 # -----------------------------
@@ -311,9 +304,13 @@ def run_strategy(
     short_signals: List[bool] = []
     position_side: List[Optional[str]] = []
 
+    prev_macd_hist: Optional[float] = None
+
     for idx, row in working.iterrows():
-        long_signal = valid_long_signal(row, config)
-        short_signal = valid_short_signal(row, config)
+        current_macd_hist = float(row["macd_hist"]) if pd.notna(row.get("macd_hist")) else None
+        
+        long_signal = valid_long_signal(row, config, prev_macd_hist)
+        short_signal = valid_short_signal(row, config, prev_macd_hist)
 
         long_signals.append(long_signal)
         short_signals.append(short_signal)
@@ -355,7 +352,7 @@ def run_strategy(
                     entry_price=entry_price,
                     ob_high=entry_price * 1.01,
                     ob_low=entry_price * 0.99,
-                    entry_reason="macd_hist_rsi",
+                    entry_reason="macd_bullish",
                     peak_price=entry_price,
                     trailing_activated=False,
                 )
@@ -367,12 +364,13 @@ def run_strategy(
                     entry_price=entry_price,
                     ob_high=entry_price * 1.01,
                     ob_low=entry_price * 0.99,
-                    entry_reason="macd_hist_rsi",
+                    entry_reason="macd_bearish",
                     peak_price=entry_price,
                     trailing_activated=False,
                 )
 
         position_side.append(position.side if position is not None else None)
+        prev_macd_hist = current_macd_hist
 
     # Force-close final open position on last close for accounting.
     if position is not None and not working.empty:
