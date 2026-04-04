@@ -275,3 +275,4 @@ e8cf468	0.281116	0.944444	18	discard	long RSI 44 worse vs 45
 85451dd	0.282802	0.947368	19	discard	trailing trigger 0.0126 worse vs 0.013
 e0b934a	0.285054	0.944444	18	discard	trailing trigger 0.0132 worse vs 0.013
 c79d489	0.296590	0.947368	19	discard	short trail 0.152pct not improved vs 0.15pct
+9f62f5c	0.152292	0.681818	22	discard	entry HL2 instead of close worse PnL
