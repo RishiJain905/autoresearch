@@ -253,3 +253,4 @@ b36b203	0.172243	0.909091	11	discard	require long OB lower half fewer trades wor
 696ffd9	-0.292048	0.500000	2	discard	filter entries by internal bias long skip bearish short skip bullish
 0ed6d14	-0.222368	0.750000	8	discard	breakeven arm 0.8pct after favorable peak worse
 34226ba	0.197373	0.923077	13	discard	disable short trailing only worse PnL
+7319348	0.295818	0.947368	19	discard	RSI length 13 worse vs 14
