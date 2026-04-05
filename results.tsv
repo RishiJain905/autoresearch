@@ -601,3 +601,4 @@ f690976	0.306752971083334	0.950000	20	discard	trailing_trigger_pct 0.01309 same 
 5914d50	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.97 same PnL as 56.0
 d715ac0	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.013096 worse vs 0.013095 good (narrow cliff)
 0ff9d4a	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.013097 worse vs 0.013095 good
+c8effc8	0.306752971083334	0.950000	20	discard	trailing_trigger_pct nextafter 0.013095 same PnL; cliff after 1 ULP
