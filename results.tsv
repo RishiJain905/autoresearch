@@ -473,3 +473,4 @@ d41d212	0.305902084754105	0.950000	20	discard	short_rsi_threshold 55.1 same PnL 
 f5bdd60	0.305902084754104	0.950000	20	discard	short_take_profit_pct 8259588 not improved vs 8259589
 cacfddd	0.305902084754105	0.950000	20	discard	trailing_trigger 0.012999 same PnL as 0.013
 68a070a	0.305902084754105	0.950000	20	discard	trailing_trigger 0.013001 same PnL as 0.013
+0000000	0.305902084754105	0.950000	20	discard	trailing_trigger 0.01299 same PnL as 0.013
