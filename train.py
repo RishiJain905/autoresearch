@@ -82,7 +82,7 @@ class StrategyConfig:
     allow_shorts: bool = True
     # When both sides signal on the same bar: skip both (default), or take one side.
     long_short_conflict: str = "skip_both"  # "prefer_long" | "prefer_short"
-    min_ob_stop_distance_pct: float = 0.0052  # above 0.0051 worse band
+    min_ob_stop_distance_pct: float = 0.005  # OB must be ≥0.5% away to apply stop
     # Trailing stop params
     trailing_stop_enabled: bool = True
     trailing_trigger_pct: float = (
