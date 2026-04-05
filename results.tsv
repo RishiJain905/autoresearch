@@ -577,3 +577,4 @@ a6ef6c6	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.01315 not i
 f4293e6	0.306752971083334	0.950000	20	discard	long_trailing_distance_pct nextafter 0.003791061077040 same PnL
 cb4cf36	0.306752971083334	0.950000	20	discard	short_trailing_distance_pct nextafter 7229745 same PnL
 607a97d	0.306752971083334	0.950000	20	discard	min_ob_stop_distance_pct 0.00496 same PnL as 0.005
+a7cbef1	0.280910105786214	0.950000	20	discard	rsi_length 6 not improved vs 12 (short_rsi 56)
