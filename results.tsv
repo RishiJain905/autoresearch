@@ -615,3 +615,4 @@ f01df76	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.09 same PnL
 8c7cd88	0.306752971083334	0.950000	20	discard	min_ob_stop_distance_pct 0.00493 same PnL as 0.005
 c1d9e33	0.306752971083334	0.950000	20	discard	trailing nextafter 0.01309533 good; decimal 0.01309534 still first bad literal
 0c20b3c	0.295096481630923	0.947368	19	discard	trailing nextbefore 0.01309534 bad; max good is nextafter(0.01309533)
+4b547c5	0.194203271320101	1.000000	12	discard	rsi_length 25 not improved vs 12
