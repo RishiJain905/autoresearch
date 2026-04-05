@@ -1,4 +1,4 @@
-﻿commit	total_pnl_pct	win_rate	trade_count	status	description
+commit	total_pnl_pct	win_rate	trade_count	status	description
 2f9b771	0.000000	0.000000	0	discard	<think>
 cbd64d2	0.039216	0.204545	44	keep	Looking at the metrics, the strategy is losing money with a very low win rate (1
 db1378d	0.120000	1.000000	8	keep	Looking at the metrics: very low win rate (20.5%) with 44 trades. The strategy i
@@ -528,20 +528,20 @@ efa89e5	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01292 same PnL 
 a25c2aa	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.8 same PnL as 56.0
 713668c	0.281281329857549	0.944444	18	discard	rsi_length 15 not improved (short_rsi 56)
 2a803eb	0.296834590586516	0.947368	19	discard	long_rsi_threshold 44.75 not improved (short_rsi 56)
-b707139	0.292927396850071	0.950000	20	discard	trailing_trigger 0.01287 cliff vs good ≥0.01288172 (short_rsi 56)
+b707139	0.292927396850071	0.950000	20	discard	trailing_trigger 0.01287 cliff vs good =0.01288172 (short_rsi 56)
 8801634	0.292927396850071	0.950000	20	discard	trailing_trigger 0.0128809375 cliff vs 0.01288171875 good
 a7910dd	0.306752971083334	0.950000	20	discard	trailing_trigger 0.0128825 same PnL as 0.013 (short_rsi 56)
 e415e9d	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01291 same PnL as 0.013 (short_rsi 56)
 8a850fc	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.125 same PnL as 45.0 (short_rsi 56)
 047ee97	0.296834590586516	0.947368	19	discard	rsi_length 13 not improved (short_rsi 56)
-1e4059f	0.292927396850071	0.950000	20	discard	trailing_trigger 0.01288125 bad vs good ≥0.01288155078
+1e4059f	0.292927396850071	0.950000	20	discard	trailing_trigger 0.01288125 bad vs good =0.01288155078
 6e22674	0.292927396850071	0.950000	20	discard	trailing_trigger 0.0128815453125 narrow bad vs 0.01288155078125 good
 0c2adf2	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01288155078125 same PnL as 0.013 (short_rsi 56)
 f7a6765	0.306752971083334	0.950000	20	discard	trailing_trigger 0.0128816 0.01288165 same PnL as 0.013 (short_rsi 56)
 651aef4	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.375 same PnL as 45.0 (short_rsi 56)
 bcb09fc	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.9 same PnL as 56.0
 9dc4334	0.306752971083334	0.950000	20	discard	trailing ULP-1 below 0.01288155078125 same PnL as 0.013
-6bc6c53	0.292927396850071	0.950000	20	discard	trailing_trigger 0.0128815454 bad vs ≥0.0128815458 good
+6bc6c53	0.292927396850071	0.950000	20	discard	trailing_trigger 0.0128815454 bad vs =0.0128815458 good
 3bad4a6	0.292927396850071	0.950000	20	discard	trailing_trigger 0.0128815456 0.0128815457 bad interior
 d4641d4	0.306752971083334	0.950000	20	discard	trailing_trigger 0.0128815465 0.012881548 same PnL as 0.013
 2472c11	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.01 same PnL as 56.0
@@ -593,4 +593,4 @@ b868d64	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.08 same PnL
 c62d903	0.306752971083334	0.950000	20	discard	min_ob_stop_distance_pct 0.00495 same PnL as 0.005 (short_rsi 56)
 5b57c39	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.01312 not improved vs 0.013
 f690976	0.306752971083334	0.950000	20	discard	trailing_trigger_pct 0.01309 same PnL as 0.013 (bisect vs 0.01312)
-bef5986	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.01310 worse vs 0.01309 flat (cliff edge)
+705dd35	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.01310 worse vs 0.01309 flat (cliff edge)
