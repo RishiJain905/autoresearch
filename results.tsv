@@ -592,3 +592,4 @@ b868d64	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.08 same PnL
 7bb1fcc	0.306752971083334	0.950000	20	discard	trailing_trigger_pct 0.01301 same PnL as 0.013 (short_rsi 56)
 c62d903	0.306752971083334	0.950000	20	discard	min_ob_stop_distance_pct 0.00495 same PnL as 0.005 (short_rsi 56)
 5b57c39	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.01312 not improved vs 0.013
+f690976	0.306752971083334	0.950000	20	discard	trailing_trigger_pct 0.01309 same PnL as 0.013 (bisect vs 0.01312)
