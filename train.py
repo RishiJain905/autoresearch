@@ -78,7 +78,7 @@ class StrategyConfig:
     short_take_profit_pct: Optional[float] = 0.0252679598259589  # last sub-step before 825959 cliff
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
-    allow_longs: bool = True
+    allow_longs: bool = False
     allow_shorts: bool = True
     # When both sides signal on the same bar: skip both (default), or take one side.
     long_short_conflict: str = "skip_both"  # "prefer_long" | "prefer_short"
