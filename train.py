@@ -86,7 +86,7 @@ class StrategyConfig:
     # Trailing stop params
     trailing_stop_enabled: bool = True
     trailing_trigger_pct: float = (
-        0.013  # activate trailing stop once price moves 1.3% in profit
+        0.013097  # bisect narrow cliff (0.013095 good 0.013096 bad)
     )
     long_trailing_distance_pct: float = (
         0.003791061077040  # probe between 0.003791061077041 and cliff band 0.039-0.037
