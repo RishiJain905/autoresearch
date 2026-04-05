@@ -532,4 +532,4 @@ b707139	0.292927396850071	0.950000	20	discard	trailing_trigger 0.01287 cliff vs 
 8801634	0.292927396850071	0.950000	20	discard	trailing_trigger 0.0128809375 cliff vs 0.01288171875 good
 a7910dd	0.306752971083334	0.950000	20	discard	trailing_trigger 0.0128825 same PnL as 0.013 (short_rsi 56)
 e415e9d	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01291 same PnL as 0.013 (short_rsi 56)
-0000000	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.125 same PnL as 45.0 (short_rsi 56)
+8a850fc	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.125 same PnL as 45.0 (short_rsi 56)
