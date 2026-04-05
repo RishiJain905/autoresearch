@@ -89,7 +89,7 @@ class StrategyConfig:
         0.013  # activate trailing stop once price moves 1.3% in profit
     )
     long_trailing_distance_pct: float = (
-        0.003791061077040  # probe between 0.003791061077041 and cliff band 0.039-0.037
+        0.0037910610770400003  # nextafter 077040 toward +inf
     )
     short_trailing_distance_pct: float = (
         0.0014579407229745  # between 722974 cliff and 722975
