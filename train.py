@@ -92,7 +92,7 @@ class StrategyConfig:
         0.003791061077040  # probe between 0.003791061077041 and cliff band 0.039-0.037
     )
     short_trailing_distance_pct: float = (
-        0.001457940722985  # tighter than 72299
+        0.00145794072298  # tighter than 722985
     )
 
 
