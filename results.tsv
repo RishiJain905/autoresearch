@@ -468,4 +468,4 @@ da638eb	0.292539583095271	0.950000	20	discard	short_trailing 0.00145794072297 cl
 e0cbb4f	0.305902084754105	0.950000	20	discard	long_rsi_threshold 44.9 same PnL as 45.0
 cba7fef	0.305902084754105	0.950000	20	discard	long_rsi_threshold 45.1 same PnL as 45.0
 42b1bba	0.305902084754105	0.950000	20	discard	short_rsi_threshold 54.9 same PnL as 55.0
-0000000	0.305902084754105	0.950000	20	discard	short_rsi_threshold 55.1 same PnL as 55.0
+d41d212	0.305902084754105	0.950000	20	discard	short_rsi_threshold 55.1 same PnL as 55.0
