@@ -582,3 +582,4 @@ b748856	0.204914646472809	0.928571	14	discard	rsi_length 20 not improved vs 12 (
 0aa6393	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.98 same PnL as 56.0
 e943ad5	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.35 same PnL as 45.0 (short_rsi 56)
 54ebdff	0.306752971083334	0.950000	20	discard	trailing_trigger_pct 0.013005 same PnL as 0.013 (short_rsi 56)
+3c87636	0.299895492184478	1.000000	18	discard	min_ob_stop_distance_pct 0.0051 not improved vs 0.005 (short_rsi 56)
