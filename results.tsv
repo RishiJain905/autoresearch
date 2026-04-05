@@ -572,3 +572,4 @@ d04d79a	0.306752971083334	0.950000	20	discard	short_trailing_distance_pct ULP-1 
 4499948	0.286495172382667	0.950000	20	discard	rsi_length 7 not improved vs 12 (short_rsi 56)
 4ee5a34	-0.177281217174894	0.833333	6	discard	rsi_length 18 not improved vs 12 (short_rsi 56)
 55383ed	0.306752971083334	0.950000	20	discard	long_rsi_threshold 44.99 same PnL as 45.0 (short_rsi 56)
+c06fd3b	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.07 same PnL as 56.0
