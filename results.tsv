@@ -596,3 +596,4 @@ f690976	0.306752971083334	0.950000	20	discard	trailing_trigger_pct 0.01309 same 
 705dd35	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.01310 worse vs 0.01309 flat (cliff edge)
 636d49c	0.306752971083334	0.950000	20	discard	trailing_trigger_pct 0.013095 same PnL cliff below 0.01310
 4b65703	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.01311 same PnL band as 0.01310
+516150f	0.271331082421986	0.904762	21	discard	rsi_length 4 not improved vs 12 (short_rsi 56)
