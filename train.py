@@ -86,7 +86,7 @@ class StrategyConfig:
     # Trailing stop params
     trailing_stop_enabled: bool = True
     trailing_trigger_pct: float = (
-        0.01309534  # first bad decimal above 0.01309533 (19 trades)
+        0.013095000000000174  # 100x nextafter(0.013095); still 20 trades vs decimal cliff
     )
     long_trailing_distance_pct: float = (
         0.003791061077040  # probe between 0.003791061077041 and cliff band 0.039-0.037
