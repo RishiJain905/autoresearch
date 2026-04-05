@@ -553,3 +553,4 @@ d9cf5df	0.306752971083334	0.950000	20	discard	long_rsi_threshold 44.95 same PnL 
 1e59ea4	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.03 same PnL as 56.0
 79072e7	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.05 same PnL as 56.0
 05e63a2	0.306752971083334	0.950000	20	discard	min_ob_stop_distance_pct 0.00498 same PnL as 0.005
+bf2501d	0.306752971083334	0.950000	20	discard	take_profit_pct nextafter 0.0155532607289665 same PnL
