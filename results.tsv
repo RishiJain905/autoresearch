@@ -484,4 +484,4 @@ f8554e8	0.197372745111473	0.923077	13	discard	trailing_stop_enabled False not im
 6add3f7	-0.250013900118622	0.800000	5	discard	allow_shorts False long-only
 c624e64	0.158861577894723	1.000000	8	discard	allow_longs False short-only
 0ce5e63	0.305902084754105	0.950000	20	discard	min_ob_stop 0.00498 same PnL as 0.005
-0000000	0.305902084754105	0.950000	20	discard	min_ob_stop 0.00495 same PnL as 0.005
+fc6d04d	0.305902084754105	0.950000	20	discard	min_ob_stop 0.00495 same PnL as 0.005
