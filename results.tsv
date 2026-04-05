@@ -595,3 +595,4 @@ c62d903	0.306752971083334	0.950000	20	discard	min_ob_stop_distance_pct 0.00495 s
 f690976	0.306752971083334	0.950000	20	discard	trailing_trigger_pct 0.01309 same PnL as 0.013 (bisect vs 0.01312)
 705dd35	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.01310 worse vs 0.01309 flat (cliff edge)
 636d49c	0.306752971083334	0.950000	20	discard	trailing_trigger_pct 0.013095 same PnL cliff below 0.01310
+4b65703	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.01311 same PnL band as 0.01310
