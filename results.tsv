@@ -1,4 +1,4 @@
-commit	total_pnl_pct	win_rate	trade_count	status	description
+﻿commit	total_pnl_pct	win_rate	trade_count	status	description
 2f9b771	0.000000	0.000000	0	discard	<think>
 cbd64d2	0.039216	0.204545	44	keep	Looking at the metrics, the strategy is losing money with a very low win rate (1
 db1378d	0.120000	1.000000	8	keep	Looking at the metrics: very low win rate (20.5%) with 44 trades. The strategy i
@@ -617,3 +617,4 @@ c1d9e33	0.306752971083334	0.950000	20	discard	trailing nextafter 0.01309533 good
 0c20b3c	0.295096481630923	0.947368	19	discard	trailing nextbefore 0.01309534 bad; max good is nextafter(0.01309533)
 4b547c5	0.194203271320101	1.000000	12	discard	rsi_length 25 not improved vs 12
 a670f32	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.45 same PnL as 45.0 (short_rsi 56)
+8ab33d0	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.96 same PnL as 56.0
