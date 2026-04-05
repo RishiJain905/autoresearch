@@ -92,7 +92,7 @@ class StrategyConfig:
         0.003791061077040  # probe between 0.003791061077041 and cliff band 0.039-0.037
     )
     short_trailing_distance_pct: float = (
-        0.001457940723  # trail ~0.1457940723% above the lowest price seen for shorts (RSI 12 tuned)
+        0.001457940722995  # micro tighter than 723, above 7229 cliff
     )
 
 
