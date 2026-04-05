@@ -44,7 +44,25 @@ jobs:
         run: python autoresearch_step.py
 
       - name: Push new commit (if experiment was kept)
-        run: git push origin HEAD
+        run: |
+          set -euo pipefail
+          branch="${GITHUB_REF_NAME:-main}"
+
+          # If another run updated the branch first, rebase and retry.
+          for attempt in 1 2 3; do
+            git fetch origin "$branch"
+            git rebase "origin/$branch"
+
+            if git push origin "HEAD:$branch"; then
+              exit 0
+            fi
+
+            echo "Push rejected (attempt $attempt/3); retrying..."
+            sleep $((attempt * 2))
+          done
+
+          echo "Push still rejected after 3 attempts."
+          exit 1
         # Only push when the step above succeeded and left a new commit.
         # `git push` is a no-op if HEAD hasn't moved, so this is always safe.
         if: success()
