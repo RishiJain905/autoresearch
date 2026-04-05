@@ -69,7 +69,7 @@ import pandas as pd
 
 @dataclass
 class StrategyConfig:
-    rsi_length: int = 12
+    rsi_length: int = 25
     long_rsi_threshold: float = 45.0
     short_rsi_threshold: float = 56.0
     take_profit_pct: float = (
