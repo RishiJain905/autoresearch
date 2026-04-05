@@ -535,3 +535,4 @@ e415e9d	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01291 same PnL 
 8a850fc	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.125 same PnL as 45.0 (short_rsi 56)
 047ee97	0.296834590586516	0.947368	19	discard	rsi_length 13 not improved (short_rsi 56)
 1e4059f	0.292927396850071	0.950000	20	discard	trailing_trigger 0.01288125 bad vs good ≥0.01288155078
+0000000	0.292927396850071	0.950000	20	discard	trailing_trigger 0.0128815453125 narrow bad vs 0.01288155078125 good
