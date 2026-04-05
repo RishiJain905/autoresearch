@@ -564,3 +564,4 @@ bf2501d	0.306752971083334	0.950000	20	discard	take_profit_pct nextafter 0.015553
 b268240	0.306752971083334	0.950000	20	discard	long_trailing_distance_pct ULP-1 vs 0.003791061077040 same PnL
 d04d79a	0.306752971083334	0.950000	20	discard	short_trailing_distance_pct ULP-1 vs 7229745 same PnL
 5d37004	-0.177281217174894	0.833333	6	discard	rsi_length 16 not improved vs 12 (short_rsi 56)
+2dd734b	0.286735396732170	0.950000	20	discard	rsi_length 8 not improved vs 12 (short_rsi 56)
