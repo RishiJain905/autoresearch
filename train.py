@@ -89,7 +89,7 @@ class StrategyConfig:
         0.013  # activate trailing stop once price moves 1.3% in profit
     )
     long_trailing_distance_pct: float = (
-        0.003791061077044  # micro-tighter vs 0.003791061077045
+        0.003791061077041  # step vs 0.003791061077044 toward 0.077035 cliff
     )
     short_trailing_distance_pct: float = (
         0.001457940723  # trail ~0.1457940723% above the lowest price seen for shorts (RSI 12 tuned)
