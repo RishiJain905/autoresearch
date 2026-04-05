@@ -477,4 +477,4 @@ cbfd026	0.305902084754105	0.950000	20	discard	trailing_trigger 0.01299 same PnL 
 202e22f	0.305902084754105	0.950000	20	discard	long_trailing 0.0037910610770398 same PnL as 040
 bbf5a83	-0.307455372364701	0.000000	1	discard	require_fvg_confirmation True trade_count 1
 341930e	0.152056912920592	0.681818	22	discard	entry_on_close False not improved vs True
-0000000	0.305902084754105	0.950000	20	discard	long_short_conflict prefer_long same PnL as skip_both
+09253d9	0.305902084754105	0.950000	20	discard	long_short_conflict prefer_long same PnL as skip_both
