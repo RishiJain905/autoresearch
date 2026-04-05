@@ -469,4 +469,4 @@ e0cbb4f	0.305902084754105	0.950000	20	discard	long_rsi_threshold 44.9 same PnL a
 cba7fef	0.305902084754105	0.950000	20	discard	long_rsi_threshold 45.1 same PnL as 45.0
 42b1bba	0.305902084754105	0.950000	20	discard	short_rsi_threshold 54.9 same PnL as 55.0
 d41d212	0.305902084754105	0.950000	20	discard	short_rsi_threshold 55.1 same PnL as 55.0
-0000000	0.299044605855248	1.000000	18	discard	min_ob_stop_distance_pct 0.00501 not improved vs 0.005
+379968d	0.299044605855248	1.000000	18	discard	min_ob_stop_distance_pct 0.00501 not improved vs 0.005
