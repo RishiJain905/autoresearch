@@ -71,7 +71,7 @@ import pandas as pd
 class StrategyConfig:
     rsi_length: int = 12
     long_rsi_threshold: float = 45.0
-    short_rsi_threshold: float = 56.03
+    short_rsi_threshold: float = 56.0
     take_profit_pct: float = (
         0.0155532607289665  # between 728966 and 728967 cliff
     )
