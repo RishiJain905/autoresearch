@@ -604,3 +604,4 @@ d715ac0	0.295096481630923	0.947368	19	discard	trailing_trigger_pct 0.013096 wors
 c8effc8	0.306752971083334	0.950000	20	discard	trailing_trigger_pct nextafter 0.013095 same PnL; cliff after 1 ULP
 31eeb47	0.306752971083334	0.950000	20	discard	trailing 0.013095+8ULP same PnL; 0.013096 decimal hits worse band
 7fd55fa	0.271331082421986	0.904762	21	discard	rsi_length 3 not improved vs 12 (short_rsi 56)
+9306d18	0.194203271320102	1.000000	12	discard	rsi_length 23 not improved vs 12 (short_rsi 56)
