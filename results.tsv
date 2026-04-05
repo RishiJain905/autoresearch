@@ -515,3 +515,4 @@ a0e33fa	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.5 same PnL a
 4389a11	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01305 same PnL as 0.013 (short_rsi 56)
 ca607a6	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.75 same PnL as 56.0
 da8ae14	0.296834590586516	0.947368	19	discard	long_rsi_threshold 44.5 not improved (short_rsi 56)
+0000000	0.299895492184478	1.000000	18	discard	min_ob_stop 0.00502 not improved (short_rsi 56)
