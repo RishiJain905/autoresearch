@@ -512,3 +512,4 @@ a8cd597	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.5 same PnL 
 a9624f2	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.25 same PnL as 56.0
 a0e33fa	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.5 same PnL as 45.0 (short_rsi 56)
 672294b	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01295 same PnL as 0.013 (short_rsi 56)
+0000000	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01305 same PnL as 0.013 (short_rsi 56)
