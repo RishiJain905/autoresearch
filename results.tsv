@@ -1,4 +1,4 @@
-﻿commit	total_pnl_pct	win_rate	trade_count	status	description
+commit	total_pnl_pct	win_rate	trade_count	status	description
 2f9b771	0.000000	0.000000	0	discard	<think>
 cbd64d2	0.039216	0.204545	44	keep	Looking at the metrics, the strategy is losing money with a very low win rate (1
 db1378d	0.120000	1.000000	8	keep	Looking at the metrics: very low win rate (20.5%) with 44 trades. The strategy i
@@ -456,4 +456,4 @@ e971e99	0.305902084754006	0.950000	20	discard	long take_profit_pct 0.01555326072
 59b1c17	0.304480983218623	0.950000	20	discard	short_take_profit_pct 0.02526795982595895 cliff vs 8259589
 4564933	0.305902084754025	0.950000	20	keep	short_trailing 0.001457940722995 vs 723
 a858b50	0.305902084754037	0.950000	20	keep	short_trailing 0.001457940722992 vs 722995
-0000000	0.305902084754045	0.950000	20	keep	short_trailing 0.00145794072299 vs 722992
+d3e9e2b	0.305902084754045	0.950000	20	keep	short_trailing 0.00145794072299 vs 722992
