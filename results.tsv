@@ -481,3 +481,4 @@ bbf5a83	-0.307455372364701	0.000000	1	discard	require_fvg_confirmation True trad
 3fff5d9	0.305902084754105	0.950000	20	discard	long_short_conflict prefer_short same PnL as skip_both
 f8554e8	0.197372745111473	0.923077	13	discard	trailing_stop_enabled False not improved
 7773f3d	0.305902084754105	0.950000	20	discard	trailing_trigger 0.01302 same PnL as 0.013
+0000000	-0.250013900118622	0.800000	5	discard	allow_shorts False long-only
