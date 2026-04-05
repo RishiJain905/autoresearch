@@ -506,3 +506,4 @@ afbe19c	0.305902084754106	0.950000	20	discard	short_rsi_threshold 54.0 same PnL 
 af2b418	0.306752971083334	0.950000	20	keep	short_rsi_threshold 56.0 vs 55.0
 f30af92	0.306752971083334	0.950000	20	discard	short_rsi_threshold 57.0 same PnL as 56.0
 7aa0860	0.305902084754106	0.950000	20	discard	short_rsi_threshold 55.5 not improved vs 56.0
+0000000	0.287125127472295	0.950000	20	discard	rsi_length 10 not improved (short_rsi 56.0)
