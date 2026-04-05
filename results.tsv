@@ -548,3 +548,4 @@ d4641d4	0.306752971083334	0.950000	20	discard	trailing_trigger 0.0128815465 0.01
 f91dccd	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.02 same PnL as 56.0
 6e3d55e	0.306752971083334	0.950000	20	discard	long_short_conflict prefer_long same PnL as skip_both
 cfb6985	0.306752971083334	0.950000	20	discard	long_short_conflict prefer_short same PnL as skip_both
+9fd3e75	0.197372745111473	0.923077	13	discard	trailing_stop_enabled false worse vs baseline 0.307/20
