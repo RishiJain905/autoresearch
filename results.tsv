@@ -610,3 +610,4 @@ c8effc8	0.306752971083334	0.950000	20	discard	trailing_trigger_pct nextafter 0.0
 96ef607	0.306752971083334	0.950000	20	discard	trailing 0.01309533 max good before 0.01309534 cliff (19 trades)
 ea45e17	0.295096481630923	0.947368	19	discard	trailing 0.01309534 min bad after 0.01309533 good
 69853d2	0.306752971083334	0.950000	20	discard	trailing 100x nextafter 0.013095 same PnL; cliff at ~0.01309534 decimal
+09d58b2	0.194203271320102	1.000000	12	discard	rsi_length 24 not improved vs 12
