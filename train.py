@@ -73,7 +73,7 @@ class StrategyConfig:
     long_rsi_threshold: float = 45.0
     short_rsi_threshold: float = 55.0
     take_profit_pct: float = (
-        0.0155532607289  # last step before 0.0155532607290 cliff
+        0.01555326072895  # between 0.0155532607289 and 0.0155532607290 cliff
     )
     short_take_profit_pct: Optional[float] = 0.0252679598259589  # last sub-step before 825959 cliff
     require_fvg_confirmation: bool = False
