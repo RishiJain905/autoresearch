@@ -561,3 +561,4 @@ bf2501d	0.306752971083334	0.950000	20	discard	take_profit_pct nextafter 0.015553
 3920984	0.306752971083334	0.950000	20	discard	short_take_profit_pct nextbefore 0.0252679598259589 same PnL
 7a321de	-0.250013900118622	0.800000	5	discard	allow_shorts false long-only worse PnL vs baseline
 2daa201	0.159712464223953	1.000000	8	discard	allow_longs false short-only worse vs baseline
+b268240	0.306752971083334	0.950000	20	discard	long_trailing_distance_pct ULP-1 vs 0.003791061077040 same PnL
