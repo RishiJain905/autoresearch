@@ -500,3 +500,4 @@ a5b7c14	0.305902084754106	0.950000	20	discard	short TP ULP-1 below 8259589 same 
 6cb4a30	0.305902084754106	0.950000	20	discard	long_trail ULP+1 above 040 same PnL
 231a9fe	0.305902084754106	0.950000	20	discard	trailing_trigger 0.0129 same PnL as 0.013
 fa8be16	0.294245595301695	0.947368	19	discard	trailing_trigger 0.0131 not improved vs 0.013
+0000000	0.295983704257288	0.947368	19	discard	long_rsi_threshold 44.0 not improved vs 45.0
