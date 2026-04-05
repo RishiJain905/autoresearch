@@ -526,3 +526,4 @@ a306039	0.305902084754106	0.950000	20	discard	rsi_length 11 not improved vs 12 (
 efa89e5	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01292 same PnL as 0.013 (short_rsi 56)
 06da04c	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01307 same PnL as 0.013 (short_rsi 56)
 a25c2aa	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.8 same PnL as 56.0
+0000000	0.281281329857549	0.944444	18	discard	rsi_length 15 not improved (short_rsi 56)
