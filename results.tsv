@@ -546,4 +546,4 @@ bcb09fc	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.9 same PnL 
 d4641d4	0.306752971083334	0.950000	20	discard	trailing_trigger 0.0128815465 0.012881548 same PnL as 0.013
 2472c11	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.01 same PnL as 56.0
 f91dccd	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.02 same PnL as 56.0
-0819a9e	0.306752971083334	0.950000	20	discard	long_short_conflict prefer_long same PnL as skip_both
+6e3d55e	0.306752971083334	0.950000	20	discard	long_short_conflict prefer_long same PnL as skip_both
