@@ -522,3 +522,4 @@ d8d868a	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.25 same PnL 
 b31a10d	0.292927396850071	0.950000	20	discard	trailing_trigger 0.01285 not improved (short_rsi 56)
 cc0edb3	0.306752971083334	0.950000	20	discard	trailing_trigger 0.01308 same PnL as 0.013 (short_rsi 56)
 a306039	0.305902084754106	0.950000	20	discard	rsi_length 11 not improved vs 12 (short_rsi 56)
+0000000	0.292927396850071	0.950000	20	discard	trailing_trigger 0.01288 not improved (short_rsi 56)
