@@ -471,4 +471,4 @@ cba7fef	0.305902084754105	0.950000	20	discard	long_rsi_threshold 45.1 same PnL a
 d41d212	0.305902084754105	0.950000	20	discard	short_rsi_threshold 55.1 same PnL as 55.0
 379968d	0.299044605855248	1.000000	18	discard	min_ob_stop_distance_pct 0.00501 not improved vs 0.005
 f5bdd60	0.305902084754104	0.950000	20	discard	short_take_profit_pct 8259588 not improved vs 8259589
-0000000	0.305902084754105	0.950000	20	discard	trailing_trigger 0.012999 same PnL as 0.013
+cacfddd	0.305902084754105	0.950000	20	discard	trailing_trigger 0.012999 same PnL as 0.013
