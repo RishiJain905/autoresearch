@@ -551,3 +551,4 @@ cfb6985	0.306752971083334	0.950000	20	discard	long_short_conflict prefer_short s
 9fd3e75	0.197372745111473	0.923077	13	discard	trailing_stop_enabled false worse vs baseline 0.307/20
 d9cf5df	0.306752971083334	0.950000	20	discard	long_rsi_threshold 44.95 same PnL as 45.0 (short_rsi 56)
 1e59ea4	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.03 same PnL as 56.0
+79072e7	0.306752971083334	0.950000	20	discard	short_rsi_threshold 56.05 same PnL as 56.0
