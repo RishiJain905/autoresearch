@@ -580,3 +580,4 @@ cb4cf36	0.306752971083334	0.950000	20	discard	short_trailing_distance_pct nextaf
 a7cbef1	0.280910105786214	0.950000	20	discard	rsi_length 6 not improved vs 12 (short_rsi 56)
 b748856	0.204914646472809	0.928571	14	discard	rsi_length 20 not improved vs 12 (short_rsi 56)
 0aa6393	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.98 same PnL as 56.0
+e943ad5	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.35 same PnL as 45.0 (short_rsi 56)
