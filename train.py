@@ -54,7 +54,7 @@ Long:
 Short:
 - latest valid bearish internal OB exists
 - close lies inside the bearish OB (wick-only overlap is not enough)
-- RSI > 55 (overbought, tuned)
+- RSI > 56 (overbought, tuned)
 - nearest relevant downside liquidity target is a weak low
 - optional bearish FVG can strengthen the thesis but is not required
 - take profit at -`short_take_profit_pct` (~2.4% on sample data)
