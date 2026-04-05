@@ -558,3 +558,4 @@ bf2501d	0.306752971083334	0.950000	20	discard	take_profit_pct nextafter 0.015553
 877618c	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.2 same PnL as 45.0 (short_rsi 56)
 1e8eafe	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.99 same PnL as 56.0
 926266c	0.306752971083334	0.950000	20	discard	take_profit_pct nextbefore 0.0155532607289665 same PnL
+3920984	0.306752971083334	0.950000	20	discard	short_take_profit_pct nextbefore 0.0252679598259589 same PnL
