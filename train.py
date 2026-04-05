@@ -84,7 +84,7 @@ class StrategyConfig:
     long_short_conflict: str = "skip_both"  # "prefer_long" | "prefer_short"
     min_ob_stop_distance_pct: float = 0.005  # OB must be ≥0.5% away to apply stop
     # Trailing stop params
-    trailing_stop_enabled: bool = False
+    trailing_stop_enabled: bool = True
     trailing_trigger_pct: float = (
         0.013  # activate trailing stop once price moves 1.3% in profit
     )
