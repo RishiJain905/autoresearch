@@ -474,3 +474,4 @@ f5bdd60	0.305902084754104	0.950000	20	discard	short_take_profit_pct 8259588 not 
 cacfddd	0.305902084754105	0.950000	20	discard	trailing_trigger 0.012999 same PnL as 0.013
 68a070a	0.305902084754105	0.950000	20	discard	trailing_trigger 0.013001 same PnL as 0.013
 cbfd026	0.305902084754105	0.950000	20	discard	trailing_trigger 0.01299 same PnL as 0.013
+0000000	0.305902084754105	0.950000	20	discard	long_trailing 0.0037910610770398 same PnL as 040
