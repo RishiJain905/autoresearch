@@ -503,4 +503,4 @@ fa8be16	0.294245595301695	0.947368	19	discard	trailing_trigger 0.0131 not improv
 fd9a786	0.295983704257288	0.947368	19	discard	long_rsi_threshold 44.0 not improved vs 45.0
 64ed608	0.305902084754106	0.950000	20	discard	long_rsi_threshold 46.0 same PnL as 45.0
 afbe19c	0.305902084754106	0.950000	20	discard	short_rsi_threshold 54.0 same PnL as 55.0
-0000000	0.306752971083334	0.950000	20	keep	short_rsi_threshold 56.0 vs 55.0
+af2b418	0.306752971083334	0.950000	20	keep	short_rsi_threshold 56.0 vs 55.0
