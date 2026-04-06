@@ -619,3 +619,4 @@ c1d9e33	0.306752971083334	0.950000	20	discard	trailing nextafter 0.01309533 good
 a670f32	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.45 same PnL as 45.0 (short_rsi 56)
 8ab33d0	0.306752971083334	0.950000	20	discard	short_rsi_threshold 55.96 same PnL as 56.0
 5bd7ac7	0.320691	0.950000	20	keep	Looking at the metrics, the strategy has an excellent 95% win rate but t
+5c61677	0.333322	0.950000	20	keep	Increase take profit targets (long 2.5%, short 3.5%) to capture more pro
