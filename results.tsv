@@ -623,3 +623,4 @@ a670f32	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.45 same PnL 
 94bc278	0.313628	0.950000	20	discard	Widen long trailing stop distance to let winners run
 7d5b1cb	0.343142	0.950000	20	keep	Increase take profit targets to 3.0% long / 4.0% short
 1206a3c	0.118974	0.818182	11	discard	Looking at the history, the strategy has a 95% win rate but only 0.34% t
+3c84237	0.000000	0.000000	0	discard	Looking at the history, I see that the strategy doesn't use the zone inf
