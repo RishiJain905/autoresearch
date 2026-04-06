@@ -47,7 +47,7 @@ Long:
 - RSI < 45 (oversold, tuned)
 - nearest relevant upside liquidity target is a weak high
 - optional bullish FVG can strengthen the thesis but is not required
-- take profit at +3.0% long (`take_profit_pct`; shorts use `short_take_profit_pct` ~4.0%)
+- take profit at +5.0% long
 - stop if close breaks below bullish OB low, BUT only if OB is ≥0.5% below entry
   (prevents getting stopped out by tight OBs that don't offer real risk management)
 
@@ -57,7 +57,7 @@ Short:
 - RSI > 56 (overbought, tuned)
 - nearest relevant downside liquidity target is a weak low
 - optional bearish FVG can strengthen the thesis but is not required
-- take profit at -`short_take_profit_pct` (~4.0% on sample data)
+- take profit at -7.0% for shorts
 - stop if close breaks above bearish OB high, BUT only if OB is ≥0.5% above entry
 """
 
@@ -72,8 +72,8 @@ class StrategyConfig:
     rsi_length: int = 12
     long_rsi_threshold: float = 45.0
     short_rsi_threshold: float = 56.0
-    take_profit_pct: float = 0.030  # 3.0% for longs (increased from 2.5%)
-    short_take_profit_pct: Optional[float] = 0.040  # 4.0% for shorts (increased from 3.5%)
+    take_profit_pct: float = 0.050  # 5.0% for longs (increased from 3.0%)
+    short_take_profit_pct: Optional[float] = 0.070  # 7.0% for shorts (increased from 4.0%)
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
     allow_longs: bool = True
