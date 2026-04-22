@@ -630,3 +630,4 @@ ff2219d	0.293197	0.950000	20	discard	Widen trailing stop distances to let winner
 e0ac9c0	0.299653	0.857143	21	discard	**Summary:** Lower min_ob_stop_distance_pct from 0.5% to 0.3%
 ee1402e	0.123155	0.500000	36	discard	Add fixed stop-loss buffer (1%) to protect against tight OBs
 f3a49b4	0.000000	0.000000	0	discard	Add zone-based entry filter (discount for longs, premium for shorts)
+98473b0	0.278961	0.950000	20	discard	Looking at the history and current state: the strategy has a 95% win rat
