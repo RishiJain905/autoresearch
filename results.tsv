@@ -626,4 +626,4 @@ a670f32	0.306752971083334	0.950000	20	discard	long_rsi_threshold 45.45 same PnL 
 3c84237	0.000000	0.000000	0	discard	Looking at the history, I see that the strategy doesn't use the zone inf
 2acf3c1	0.120552	0.472222	36	discard	Use ATR-based stop loss instead of fixed OB stop
 ff2219d	0.293197	0.950000	20	discard	Widen trailing stop distances to let winners run more
-bef1b3b	0.344236	0.950000	20	keep	Increase take profit to 5% longs / 7% shorts
+285ab63	0.344236	0.950000	20	keep	Increase take profit to 5% longs / 7% shorts
