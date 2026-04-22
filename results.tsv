@@ -632,3 +632,4 @@ ee1402e	0.123155	0.500000	36	discard	Add fixed stop-loss buffer (1%) to protect 
 f3a49b4	0.000000	0.000000	0	discard	Add zone-based entry filter (discount for longs, premium for shorts)
 98473b0	0.278961	0.950000	20	discard	Looking at the history and current state: the strategy has a 95% win rat
 381e7a5	-0.307455	0.000000	1	discard	Looking at the history, the strategy has a very high win rate (95%) but 
+5db91bf	0.280280	1.000000	14	discard	Lower long RSI threshold to 40 to capture more oversold entries
