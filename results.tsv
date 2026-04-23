@@ -641,3 +641,4 @@ b391b69	0.100702	0.714286	7	discard	Disable trailing stop and lower TP targets t
 443c0d5	0.303481	0.950000	20	discard	Widen trailing stop distance to let winners run longer
 f05f453	0.343384	0.950000	20	discard	from __future__ import annotations
 b48ecaf	0.220641	0.714286	7	discard	Looking at the history carefully:
+f63a623	0.000000	0.000000	0	discard	Looking at the history carefully:
