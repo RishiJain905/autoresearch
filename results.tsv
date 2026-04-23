@@ -639,3 +639,4 @@ fc087ef	0.344236	0.950000	20	discard	Increase take profit to 6% long / 8% short
 b43277f	0.220641	0.714286	7	discard	Disable trailing stop to let winners reach full TP
 b391b69	0.100702	0.714286	7	discard	Disable trailing stop and lower TP targets to 3% long / 4% short
 443c0d5	0.303481	0.950000	20	discard	Widen trailing stop distance to let winners run longer
+f05f453	0.343384	0.950000	20	discard	from __future__ import annotations
