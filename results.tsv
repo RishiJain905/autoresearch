@@ -637,3 +637,4 @@ cc750af	0.299653	0.857143	21	discard	Lower min_ob_stop_distance_pct to 0.3% to t
 66323f4	-0.234986	0.875000	8	discard	Lower trailing trigger from 1.3% to 0.8% to exit winners sooner
 fc087ef	0.344236	0.950000	20	discard	Increase take profit to 6% long / 8% short
 b43277f	0.220641	0.714286	7	discard	Disable trailing stop to let winners reach full TP
+b391b69	0.100702	0.714286	7	discard	Disable trailing stop and lower TP targets to 3% long / 4% short
