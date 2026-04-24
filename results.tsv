@@ -645,3 +645,4 @@ f63a623	0.000000	0.000000	0	discard	Looking at the history carefully:
 c9efcfe	0.134669	0.818182	11	discard	from __future__ import annotations
 6e81cc0	0.202118	0.736842	19	discard	Lower min_ob_stop_distance_pct from 0.5% to 0.3%
 7f8922e	0.333991	0.904762	21	discard	Looking at the history: many trailing stop and stop-distance experiments
+9d20cad	0.076916	0.317073	41	discard	Looking at the history, I see many trailing stop and stop-distance exper
