@@ -642,3 +642,4 @@ b391b69	0.100702	0.714286	7	discard	Disable trailing stop and lower TP targets t
 f05f453	0.343384	0.950000	20	discard	from __future__ import annotations
 b48ecaf	0.220641	0.714286	7	discard	Looking at the history carefully:
 f63a623	0.000000	0.000000	0	discard	Looking at the history carefully:
+c9efcfe	0.134669	0.818182	11	discard	from __future__ import annotations
