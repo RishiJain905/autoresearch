@@ -654,3 +654,4 @@ a9c8321	0.276820	1.000000	14	discard	Tighten RSI thresholds to 40/60 for higher-
 7cac8e5	0.291924	0.950000	20	discard	Widen trailing stop distance from 0.38% to 0.75%
 ff7b401	0.000000	0.000000	0	discard	**Summary:** Add zone-based entry filter (discount/premium)
 f08ee4e	0.344236	0.950000	20	discard	**Summary: Increase long TP to 6% and short TP to 6%**
+9001b1b	0.035750	0.500000	4	discard	Remove trailing stop and raise TP targets to 6%/8%
