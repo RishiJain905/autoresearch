@@ -651,3 +651,4 @@ c3b177c	0.117606	0.818182	11	discard	from __future__ import annotations
 bdd9ec2	0.344236	0.950000	20	discard	Increase TP targets to let high-win-rate winners run
 cc9ab70	0.316032	0.950000	20	discard	Looking at the history, many trailing stop experiments have been tried a
 a9c8321	0.276820	1.000000	14	discard	Tighten RSI thresholds to 40/60 for higher-quality entries
+7cac8e5	0.291924	0.950000	20	discard	Widen trailing stop distance from 0.38% to 0.75%
