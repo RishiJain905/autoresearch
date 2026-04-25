@@ -660,3 +660,4 @@ e540c5c	0.222553	0.968750	32	discard	Add exit when price reaches nearest weak hi
 e1a0792	0.344236	0.950000	20	discard	Add partial take profit (50% at TP, rest trails)
 1c463fd	0.321968	0.944444	18	discard	Lower RSI thresholds to 42/54 to capture more trades
 74f3f27	0.220641	0.714286	7	discard	Remove trailing stop, use fixed TP+OB exits only
+0102d8f	0.316493	0.950000	20	discard	Lower long RSI threshold to 50 to capture deeper pullback entries
