@@ -658,3 +658,4 @@ f08ee4e	0.344236	0.950000	20	discard	**Summary: Increase long TP to 6% and short
 e540c5c	0.222553	0.968750	32	discard	Add exit when price reaches nearest weak high/low for longs/shorts
 3b12c96	0.344236	0.950000	20	discard	Lower long TP from 5% to 4% to capture more frequent smaller wins
 e1a0792	0.344236	0.950000	20	discard	Add partial take profit (50% at TP, rest trails)
+1c463fd	0.321968	0.944444	18	discard	Lower RSI thresholds to 42/54 to capture more trades
