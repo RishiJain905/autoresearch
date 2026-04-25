@@ -668,3 +668,4 @@ a5802b8	0.280280	1.000000	14	discard	Lower long RSI threshold to 40 for deeper p
 87b4d3f	-0.238856	0.875000	8	discard	Looking at the current state (95% win rate, 20 trades, 0.344 total PnL),
 88cf796	0.344236	0.950000	20	discard	Increase TP targets to 8%/10% to capture more profit on the 95% win rate
 7f6d4ee	0.332276	0.950000	20	discard	Widen trailing distances to let high-win-rate winners run
+0b53f86	0.328178	1.000000	18	discard	Remove OB stop logic to let high-win trades run longer
