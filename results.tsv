@@ -664,3 +664,4 @@ e1a0792	0.344236	0.950000	20	discard	Add partial take profit (50% at TP, rest tr
 ccfbe85	0.084849	0.750000	8	discard	Looking at the data: 95% win rate but moderate total_pnl_pct (0.344) wit
 4a6ab73	0.328859	0.950000	20	discard	**Summary:** Increase TP targets to 6%/8% and widen trailing distance to
 a5802b8	0.280280	1.000000	14	discard	Lower long RSI threshold to 40 for deeper pullback entries
+4aaf359	0.324246	1.000000	18	discard	Increase min_ob_stop_distance_pct from 0.5% to 1.5% to filter out tight 
