@@ -677,3 +677,4 @@ fd343ba	0.321737	0.950000	20	discard	Looking at the metrics: 95% win rate with 2
 38aaeb6	0.000000	0.000000	0	discard	Add discount/premium zone filter for cleaner entries
 d12c895	0.166293	0.741935	31	discard	Add fixed max stop loss to cap losing trade size
 f7f3022	0.291924	0.950000	20	discard	**Summary: Widen trailing distance to let winners run further**
+3af02bd	0.126668	0.818182	11	discard	Widen trailing trigger to 2.0% and trailing distance to 0.7%
