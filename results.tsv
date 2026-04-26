@@ -671,3 +671,4 @@ a5802b8	0.280280	1.000000	14	discard	Lower long RSI threshold to 40 for deeper p
 0b53f86	0.328178	1.000000	18	discard	Remove OB stop logic to let high-win trades run longer
 73aab54	0.059857	0.750000	8	discard	Widen trailing stop trigger to 2.5% and distance to 1.0%
 24c841e	0.167697	0.600000	5	discard	**Summary: Increase TP targets to 7%/9% and remove trailing stop to maxi
+9312caa	0.344236	0.950000	20	discard	from __future__ import annotations
