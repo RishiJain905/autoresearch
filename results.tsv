@@ -675,3 +675,4 @@ a5802b8	0.280280	1.000000	14	discard	Lower long RSI threshold to 40 for deeper p
 15d17d9	-0.199205	0.800000	5	discard	Require minimum upside room to nearest weak high using ATR
 fd343ba	0.321737	0.950000	20	discard	Looking at the metrics: 95% win rate with 20 trades, averaging ~1.72% pe
 38aaeb6	0.000000	0.000000	0	discard	Add discount/premium zone filter for cleaner entries
+d12c895	0.166293	0.741935	31	discard	Add fixed max stop loss to cap losing trade size
