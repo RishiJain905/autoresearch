@@ -683,3 +683,4 @@ b18b27a	0.280280	1.000000	14	discard	Raise short TP to 7.5% and long RSI to 40
 48e146f	0.256433	0.956522	23	discard	Widen trailing stop to capture larger portions of winners
 29623f5	0.220641	0.714286	7	discard	**Summary:** Remove trailing stop to let high-win trades reach full TP t
 c3a7779	0.000000	0.000000	0	discard	**Summary: Combine RSI + zone for stricter entry filtering**
+888e23e	0.049277	0.282051	39	discard	from __future__ import annotations
