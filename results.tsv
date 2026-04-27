@@ -679,3 +679,4 @@ d12c895	0.166293	0.741935	31	discard	Add fixed max stop loss to cap losing trade
 f7f3022	0.291924	0.950000	20	discard	**Summary: Widen trailing distance to let winners run further**
 3af02bd	0.126668	0.818182	11	discard	Widen trailing trigger to 2.0% and trailing distance to 0.7%
 b18b27a	0.280280	1.000000	14	discard	Raise short TP to 7.5% and long RSI to 40
+1c81bf9	0.220641	0.714286	7	discard	Remove trailing stop to let 95% win rate winners reach full TP
