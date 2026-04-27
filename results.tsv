@@ -681,3 +681,4 @@ f7f3022	0.291924	0.950000	20	discard	**Summary: Widen trailing distance to let w
 b18b27a	0.280280	1.000000	14	discard	Raise short TP to 7.5% and long RSI to 40
 1c81bf9	0.220641	0.714286	7	discard	Remove trailing stop to let 95% win rate winners reach full TP
 48e146f	0.256433	0.956522	23	discard	Widen trailing stop to capture larger portions of winners
+29623f5	0.220641	0.714286	7	discard	**Summary:** Remove trailing stop to let high-win trades reach full TP t
