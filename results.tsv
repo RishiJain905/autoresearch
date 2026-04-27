@@ -685,3 +685,4 @@ b18b27a	0.280280	1.000000	14	discard	Raise short TP to 7.5% and long RSI to 40
 c3a7779	0.000000	0.000000	0	discard	**Summary: Combine RSI + zone for stricter entry filtering**
 888e23e	0.049277	0.282051	39	discard	from __future__ import annotations
 11375df	-0.176786	0.800000	5	discard	Remove trailing stop for longs to let winners reach full 5% TP
+199828b	0.022760	0.500000	34	discard	Raise long TP to 5.5% and enforce 1.0% min OB distance for tighter risk 
