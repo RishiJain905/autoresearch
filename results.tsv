@@ -691,3 +691,4 @@ f01d535	0.329414	0.950000	20	discard	Widen short TP to 8% and trailing distance 
 469db19	0.025750	0.500000	4	discard	**Summary: Raise long TP to 6% and use conditional trailing stop**
 6a062b2	0.330013	0.950000	20	discard	Widen short trailing distance to let shorts capture bigger moves
 4f852cd	0.220641	0.714286	7	discard	Remove trailing stop to let high-win winners run to full TP
+068580c	0.129302	0.818182	11	discard	Looking at the current metrics (95% win rate, 20 trades, 0.344 total PnL
