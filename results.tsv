@@ -697,3 +697,4 @@ bf071ef	0.000000	0.000000	0	discard	Add zone filter for longs in discount zone a
 ec69f26	0.316883	0.950000	20	discard	Looking at the git history, I see many trailing stop and TP adjustments 
 0897997	0.025750	0.500000	4	discard	Looking at the history carefully, I see many trailing stop and TP adjust
 163ce29	0.299653	0.857143	21	discard	Looking at the history, many trailing stop and TP adjustments have been 
+6ac03a4	-0.105062	0.900000	10	discard	Try removing weak high/low OB requirement
