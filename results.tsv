@@ -699,3 +699,4 @@ ec69f26	0.316883	0.950000	20	discard	Looking at the git history, I see many trai
 163ce29	0.299653	0.857143	21	discard	Looking at the history, many trailing stop and TP adjustments have been 
 6ac03a4	-0.105062	0.900000	10	discard	Try removing weak high/low OB requirement
 4d7bed0	0.220641	0.714286	7	discard	Remove trailing stop to maximize high-win-rate edge
+23bd128	0.084849	0.750000	8	discard	Widen trailing stop trigger to 2.5% and distance to 0.6%.
