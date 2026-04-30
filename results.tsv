@@ -702,3 +702,4 @@ ec69f26	0.316883	0.950000	20	discard	Looking at the git history, I see many trai
 23bd128	0.084849	0.750000	8	discard	Widen trailing stop trigger to 2.5% and distance to 0.6%.
 d4f8cfc	0.220641	0.714286	7	discard	Remove trailing stop to let winners reach full TP
 3036532	0.276820	1.000000	14	discard	from __future__ import annotations
+fb8fc65	0.167697	0.600000	5	discard	**Summary:** Add ATR-based volatility filter to reduce trades in choppy 
