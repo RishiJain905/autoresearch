@@ -710,3 +710,4 @@ de9b46b	0.270469	1.000000	13	discard	Looking at the history and current state:
 b67821e	0.317509	0.950000	20	discard	**Summary: Widen short trailing distance from 0.25% to 0.8%**
 22d2bbf	0.344236	0.950000	20	discard	Increase long TP from 5% to 6%
 d7c68b7	0.177029	0.500000	6	discard	Raise TP to 6%/8% and remove trailing stop to let high-win-rate winners 
+9ee75d5	0.344236	0.950000	20	discard	Add trend bias filter to only take longs in bullish bias and shorts in b
