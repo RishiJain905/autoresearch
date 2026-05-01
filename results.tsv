@@ -707,3 +707,4 @@ fb8fc65	0.167697	0.600000	5	discard	**Summary:** Add ATR-based volatility filter
 917c178	0.142904	0.818182	11	discard	Raise long trailing trigger to 2% to give winners more room
 7ca2f3e	0.280280	1.000000	14	discard	Raise long RSI threshold to 40 for stronger entries
 de9b46b	0.270469	1.000000	13	discard	Looking at the history and current state:
+b67821e	0.317509	0.950000	20	discard	**Summary: Widen short trailing distance from 0.25% to 0.8%**
