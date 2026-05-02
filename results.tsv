@@ -717,3 +717,4 @@ e2a5caf	0.299653	0.857143	21	discard	Relax OB stop distance threshold to 0.3% to
 d5a5cfc	0.220641	0.714286	7	discard	**Summary:** Remove aggressive trailing stop to maximize 95% win-rate ed
 0983bcc	0.340263	0.950000	20	discard	Widen short trailing distance to let shorts run longer
 8e0343a	0.324246	1.000000	18	discard	Remove OB-based stop loss to let winners run freely
+c0ed86a	0.344236	0.950000	20	discard	Increase long TP from 5% to 6%
