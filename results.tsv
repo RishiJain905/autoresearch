@@ -721,3 +721,4 @@ c0ed86a	0.344236	0.950000	20	discard	Increase long TP from 5% to 6%
 b30386b	0.344236	0.950000	20	discard	Looking at the data: 95% win rate with 20 trades, averaging 1.72% per tr
 7bed4c6	0.317703	0.950000	20	discard	Widen long trailing stop distance to let winners run longer
 6f095fd	0.315642	0.950000	20	discard	Increase trade frequency by widening RSI thresholds (long to 50, short t
+6e73145	0.293183	0.950000	20	discard	Widen long trailing distance to 0.8% to let winners run
