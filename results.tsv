@@ -726,3 +726,4 @@ d306fdf	0.344236	0.950000	20	discard	Looking at the current state: 95% win rate,
 c75f93a	0.313142	0.950000	20	discard	Looking at the metrics (95% win rate, 34.4% total PnL, 20 trades), I nee
 f56a9b7	0.302081	0.904762	21	discard	Set long/short RSI thresholds both to 50 for balanced entries
 12e2a65	0.344236	0.950000	20	discard	from __future__ import annotations
+4f628c0	0.293183	0.950000	20	discard	Increase long TP to 6.5% and widen trailing distance to let winners run
