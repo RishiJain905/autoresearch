@@ -719,3 +719,4 @@ d5a5cfc	0.220641	0.714286	7	discard	**Summary:** Remove aggressive trailing stop
 8e0343a	0.324246	1.000000	18	discard	Remove OB-based stop loss to let winners run freely
 c0ed86a	0.344236	0.950000	20	discard	Increase long TP from 5% to 6%
 b30386b	0.344236	0.950000	20	discard	Looking at the data: 95% win rate with 20 trades, averaging 1.72% per tr
+7bed4c6	0.317703	0.950000	20	discard	Widen long trailing stop distance to let winners run longer
