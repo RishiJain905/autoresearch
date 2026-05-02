@@ -724,3 +724,4 @@ b30386b	0.344236	0.950000	20	discard	Looking at the data: 95% win rate with 20 t
 6e73145	0.293183	0.950000	20	discard	Widen long trailing distance to 0.8% to let winners run
 d306fdf	0.344236	0.950000	20	discard	Looking at the current state: 95% win rate, 20 trades, 34.4% total PnL. 
 c75f93a	0.313142	0.950000	20	discard	Looking at the metrics (95% win rate, 34.4% total PnL, 20 trades), I nee
+f56a9b7	0.302081	0.904762	21	discard	Set long/short RSI thresholds both to 50 for balanced entries
