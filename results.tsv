@@ -732,3 +732,4 @@ f56a9b7	0.302081	0.904762	21	discard	Set long/short RSI thresholds both to 50 fo
 16f3992	0.151304	0.388889	18	discard	Looking at the commit history and metrics, many trailing-stop widening a
 d3e7ad6	0.315642	0.950000	20	discard	Relax RSI thresholds to capture more trades
 5edc310	0.270036	0.933333	15	discard	Lower RSI thresholds for earlier entry signals
+c3a2cae	0.325639	0.950000	20	discard	Tighten long trailing stop to 0.20% for sharper exits
