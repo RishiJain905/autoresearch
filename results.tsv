@@ -734,3 +734,4 @@ d3e7ad6	0.315642	0.950000	20	discard	Relax RSI thresholds to capture more trades
 5edc310	0.270036	0.933333	15	discard	Lower RSI thresholds for earlier entry signals
 c3a2cae	0.325639	0.950000	20	discard	Tighten long trailing stop to 0.20% for sharper exits
 b2932db	0.220641	0.714286	7	discard	Increase trailing stop to fixed 3% from entry for simpler exits that let
+afc8663	0.000000	0.000000	0	discard	Add zone filtering — longs only in discount zone, shorts only in premium
