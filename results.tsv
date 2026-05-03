@@ -729,3 +729,4 @@ f56a9b7	0.302081	0.904762	21	discard	Set long/short RSI thresholds both to 50 fo
 4f628c0	0.293183	0.950000	20	discard	Increase long TP to 6.5% and widen trailing distance to let winners run
 44281ca	0.280280	1.000000	14	discard	Looking at the metrics and recent commit history, I notice many TP/trail
 29c35cd	0.344236	0.950000	20	discard	Minor TP increase (+0.5% both sides)
+16f3992	0.151304	0.388889	18	discard	Looking at the commit history and metrics, many trailing-stop widening a
