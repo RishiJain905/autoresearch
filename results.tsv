@@ -736,3 +736,4 @@ c3a2cae	0.325639	0.950000	20	discard	Tighten long trailing stop to 0.20% for sha
 b2932db	0.220641	0.714286	7	discard	Increase trailing stop to fixed 3% from entry for simpler exits that let
 afc8663	0.000000	0.000000	0	discard	Add zone filtering — longs only in discount zone, shorts only in premium
 caf051e	0.299653	0.857143	21	discard	Reduce min OB stop distance threshold from 0.5% to 0.3%
+650a603	-0.226772	0.875000	8	discard	**Summary:** Adjust trailing trigger/distance to let more winners run lo
