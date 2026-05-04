@@ -745,3 +745,4 @@ dfedfaa	0.344236	0.950000	20	discard	**Summary: Add partial TP exits to lock in 
 c8bdd34	0.220641	0.714286	7	discard	Disable trailing stops to let 95% win-rate winners run to full TP
 1b3fb0f	0.317148	0.950000	20	discard	Widen trailing stop distances to let more winners run longer before exit
 f942fef	-0.307455	0.000000	1	discard	Looking at the current state: 95% win rate, 20 trades, moderate total Pn
+6477b69	0.090897	0.750000	8	discard	Widen TPs to 8%/10% and relax trailing trigger to 2.5% to let 95% win-ra
