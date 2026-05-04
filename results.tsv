@@ -739,3 +739,4 @@ caf051e	0.299653	0.857143	21	discard	Reduce min OB stop distance threshold from 
 650a603	-0.226772	0.875000	8	discard	**Summary:** Adjust trailing trigger/distance to let more winners run lo
 7a70545	0.000000	0.000000	0	discard	Add discount/premium zone filtering for asymmetric entries
 dfedfaa	0.344236	0.950000	20	discard	**Summary: Add partial TP exits to lock in gains while letting winners r
+4f01878	0.324246	1.000000	18	discard	Looking at the history, many trailing stop and TP tweaks were tried with
