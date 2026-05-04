@@ -741,3 +741,4 @@ caf051e	0.299653	0.857143	21	discard	Reduce min OB stop distance threshold from 
 dfedfaa	0.344236	0.950000	20	discard	**Summary: Add partial TP exits to lock in gains while letting winners r
 4f01878	0.324246	1.000000	18	discard	Looking at the history, many trailing stop and TP tweaks were tried with
 2b79ff1	0.089015	0.750000	8	discard	Raise TP targets and trailing trigger to let winners run longer
+6969739	0.344236	0.950000	20	discard	Add trend bias filter for directional entries
