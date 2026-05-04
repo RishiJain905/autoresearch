@@ -743,3 +743,4 @@ dfedfaa	0.344236	0.950000	20	discard	**Summary: Add partial TP exits to lock in 
 2b79ff1	0.089015	0.750000	8	discard	Raise TP targets and trailing trigger to let winners run longer
 6969739	0.344236	0.950000	20	discard	Add trend bias filter for directional entries
 c8bdd34	0.220641	0.714286	7	discard	Disable trailing stops to let 95% win-rate winners run to full TP
+1b3fb0f	0.317148	0.950000	20	discard	Widen trailing stop distances to let more winners run longer before exit
