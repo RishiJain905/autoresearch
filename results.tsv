@@ -749,3 +749,4 @@ f942fef	-0.307455	0.000000	1	discard	Looking at the current state: 95% win rate,
 4636719	0.000000	0.000000	0	discard	Add ATR-based volatility filter to avoid low-volatility choppy entries
 3e270bf	0.344236	0.950000	20	discard	Widen TP targets to let winners fully capture larger moves
 c2f1e17	0.344236	0.950000	20	discard	Lower short TP from 7% to 5.5% for tighter asymmetry
+ce4c4e6	0.321968	0.944444	18	discard	from __future__ import annotations
