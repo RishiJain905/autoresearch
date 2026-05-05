@@ -755,3 +755,4 @@ fa0bff7	0.302081	0.904762	21	discard	Relax long RSI threshold to 50 for more ent
 51c0c64	-0.239997	0.800000	5	discard	from __future__ import annotations
 821a23a	0.317703	0.950000	20	discard	Widen long trailing stop distance to let winners run longer
 07c3935	0.344236	0.950000	20	discard	Switch conflict policy to prefer_long to capture more trades
+477fa4e	0.344236	0.950000	20	discard	Raise TP targets to 7%/9% for bigger winners
