@@ -752,3 +752,4 @@ c2f1e17	0.344236	0.950000	20	discard	Lower short TP from 7% to 5.5% for tighter 
 ce4c4e6	0.321968	0.944444	18	discard	from __future__ import annotations
 e32e874	0.305443	0.950000	20	discard	Increase trailing distance to 0.7% to capture more of winners
 fa0bff7	0.302081	0.904762	21	discard	Relax long RSI threshold to 50 for more entry opportunities
+51c0c64	-0.239997	0.800000	5	discard	from __future__ import annotations
