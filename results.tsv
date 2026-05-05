@@ -748,3 +748,4 @@ f942fef	-0.307455	0.000000	1	discard	Looking at the current state: 95% win rate,
 6477b69	0.090897	0.750000	8	discard	Widen TPs to 8%/10% and relax trailing trigger to 2.5% to let 95% win-ra
 4636719	0.000000	0.000000	0	discard	Add ATR-based volatility filter to avoid low-volatility choppy entries
 3e270bf	0.344236	0.950000	20	discard	Widen TP targets to let winners fully capture larger moves
+c2f1e17	0.344236	0.950000	20	discard	Lower short TP from 7% to 5.5% for tighter asymmetry
