@@ -761,3 +761,4 @@ fa0bff7	0.302081	0.904762	21	discard	Relax long RSI threshold to 50 for more ent
 6c744d1	0.000000	0.000000	0	discard	**Summary: Require discount/premium zone entries to trade with momentum
 9244055	0.255871	0.973684	38	discard	Use nearest liquidity level for partial profit-taking exits
 af50f3e	0.280280	1.000000	14	discard	Lower long RSI threshold to 40 to catch more oversold entries
+1f54606	0.302081	0.904762	21	discard	Widen RSI thresholds to 50/50 for more balanced entries
