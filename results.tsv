@@ -757,3 +757,4 @@ fa0bff7	0.302081	0.904762	21	discard	Relax long RSI threshold to 50 for more ent
 07c3935	0.344236	0.950000	20	discard	Switch conflict policy to prefer_long to capture more trades
 477fa4e	0.344236	0.950000	20	discard	Raise TP targets to 7%/9% for bigger winners
 961e933	0.299653	0.857143	21	discard	Lower min_ob_stop_distance_pct from 0.5% to 0.3%
+9c736a9	0.280280	1.000000	14	discard	Tighten long RSI to 40 and raise long TP to 6% for bigger winners
