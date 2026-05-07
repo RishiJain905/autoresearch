@@ -47,7 +47,7 @@ Long:
 - RSI < 45 (oversold, tuned)
 - nearest relevant upside liquidity target is a weak high
 - optional bullish FVG can strengthen the thesis but is not required
-- take profit at +5.0% long
+- 50% partial exit at full TP (+5.0%), remaining 50% trails with trailing stop
 - stop if close breaks below bullish OB low, BUT only if OB is ≥0.5% below entry
   (prevents getting stopped out by tight OBs that don't offer real risk management)
 
@@ -57,7 +57,7 @@ Short:
 - RSI > 56 (overbought, tuned)
 - nearest relevant downside liquidity target is a weak low
 - optional bearish FVG can strengthen the thesis but is not required
-- take profit at -7.0% for shorts
+- 50% partial exit at full TP (-7.0%), remaining 50% trails with trailing stop
 - stop if close breaks above bearish OB high, BUT only if OB is ≥0.5% above entry
 """
 
@@ -72,8 +72,8 @@ class StrategyConfig:
     rsi_length: int = 12
     long_rsi_threshold: float = 45.0
     short_rsi_threshold: float = 56.0
-    take_profit_pct: float = 0.050  # 5.0% for longs (increased from 3.0%)
-    short_take_profit_pct: Optional[float] = 0.070  # 7.0% for shorts (increased from 4.0%)
+    take_profit_pct: float = 0.050  # 5.0% for longs
+    short_take_profit_pct: Optional[float] = 0.070  # 7.0% for shorts
     require_fvg_confirmation: bool = False
     entry_on_close: bool = True
     allow_longs: bool = True
@@ -87,11 +87,13 @@ class StrategyConfig:
         0.013  # activate trailing stop once price moves 1.3% in profit
     )
     long_trailing_distance_pct: float = (
-        0.003791061077040  # probe between 0.003791061077041 and cliff band 0.039-0.037
+        0.003791061077040  # trailing distance for remaining half
     )
     short_trailing_distance_pct: float = (
-        0.0025  # widened from 0.0014579407229745 to give shorts more room
+        0.0025  # trailing distance for remaining half
     )
+    # Partial exit: close 50% at TP, trail remaining 50%
+    partial_tp_enabled: bool = True
 
 
 @dataclass
@@ -104,6 +106,7 @@ class Position:
     entry_reason: str
     peak_price: float  # highest price for longs, lowest for shorts
     trailing_activated: bool = False
+    remaining_size: float = 1.0  # 1.0 = full position, 0.5 = 50% remaining
 
 
 @dataclass
@@ -258,25 +261,28 @@ def should_exit_position(
 
     if position.side == "long":
         tp = long_take_profit(position.entry_price, config)
-        if high >= tp:
-            return tp, "take_profit"
 
         # Update peak price for trailing stop
         if high > position.peak_price:
             position.peak_price = high
 
-        # Check trailing stop
-        if config.trailing_stop_enabled:
-            profit_from_entry = (
-                position.peak_price - position.entry_price
-            ) / position.entry_price
-            if profit_from_entry >= config.trailing_trigger_pct:
-                position.trailing_activated = True
+        # Phase 1: full position - check for 50% partial TP exit
+        if position.remaining_size == 1.0 and config.partial_tp_enabled:
+            if high >= tp:
+                position.remaining_size = 0.5
+                return tp, "take_profit_50"
+
+        # Phase 2: 50% remaining - exit via trailing stop or full TP
+        if position.remaining_size == 0.5:
+            if config.trailing_stop_enabled:
                 trailing_stop_price = position.peak_price * (
                     1.0 - config.long_trailing_distance_pct
                 )
                 if close <= trailing_stop_price:
                     return trailing_stop_price, "trailing_stop"
+            # Also exit at full TP if trailing doesn't trigger
+            if close <= tp:
+                return tp, "take_profit_full"
 
         # OB stop only if far enough from entry
         ob_dist_pct = ob_stop_distance_pct(
@@ -288,25 +294,28 @@ def should_exit_position(
 
     if position.side == "short":
         tp = short_take_profit(position.entry_price, config)
-        if low <= tp:
-            return tp, "take_profit"
 
         # Update peak (lowest) price for trailing stop
         if low < position.peak_price:
             position.peak_price = low
 
-        # Check trailing stop
-        if config.trailing_stop_enabled:
-            profit_from_entry = (
-                position.entry_price - position.peak_price
-            ) / position.entry_price
-            if profit_from_entry >= config.trailing_trigger_pct:
-                position.trailing_activated = True
+        # Phase 1: full position - check for 50% partial TP exit
+        if position.remaining_size == 1.0 and config.partial_tp_enabled:
+            if low <= tp:
+                position.remaining_size = 0.5
+                return tp, "take_profit_50"
+
+        # Phase 2: 50% remaining - exit via trailing stop or full TP
+        if position.remaining_size == 0.5:
+            if config.trailing_stop_enabled:
                 trailing_stop_price = position.peak_price * (
                     1.0 + config.short_trailing_distance_pct
                 )
                 if close >= trailing_stop_price:
                     return trailing_stop_price, "trailing_stop"
+            # Also exit at full TP if trailing doesn't trigger
+            if close >= tp:
+                return tp, "take_profit_full"
 
         # OB stop only if far enough from entry
         ob_dist_pct = ob_stop_distance_pct(
@@ -378,7 +387,9 @@ def run_strategy(
                         entry_reason=position.entry_reason,
                     )
                 )
-                position = None
+                # Check if position is fully closed
+                if position.remaining_size <= 0.0:
+                    position = None
 
         if position is None:
             if long_signal:
@@ -392,6 +403,7 @@ def run_strategy(
                     entry_reason="bullish_internal_ob_overlap_rsi_weak_high",
                     peak_price=entry_price,
                     trailing_activated=False,
+                    remaining_size=1.0,
                 )
             elif short_signal:
                 entry_price = bar_entry_price(row, config)
@@ -404,6 +416,7 @@ def run_strategy(
                     entry_reason="bearish_internal_ob_overlap_rsi_weak_low",
                     peak_price=entry_price,
                     trailing_activated=False,
+                    remaining_size=1.0,
                 )
 
         position_side.append(position.side if position is not None else None)
