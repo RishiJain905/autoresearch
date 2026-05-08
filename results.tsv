@@ -775,3 +775,4 @@ e51e19f	1463.573042	1.000000	5349	discard	Implement unused trailing_trigger_pct 
 666f65a	1463.578042	1.000000	5349	keep	Looking at the metrics: 100% win rate, 5349 trades, avg ~0.27% per trade
 81f710b	1463.578042	1.000000	5349	discard	Widen RSI thresholds for more balanced entries
 89ce376	1463.578042	1.000000	5349	discard	Widen long trailing distance to let long winners run further
+611290c	1456.107105	1.000000	5339	discard	Increase trailing stop trigger and distance to capture larger trends
