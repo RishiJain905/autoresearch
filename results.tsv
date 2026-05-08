@@ -770,3 +770,4 @@ c33adfc	1463.573042	1.000000	5349	discard	Looking at the commit history, I see t
 69a76fd	1463.573042	1.000000	5349	discard	from __future__ import annotations
 4cb39db	1463.573042	1.000000	5349	discard	Looking at the commit history and metrics, I see many TP and trailing st
 89f661a	1451.385833	1.000000	5193	discard	Increase TP targets to 7%/9% to capture larger moves per trade
+e51e19f	1463.573042	1.000000	5349	discard	Implement unused trailing_trigger_pct to delay trailing stop activation
