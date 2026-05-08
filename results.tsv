@@ -769,3 +769,4 @@ a5a800b	0.311062	0.700000	10	discard	Disable trailing stop to let 95% win-rate t
 c33adfc	1463.573042	1.000000	5349	discard	Looking at the commit history, I see that various TP and trailing stop c
 69a76fd	1463.573042	1.000000	5349	discard	from __future__ import annotations
 4cb39db	1463.573042	1.000000	5349	discard	Looking at the commit history and metrics, I see many TP and trailing st
+89f661a	1451.385833	1.000000	5193	discard	Increase TP targets to 7%/9% to capture larger moves per trade
