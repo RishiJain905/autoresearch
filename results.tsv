@@ -773,3 +773,4 @@ c33adfc	1463.573042	1.000000	5349	discard	Looking at the commit history, I see t
 e51e19f	1463.573042	1.000000	5349	discard	Implement unused trailing_trigger_pct to delay trailing stop activation
 984089a	1450.664314	1.000000	5331	discard	Widen trailing stop distances to let winners run longer
 666f65a	1463.578042	1.000000	5349	keep	Looking at the metrics: 100% win rate, 5349 trades, avg ~0.27% per trade
+81f710b	1463.578042	1.000000	5349	discard	Widen RSI thresholds for more balanced entries
