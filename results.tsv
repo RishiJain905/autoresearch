@@ -778,3 +778,4 @@ e51e19f	1463.573042	1.000000	5349	discard	Implement unused trailing_trigger_pct 
 611290c	1456.107105	1.000000	5339	discard	Increase trailing stop trigger and distance to capture larger trends
 0d6fa46	1451.385833	1.000000	5193	discard	Raise TP targets to 7%/9% for stronger per-trade capture
 ad59654	1463.578042	1.000000	5349	discard	Use trailing_trigger_pct to delay trailing stop activation
+66fa561	1451.555352	1.000000	5195	discard	Increase TP targets to capture more per trade
