@@ -784,3 +784,4 @@ ad59654	1463.578042	1.000000	5349	discard	Use trailing_trigger_pct to delay trai
 b8cf998	1463.578042	1.000000	5349	discard	Looking at the metrics and commit history carefully:
 e3e442c	521.451540	1.000000	5213	discard	Increase TP to 8%/10% and remove trailing stop for remaining half
 41723db	1439.156703	1.000000	5179	discard	Widen TP and trailing distances to let winners run longer
+404bab7	0.000000	0.000000	0	discard	Looking at the commit history, many trailing stop and TP adjustments hav
