@@ -782,3 +782,4 @@ ad59654	1463.578042	1.000000	5349	discard	Use trailing_trigger_pct to delay trai
 82dfd67	1450.669314	1.000000	5331	discard	</think>Looking at the commit history, many trailing stop distance chang
 289a26e	11.276540	1.000000	148	discard	Remove trailing stop to let all trades hit full TP
 b8cf998	1463.578042	1.000000	5349	discard	Looking at the metrics and commit history carefully:
+e3e442c	521.451540	1.000000	5213	discard	Increase TP to 8%/10% and remove trailing stop for remaining half
