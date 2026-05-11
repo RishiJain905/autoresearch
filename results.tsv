@@ -786,3 +786,4 @@ e3e442c	521.451540	1.000000	5213	discard	Increase TP to 8%/10% and remove traili
 41723db	1439.156703	1.000000	5179	discard	Widen TP and trailing distances to let winners run longer
 404bab7	0.000000	0.000000	0	discard	Looking at the commit history, many trailing stop and TP adjustments hav
 d215542	0.000000	0.000000	0	discard	Looking at the commit history, many trailing stop/TP parameter changes w
+37bed51	1374.339670	0.698209	8708	discard	Add max_holding_bars limit to force decisive exits
