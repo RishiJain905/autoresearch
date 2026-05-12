@@ -789,3 +789,4 @@ d215542	0.000000	0.000000	0	discard	Looking at the commit history, many trailing
 37bed51	1374.339670	0.698209	8708	discard	Add max_holding_bars limit to force decisive exits
 766fd0c	0.000000	0.000000	0	discard	Add discount/premium zone filters to tighten entry conditions
 0fa7b67	1463.578042	1.000000	5349	discard	Widen long trailing stop distance from 0.38% to 0.60%
+755fb36	1463.578042	1.000000	5349	discard	**Summary:** Lower min_ob_stop_distance_pct to 0.3% to allow tighter sto
