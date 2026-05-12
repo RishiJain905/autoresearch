@@ -94,6 +94,9 @@ class StrategyConfig:
     )
     # Partial exit: close 50% at TP, trail remaining 50%
     partial_tp_enabled: bool = True
+    # Higher TP for the remaining 50% that trails
+    long_full_exit_tp_pct: float = 0.08  # 8% for full exit of trailing half
+    short_full_exit_tp_pct: float = 0.10  # 10% for full exit of trailing half
 
 
 @dataclass
@@ -247,6 +250,14 @@ def short_take_profit(entry_price: float, config: StrategyConfig) -> float:
     return entry_price * (1.0 - pct)
 
 
+def long_full_exit_tp(entry_price: float, config: StrategyConfig) -> float:
+    return entry_price * (1.0 + config.long_full_exit_tp_pct)
+
+
+def short_full_exit_tp(entry_price: float, config: StrategyConfig) -> float:
+    return entry_price * (1.0 - config.short_full_exit_tp_pct)
+
+
 def ob_stop_distance_pct(entry_price: float, ob_price: float, side: str) -> float:
     """Return the percentage distance from entry to the OB level."""
     return abs(entry_price - ob_price) / entry_price
@@ -261,6 +272,7 @@ def should_exit_position(
 
     if position.side == "long":
         tp = long_take_profit(position.entry_price, config)
+        full_exit_tp = long_full_exit_tp(position.entry_price, config)
 
         # Update peak price for trailing stop
         if high > position.peak_price:
@@ -280,9 +292,9 @@ def should_exit_position(
                 )
                 if close <= trailing_stop_price:
                     return trailing_stop_price, "trailing_stop"
-            # Also exit at full TP if trailing doesn't trigger
-            if close <= tp:
-                return tp, "take_profit_full"
+            # Also exit at higher full TP if trailing doesn't trigger
+            if close <= full_exit_tp:
+                return full_exit_tp, "take_profit_full"
 
         # OB stop only if far enough from entry
         ob_dist_pct = ob_stop_distance_pct(
@@ -294,6 +306,7 @@ def should_exit_position(
 
     if position.side == "short":
         tp = short_take_profit(position.entry_price, config)
+        full_exit_tp = short_full_exit_tp(position.entry_price, config)
 
         # Update peak (lowest) price for trailing stop
         if low < position.peak_price:
@@ -313,9 +326,9 @@ def should_exit_position(
                 )
                 if close >= trailing_stop_price:
                     return trailing_stop_price, "trailing_stop"
-            # Also exit at full TP if trailing doesn't trigger
-            if close >= tp:
-                return tp, "take_profit_full"
+            # Also exit at higher full TP if trailing doesn't trigger
+            if close >= full_exit_tp:
+                return full_exit_tp, "take_profit_full"
 
         # OB stop only if far enough from entry
         ob_dist_pct = ob_stop_distance_pct(
