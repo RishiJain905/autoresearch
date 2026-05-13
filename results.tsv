@@ -793,3 +793,4 @@ d215542	0.000000	0.000000	0	discard	Looking at the commit history, many trailing
 f4015c7	11.276540	1.000000	148	discard	Looking at the commit history, I see many trailing stop and TP distance 
 c761615	1463.678042	1.000000	5350	keep	Looking at the metrics: 100% win rate with 5349 trades suggests the stra
 65301cf	1466.742726	1.000000	5356	keep	Tighten full exit TP and trailing distances
+640ebb7	1466.742726	1.000000	5356	discard	Looking at the current strategy with 100% win rate and 5356 trades, I ne
