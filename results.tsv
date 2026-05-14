@@ -802,3 +802,4 @@ e54b8ee	1466.742726	1.000000	5356	discard	Widen RSI entry thresholds and lower O
 cfdf0a8	1466.747726	1.000000	5356	keep	Increase partial TP thresholds to capture more profit per trade
 f47bd8e	1466.747726	1.000000	5356	discard	Looking at the metrics (100% win rate, 5356 trades, 1466% total PnL), th
 1d5dfad	0.335029	0.950000	20	discard	**Summary:** Remove 50% partial TP, use full trailing stop exit
+78a66eb	1454.397071	1.000000	5199	discard	Increase take profit percentages for both sides
