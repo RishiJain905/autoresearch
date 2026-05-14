@@ -798,3 +798,4 @@ e377318	1466.742726	1.000000	5356	discard	Fix inverted short RSI logic - shorts 
 aa863f6	1367.360380	0.672189	7968	discard	Remove min_ob_stop_distance_pct to allow tighter stops
 2e08a8e	0.335029	0.950000	20	discard	Looking at the commit history, I see many trailing stop distance changes
 12e8fd2	0.167697	0.600000	5	discard	Remove trailing stop and let all winners run to full TP exit.
+e54b8ee	1466.742726	1.000000	5356	discard	Widen RSI entry thresholds and lower OB stop distance filter
