@@ -796,3 +796,4 @@ c761615	1463.678042	1.000000	5350	keep	Looking at the metrics: 100% win rate wit
 640ebb7	1466.742726	1.000000	5356	discard	Looking at the current strategy with 100% win rate and 5356 trades, I ne
 e377318	1466.742726	1.000000	5356	discard	Fix inverted short RSI logic - shorts should trigger when RSI > threshol
 aa863f6	1367.360380	0.672189	7968	discard	Remove min_ob_stop_distance_pct to allow tighter stops
+2e08a8e	0.335029	0.950000	20	discard	Looking at the commit history, I see many trailing stop distance changes
