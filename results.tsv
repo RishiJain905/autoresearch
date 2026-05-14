@@ -800,3 +800,4 @@ aa863f6	1367.360380	0.672189	7968	discard	Remove min_ob_stop_distance_pct to all
 12e8fd2	0.167697	0.600000	5	discard	Remove trailing stop and let all winners run to full TP exit.
 e54b8ee	1466.742726	1.000000	5356	discard	Widen RSI entry thresholds and lower OB stop distance filter
 cfdf0a8	1466.747726	1.000000	5356	keep	Increase partial TP thresholds to capture more profit per trade
+f47bd8e	1466.747726	1.000000	5356	discard	Looking at the metrics (100% win rate, 5356 trades, 1466% total PnL), th
