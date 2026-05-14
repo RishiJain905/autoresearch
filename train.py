@@ -38,6 +38,7 @@ Required strategy-context columns produced upstream:
 Optional columns:
 - timestamp
 - symbol
+- atr
 
 Strategy summary
 ----------------
@@ -97,6 +98,12 @@ class StrategyConfig:
     # Higher TP for the remaining 50% that trails
     long_full_exit_tp_pct: float = 0.07  # 7% for full exit of trailing half
     short_full_exit_tp_pct: float = 0.09  # 9% for full exit of trailing half
+    # ATR-based position sizing
+    atr_length: int = 20
+    low_vol_threshold: float = 0.8   # if ATR/SMA_ATR < this, size up
+    high_vol_threshold: float = 1.2  # if ATR/SMA_ATR > this, size down
+    low_vol_multiplier: float = 1.5  # position size multiplier for low vol
+    high_vol_multiplier: float = 0.75  # position size multiplier for high vol
 
 
 @dataclass
@@ -110,6 +117,7 @@ class Position:
     peak_price: float  # highest price for longs, lowest for shorts
     trailing_activated: bool = False
     remaining_size: float = 1.0  # 1.0 = full position, 0.5 = 50% remaining
+    position_size: float = 1.0  # base position size for this trade
 
 
 @dataclass
@@ -122,6 +130,7 @@ class Trade:
     pnl_pct: float
     exit_reason: str
     entry_reason: str
+    position_size: float = 1.0
 
 
 REQUIRED_COLUMNS = {
@@ -166,6 +175,16 @@ def compute_rsi(series: pd.Series, length: int = 14) -> pd.Series:
     rs = avg_gain / avg_loss.replace(0, pd.NA)
     rsi = 100 - (100 / (1 + rs))
     return rsi.fillna(50.0)
+
+
+def compute_atr_ratio(df: pd.DataFrame, length: int) -> pd.Series:
+    """Compute ATR / SMA(ATR) ratio for volatility regime detection."""
+    if "atr" not in df.columns:
+        return pd.Series(1.0, index=df.index)
+    atr = df["atr"].fillna(df["atr"].mean() if df["atr"].mean() > 0 else 1.0)
+    sma_atr = atr.rolling(window=length, min_periods=length).mean()
+    ratio = atr / sma_atr.replace(0, pd.NA)
+    return ratio.fillna(1.0)
 
 
 # -----------------------------
@@ -230,6 +249,15 @@ def bar_entry_price(row: pd.Series, config: StrategyConfig) -> float:
     if config.entry_on_close:
         return float(row["close"])
     return 0.5 * (float(row["high"]) + float(row["low"]))
+
+
+def get_position_size(atr_ratio: float, config: StrategyConfig) -> float:
+    """Return position size multiplier based on volatility regime."""
+    if atr_ratio < config.low_vol_threshold:
+        return config.low_vol_multiplier
+    elif atr_ratio > config.high_vol_threshold:
+        return config.high_vol_multiplier
+    return 1.0
 
 
 # -----------------------------
@@ -354,6 +382,7 @@ def run_strategy(
 
     working = df.copy()
     working["rsi"] = compute_rsi(working["close"], length=config.rsi_length)
+    working["atr_ratio"] = compute_atr_ratio(working, length=config.atr_length)
 
     position: Optional[Position] = None
     trades: List[Trade] = []
@@ -383,11 +412,13 @@ def run_strategy(
             exit_decision = should_exit_position(position, row, config)
             if exit_decision is not None:
                 exit_price, exit_reason = exit_decision
-                pnl_pct = (
+                raw_pnl_pct = (
                     (exit_price - position.entry_price) / position.entry_price
                     if position.side == "long"
                     else (position.entry_price - exit_price) / position.entry_price
                 )
+                # Apply position size multiplier
+                pnl_pct = raw_pnl_pct * position.position_size
                 trades.append(
                     Trade(
                         side=position.side,
@@ -398,6 +429,7 @@ def run_strategy(
                         pnl_pct=pnl_pct,
                         exit_reason=exit_reason,
                         entry_reason=position.entry_reason,
+                        position_size=position.position_size,
                     )
                 )
                 # Check if position is fully closed
@@ -405,6 +437,10 @@ def run_strategy(
                     position = None
 
         if position is None:
+            # Get ATR-based position size
+            atr_ratio = float(row["atr_ratio"]) if "atr_ratio" in row else 1.0
+            pos_size = get_position_size(atr_ratio, config)
+
             if long_signal:
                 entry_price = bar_entry_price(row, config)
                 position = Position(
@@ -417,6 +453,7 @@ def run_strategy(
                     peak_price=entry_price,
                     trailing_activated=False,
                     remaining_size=1.0,
+                    position_size=pos_size,
                 )
             elif short_signal:
                 entry_price = bar_entry_price(row, config)
@@ -430,6 +467,7 @@ def run_strategy(
                     peak_price=entry_price,
                     trailing_activated=False,
                     remaining_size=1.0,
+                    position_size=pos_size,
                 )
 
         position_side.append(position.side if position is not None else None)
@@ -438,11 +476,12 @@ def run_strategy(
     if position is not None and not working.empty:
         final_idx = int(working.index[-1])
         final_close = float(working.iloc[-1]["close"])
-        pnl_pct = (
+        raw_pnl_pct = (
             (final_close - position.entry_price) / position.entry_price
             if position.side == "long"
             else (position.entry_price - final_close) / position.entry_price
         )
+        pnl_pct = raw_pnl_pct * position.position_size
         trades.append(
             Trade(
                 side=position.side,
@@ -453,6 +492,7 @@ def run_strategy(
                 pnl_pct=pnl_pct,
                 exit_reason="end_of_data",
                 entry_reason=position.entry_reason,
+                position_size=position.position_size,
             )
         )
 

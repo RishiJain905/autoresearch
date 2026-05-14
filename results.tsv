@@ -804,3 +804,4 @@ f47bd8e	1466.747726	1.000000	5356	discard	Looking at the metrics (100% win rate,
 1d5dfad	0.335029	0.950000	20	discard	**Summary:** Remove 50% partial TP, use full trailing stop exit
 78a66eb	1454.397071	1.000000	5199	discard	Increase take profit percentages for both sides
 da7efd2	1466.747726	1.000000	5356	discard	Looking at the metrics: 100% win rate with 5356 trades and 1466% PnL. Th
+86a212a	2200.121589	1.000000	5356	keep	Add ATR-based dynamic position sizing for volatility regime adaptation
