@@ -811,3 +811,4 @@ b2e9677	0.000000	0.000000	0	discard	Add zone-based entry filters (discount zone 
 e70d6eb	2200.091589	1.000000	5356	discard	**Summary: Lower partial TP thresholds to capture smaller partial exits*
 710568c	2200.121589	1.000000	5356	discard	**Summary:** Reduce long trailing stop distance from 0.3% to 0.25%
 0a1ceb7	2181.851250	1.000000	5201	discard	Increase take profit percentages by 0.5% on both sides
+f0ed018	2200.121589	1.000000	5356	discard	Tighten long RSI to 40, short RSI to 60, increase full exit TP to 8%/10%
