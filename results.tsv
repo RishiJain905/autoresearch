@@ -807,3 +807,4 @@ da7efd2	1466.747726	1.000000	5356	discard	Looking at the metrics: 100% win rate 
 86a212a	2200.121589	1.000000	5356	keep	Add ATR-based dynamic position sizing for volatility regime adaptation
 2da8777	2181.595606	1.000000	5199	discard	Increase partial TP thresholds to 7%/9% for higher per-trade capture
 b2e9677	0.000000	0.000000	0	discard	Add zone-based entry filters (discount zone for longs, premium zone for 
+2d0e622	2192.131421	1.000000	5348	discard	Looking at the git history, I see many trailing stop distance and TP per
