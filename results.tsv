@@ -806,3 +806,4 @@ f47bd8e	1466.747726	1.000000	5356	discard	Looking at the metrics (100% win rate,
 da7efd2	1466.747726	1.000000	5356	discard	Looking at the metrics: 100% win rate with 5356 trades and 1466% PnL. Th
 86a212a	2200.121589	1.000000	5356	keep	Add ATR-based dynamic position sizing for volatility regime adaptation
 2da8777	2181.595606	1.000000	5199	discard	Increase partial TP thresholds to 7%/9% for higher per-trade capture
+b2e9677	0.000000	0.000000	0	discard	Add zone-based entry filters (discount zone for longs, premium zone for 
