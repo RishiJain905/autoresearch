@@ -809,3 +809,4 @@ da7efd2	1466.747726	1.000000	5356	discard	Looking at the metrics: 100% win rate 
 b2e9677	0.000000	0.000000	0	discard	Add zone-based entry filters (discount zone for longs, premium zone for 
 2d0e622	2192.131421	1.000000	5348	discard	Looking at the git history, I see many trailing stop distance and TP per
 e70d6eb	2200.091589	1.000000	5356	discard	**Summary: Lower partial TP thresholds to capture smaller partial exits*
+710568c	2200.121589	1.000000	5356	discard	**Summary:** Reduce long trailing stop distance from 0.3% to 0.25%
