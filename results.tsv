@@ -816,3 +816,4 @@ f0ed018	2200.121589	1.000000	5356	discard	Tighten long RSI to 40, short RSI to 6
 cfb4f7a	2181.595606	1.000000	5199	discard	Looking at the metrics (100% win rate, 5356 trades), the strategy is alr
 54e9977	1466.747726	1.000000	5356	discard	Looking at the git history and current metrics (2200% PnL with 100% win 
 a88ea71	2200.121589	1.000000	5356	discard	Tighten RSI thresholds (42/58) and lower trailing trigger (1.1%)
+5aa089a	0.342781	0.950000	20	discard	Remove partial TP, use full trailing stop for all exits to fix position 
