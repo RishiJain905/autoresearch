@@ -824,3 +824,4 @@ a88ea71	2200.121589	1.000000	5356	discard	Tighten RSI thresholds (42/58) and low
 1a2240b	4414.920055	1.000000	5361	keep	Increase ATR-based position size multiplier for low volatility periods
 fb1bd5d	1435.487866	1.000000	5206	discard	Reduce low_vol_multiplier from 3.0 to 2.0 for more realistic sizing
 599e261	4414.920055	1.000000	5361	discard	Reduce high_vol_multiplier from 0.75 to 0.50 to protect against large dr
+47f2d68	4414.920055	1.000000	5361	discard	Looking at the metrics (100% win rate, 5361 trades), the strategy has ve
