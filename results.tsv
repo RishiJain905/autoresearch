@@ -821,3 +821,4 @@ a88ea71	2200.121589	1.000000	5356	discard	Tighten RSI thresholds (42/58) and low
 1e648c6	2207.460027	1.000000	5361	keep	Tighten trailing stop distances to lock in more profit on the remaining 
 90314ef	2943.280036	1.000000	5361	keep	from __future__ import annotations
 4e2a0ac	2943.280036	1.000000	5361	discard	Lower trailing trigger from 1.3% to 0.8% so trailing activates sooner on
+1a2240b	4414.920055	1.000000	5361	keep	Increase ATR-based position size multiplier for low volatility periods
