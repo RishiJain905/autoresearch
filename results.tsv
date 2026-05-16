@@ -814,3 +814,4 @@ e70d6eb	2200.091589	1.000000	5356	discard	**Summary: Lower partial TP thresholds
 f0ed018	2200.121589	1.000000	5356	discard	Tighten long RSI to 40, short RSI to 60, increase full exit TP to 8%/10%
 0a2eb74	0.000000	0.000000	0	discard	Add EMA(20) trend filter for entry direction alignment
 cfb4f7a	2181.595606	1.000000	5199	discard	Looking at the metrics (100% win rate, 5356 trades), the strategy is alr
+54e9977	1466.747726	1.000000	5356	discard	Looking at the git history and current metrics (2200% PnL with 100% win 
