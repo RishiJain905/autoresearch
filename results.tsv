@@ -817,3 +817,4 @@ cfb4f7a	2181.595606	1.000000	5199	discard	Looking at the metrics (100% win rate,
 54e9977	1466.747726	1.000000	5356	discard	Looking at the git history and current metrics (2200% PnL with 100% win 
 a88ea71	2200.121589	1.000000	5356	discard	Tighten RSI thresholds (42/58) and lower trailing trigger (1.1%)
 5aa089a	0.342781	0.950000	20	discard	Remove partial TP, use full trailing stop for all exits to fix position 
+4af3170	-0.307455	0.000000	1	discard	Require FVG confirmation for entries to filter noise and improve quality
