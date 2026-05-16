@@ -88,10 +88,10 @@ class StrategyConfig:
         0.013  # activate trailing stop once price moves 1.3% in profit
     )
     long_trailing_distance_pct: float = (
-        0.003  # trailing distance for remaining half
+        0.002  # tighter trailing distance for remaining half
     )
     short_trailing_distance_pct: float = (
-        0.002  # trailing distance for remaining half
+        0.001  # tighter trailing distance for remaining half
     )
     # Partial exit: close 50% at TP, trail remaining 50%
     partial_tp_enabled: bool = True
