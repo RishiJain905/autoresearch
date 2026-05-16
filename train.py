@@ -99,10 +99,10 @@ class StrategyConfig:
     long_full_exit_tp_pct: float = 0.07  # 7% for full exit of trailing half
     short_full_exit_tp_pct: float = 0.09  # 9% for full exit of trailing half
     # ATR-based position sizing
-    atr_length: int = 20
+    atr_length: int = 50
     low_vol_threshold: float = 0.8   # if ATR/SMA_ATR < this, size up
     high_vol_threshold: float = 1.2  # if ATR/SMA_ATR > this, size down
-    low_vol_multiplier: float = 1.5  # position size multiplier for low vol
+    low_vol_multiplier: float = 2.0  # position size multiplier for low vol
     high_vol_multiplier: float = 0.75  # position size multiplier for high vol
 
 
