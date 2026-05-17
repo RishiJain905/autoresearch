@@ -835,3 +835,4 @@ fb1bd5d	1435.487866	1.000000	5206	discard	Reduce low_vol_multiplier from 3.0 to 
 1c52f59	5886.560073	1.000000	5361	discard	Looking at the metrics and commit history, the 100% win rate with 5361 t
 7c30c14	1471.640018	1.000000	5361	discard	Remove broken ATR-based position sizing
 9e9b746	2207.460027	1.000000	5361	discard	**Summary:** Cap ATR-based position size multipliers to realistic range 
+2bf4155	1471.640018	1.000000	5361	discard	Looking at the commit history, I see many "discard" results and a consis
