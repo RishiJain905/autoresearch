@@ -833,3 +833,4 @@ fb1bd5d	1435.487866	1.000000	5206	discard	Reduce low_vol_multiplier from 3.0 to 
 29b8281	4414.920055	1.000000	5361	discard	Looking at the metrics (100% win rate with 5361 trades), the strategy is
 1ddd251	2207.460027	1.000000	5361	discard	Reduce low_vol_multiplier to 1.5, raise full exit TP to 7.5%/9.5%
 1c52f59	5886.560073	1.000000	5361	discard	Looking at the metrics and commit history, the 100% win rate with 5361 t
+7c30c14	1471.640018	1.000000	5361	discard	Remove broken ATR-based position sizing
