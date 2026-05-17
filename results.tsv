@@ -830,3 +830,4 @@ fb1bd5d	1435.487866	1.000000	5206	discard	Reduce low_vol_multiplier from 3.0 to 
 7364876	5836.580047	1.000000	5204	discard	Increase TP percentages slightly to capture more profit per trade
 3fad16c	3679.100046	1.000000	5361	discard	Reduce low_vol_multiplier from 4.0 to 2.5 for realistic position sizing
 247c0bf	5886.560073	1.000000	5361	discard	from __future__ import annotations
+29b8281	4414.920055	1.000000	5361	discard	Looking at the metrics (100% win rate with 5361 trades), the strategy is
