@@ -102,7 +102,7 @@ class StrategyConfig:
     atr_length: int = 50
     low_vol_threshold: float = 0.8   # if ATR/SMA_ATR < this, size up
     high_vol_threshold: float = 1.2  # if ATR/SMA_ATR > this, size down
-    low_vol_multiplier: float = 3.0  # increased from 2.0 for more gain in calm markets
+    low_vol_multiplier: float = 4.0  # increased from 3.0 for more gain in calm markets
     high_vol_multiplier: float = 0.75  # position size multiplier for high vol
 
 
