@@ -842,3 +842,4 @@ a2132df	1459.042108	1.000000	5203	discard	Increase TP percentages to capture mor
 3913427	5889.440073	1.000000	5365	keep	**Summary:** Increase full exit TP to let winners run longer
 c47e094	5889.440073	1.000000	5365	discard	Reduce partial TP to 5% for more balanced exits
 ce82f9f	1472.360018	1.000000	5365	discard	Remove ATR-based position sizing for realistic metrics
+b25970e	5889.440073	1.000000	5365	discard	Looking at the history, I see many discards and only 2 keeps. The strate
