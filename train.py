@@ -96,8 +96,8 @@ class StrategyConfig:
     # Partial exit: close 50% at TP, trail remaining 50%
     partial_tp_enabled: bool = True
     # Higher TP for the remaining 50% that trails
-    long_full_exit_tp_pct: float = 0.07  # 7% for full exit of trailing half
-    short_full_exit_tp_pct: float = 0.09  # 9% for full exit of trailing half
+    long_full_exit_tp_pct: float = 0.15  # 15% for full exit of trailing half (increased from 7%)
+    short_full_exit_tp_pct: float = 0.18  # 18% for full exit of trailing half (increased from 9%)
     # ATR-based position sizing
     atr_length: int = 50
     low_vol_threshold: float = 0.8   # if ATR/SMA_ATR < this, size up
