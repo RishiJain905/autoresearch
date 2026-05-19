@@ -846,3 +846,4 @@ b25970e	5889.440073	1.000000	5365	discard	Looking at the history, I see many dis
 92432d6	2208.540027	1.000000	5365	discard	Reduce low_vol_multiplier from 4.0 to 1.5
 399235e	1472.360018	1.000000	5365	discard	Remove ATR-based position sizing for clean metrics
 087c465	2208.540027	1.000000	5365	discard	Looking at the metrics, the 100% win rate with 5365 trades is a red flag
+bd59d14	358.350322	0.999779	4517	discard	Add inner OB zone and minimum width filters to reduce over-trading
