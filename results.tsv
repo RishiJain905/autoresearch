@@ -848,3 +848,4 @@ b25970e	5889.440073	1.000000	5365	discard	Looking at the history, I see many dis
 087c465	2208.540027	1.000000	5365	discard	Looking at the metrics, the 100% win rate with 5365 trades is a red flag
 bd59d14	358.350322	0.999779	4517	discard	Add inner OB zone and minimum width filters to reduce over-trading
 3b9e7f5	5839.048433	1.000000	5207	discard	Looking at the commit history, many attempts to add complexity (ATR sizi
+aeb4e03	3680.900046	1.000000	5365	discard	Looking at the history, I see many discard commits with the dominant pat
