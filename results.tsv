@@ -844,3 +844,4 @@ c47e094	5889.440073	1.000000	5365	discard	Reduce partial TP to 5% for more balan
 ce82f9f	1472.360018	1.000000	5365	discard	Remove ATR-based position sizing for realistic metrics
 b25970e	5889.440073	1.000000	5365	discard	Looking at the history, I see many discards and only 2 keeps. The strate
 92432d6	2208.540027	1.000000	5365	discard	Reduce low_vol_multiplier from 4.0 to 1.5
+399235e	1472.360018	1.000000	5365	discard	Remove ATR-based position sizing for clean metrics
